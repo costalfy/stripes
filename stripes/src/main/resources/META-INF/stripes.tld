@@ -34,7 +34,7 @@
     <display-name>Stripes Tag Library</display-name>
     <tlib-version>1.0</tlib-version>
     <short-name>stripes</short-name>
-    <uri>http://stripes.sourceforge.net/stripes.tld</uri>
+    <uri>/stripes.tld</uri>
 
     <tag>
         <description><![CDATA[
