@@ -15,9 +15,13 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B clean verify --file pom.xml
-    - name: Upload release
-      uses: ncipollo/release-action@v1
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
       with:
-        artifacts: "/dist/target/*.zip,/dist/target/*.jar"
-        bodyFile: "body.md"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        name: stripes-1.7.0-SNAPSHOT.zip
+        path: dist/target/stripes-1.7.0-SNAPSHOT.zip
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v1
+      with:
+        name: stripes-1.7.0-SNAPSHOT-bundle.jar
+        path: dist/target/stripes-1.7.0-SNAPSHOT-bundle.jar
