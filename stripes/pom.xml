@@ -19,6 +19,8 @@
         <tld.target>${project.build.outputDirectory}/META-INF</tld.target>
         <tld.uri>/stripes.tld</tld.uri>
         <tld.dynuri>/stripes-dynattr.tld</tld.dynuri>
+        <jackson.version>2.0.1</jackson.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
     </properties>
 
     <dependencies>
@@ -65,12 +67,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.0.1</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.0.1</version>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 
@@ -98,7 +100,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <version>${maven-antrun-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>

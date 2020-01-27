@@ -12,6 +12,11 @@
 	<properties>
 		<webtests.browser>firefox</webtests.browser>
 		<webdriver.chrome.driver>PASS_SYS_PROP</webdriver.chrome.driver>
+		<selenium-utils-groovy.version>1.4.10</selenium-utils-groovy.version>
+		<junit.version>4.12</junit.version>
+		<jetty-maven-plugin.version>9.4.25.v20191220</jetty-maven-plugin.version>
+		<jboss-as-maven-plugin.version>7.9.Final</jboss-as-maven-plugin.version>
+		<wildfly-maven-plugin.version>1.2.2.Final</wildfly-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -23,7 +28,7 @@
 		<dependency>
 			<groupId>com.pojosontheweb</groupId>
 			<artifactId>selenium-utils-groovy</artifactId>
-			<version>1.4.4</version>
+			<version>${selenium-utils-groovy.version}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -35,7 +40,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -53,7 +58,7 @@
 			<plugin>
                 <groupId>org.codehaus.gmaven</groupId>
 				<artifactId>gmaven-plugin</artifactId>
-                <version>1.4</version>
+                <version>${gmaven-plugin.version}</version>
                 <configuration>
                     <providerSelection>2.0</providerSelection>
                 </configuration>
@@ -133,7 +138,7 @@
 					<plugin>
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
-						<version>9.2.14.v20151106</version>
+						<version>${jetty-maven-plugin.version}</version>
 						<configuration>
 							<httpConnector>
 								<port>9999</port>
@@ -173,7 +178,7 @@
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
-						<version>1.2.0</version>
+						<version>${cargo-maven2-plugin.version}</version>
 						<configuration>
 							<wait>false</wait>
 							<container>
@@ -230,7 +235,7 @@
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
-						<version>1.2.0</version>
+						<version>${cargo-maven2-plugin.version}</version>
 						<configuration>
 							<wait>false</wait>
 							<container>
@@ -296,7 +301,7 @@
 					<plugin>
 						<groupId>org.jboss.as.plugins</groupId>
 						<artifactId>jboss-as-maven-plugin</artifactId>
-						<version>7.7.Final</version>
+						<version>${jboss-as-maven-plugin.version}</version>
 						<configuration>
 							<!--<serverConfig>stripes-standalone.xml</serverConfig>-->
 						</configuration>
@@ -332,7 +337,7 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.18.1</version>
+						<version>${maven-surefire-plugin.version}</version>
 						<configuration>
 							<systemProperties>
 								<webtests.base.url>http://localhost:8080/webtests</webtests.base.url>
@@ -349,7 +354,7 @@
 					<plugin>
 						<groupId>org.wildfly.plugins</groupId>
 						<artifactId>wildfly-maven-plugin</artifactId>
-						<version>1.0.2.Final</version>
+						<version>${wildfly-maven-plugin.version}</version>
 						<executions>
 							<execution>
 								<id>start-container</id>
@@ -381,7 +386,7 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.18.1</version>
+						<version>${maven-surefire-plugin.version}</version>
 						<configuration>
 							<systemProperties>
 								<webtests.base.url>http://localhost:8080/webtests</webtests.base.url>

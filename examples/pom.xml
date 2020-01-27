@@ -2,6 +2,11 @@
 <!-- Stripes Examples Webapp. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <jackson.version>2.0.1</jackson.version>
+        <httpasyncclient.version>4.0.2</httpasyncclient.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+    </properties>
     <parent>
         <groupId>net.sourceforge.stripes</groupId>
         <artifactId>stripes-parent</artifactId>
@@ -51,26 +56,26 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.0.1</version>
+            <version>${jackson.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.0.1</version>
+            <version>${jackson.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.0.1</version>
+            <version>${jackson.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>4.0.2</version>
+            <version>${httpasyncclient.version}</version>
         </dependency>
 
     </dependencies>
@@ -79,7 +84,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <version>${maven-antrun-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
