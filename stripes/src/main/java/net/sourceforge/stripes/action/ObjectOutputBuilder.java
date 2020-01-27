@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Stripes Framework.
+ * Copyright 2020 Stripes Framework.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  */
 package net.sourceforge.stripes.action;
 
+import net.sourceforge.stripes.util.Log;
+
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import net.sourceforge.stripes.util.Log;
 
 /**
  * This abstract class should be implemented by "builders" which take Java

@@ -18,10 +18,10 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: stripes-1.7.0-SNAPSHOT.zip
-        path: dist/target/stripes-1.7.0-SNAPSHOT.zip
+        name: stripes-2.0.0-SNAPSHOT.zip
+        path: dist/target/stripes-2.0.0-SNAPSHOT.zip
     - name: Archive code coverage results
       uses: actions/upload-artifact@v1
       with:
-        name: stripes-1.7.0-SNAPSHOT-bundle.jar
-        path: dist/target/stripes-1.7.0-SNAPSHOT-bundle.jar
+        name: stripes-2.0.0-SNAPSHOT-bundle.jar
+        path: dist/target/stripes-2.0.0-SNAPSHOT-bundle.jar

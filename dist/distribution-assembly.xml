@@ -18,12 +18,6 @@
 				<unpack>false</unpack>
 				<dependencySets>
 					<dependencySet>
-						<scope>provided</scope>
-						<includes>
-							<include>servlets.com:cos</include>
-						</includes>
-					</dependencySet>
-					<dependencySet>
 						<includes>
 							<include>commons-logging:commons-logging</include>
 						</includes>

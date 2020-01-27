@@ -14,22 +14,21 @@
  */
 package net.sourceforge.stripes.controller.multipart;
 
-import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
 import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.File;
-import java.util.regex.Pattern;
+import java.io.IOException;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
  * Default implementation of a factory for MultipartWrappers. Looks up a class
  * name in Configuration under the key specified by {@link #WRAPPER_CLASS_NAME}.
- * If no class name is configured, defaults to the {@link CosMultipartWrapper}.
  * An additional configuration parameter is supported to specify the maximum
  * post size allowable.</p>
  *

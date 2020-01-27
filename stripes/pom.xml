@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.stripes</groupId>
         <artifactId>stripes-parent</artifactId>
-        <version>1.7.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <artifactId>stripes</artifactId>
@@ -19,8 +19,6 @@
         <tld.target>${project.build.outputDirectory}/META-INF</tld.target>
         <tld.uri>/stripes.tld</tld.uri>
         <tld.dynuri>/stripes-dynattr.tld</tld.dynuri>
-        <jackson.version>2.0.1</jackson.version>
-        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
     </properties>
 
     <dependencies>
@@ -30,11 +28,11 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
+            <artifactId>javax.el-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
@@ -49,12 +47,12 @@
             <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>servlets.com</groupId>
-            <artifactId>cos</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -155,7 +153,6 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <additionalparam>${javadoc.opts}</additionalparam>
                             <groups>
                                 <group>
                                     <title>Core API</title>
