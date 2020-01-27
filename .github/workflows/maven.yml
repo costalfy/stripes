@@ -17,7 +17,7 @@ jobs:
       run: mvn -B clean verify --file pom.xml
     - name: Upload release
       uses: ncipollo/release-action@v1
-        with:
-          artifacts: "/dist/target/*.zip,/dist/target/*.jar"
-          bodyFile: "body.md"
-          token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        artifacts: "/dist/target/*.zip,/dist/target/*.jar"
+        bodyFile: "body.md"
+        token: ${{ secrets.GITHUB_TOKEN }}
