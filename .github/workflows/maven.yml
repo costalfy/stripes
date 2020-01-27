@@ -16,10 +16,8 @@ jobs:
     - name: Build with Maven
       run: mvn -B clean verify --file pom.xml
     - name: Upload release
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        prerelease: true
-        files: |
-          /dist/target/*.zip
-          /dist/target/*.jar
+      uses: ncipollo/release-action@v1
+        with:
+          artifacts: "/dist/target/*.zip,/dist/target/*.jar"
+          bodyFile: "body.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
