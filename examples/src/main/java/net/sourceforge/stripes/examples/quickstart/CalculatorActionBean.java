@@ -1,10 +1,6 @@
 package net.sourceforge.stripes.examples.quickstart;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.examples.bugzooky.ext.Public;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
@@ -16,6 +12,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
  * @author Tim Fennell
  */
 @Public
+@UrlBinding( "/quickstart/Calculator.action" )
 public class CalculatorActionBean implements ActionBean {
     private ActionBeanContext context;
     @Validate(required=true) private double numberOne;
