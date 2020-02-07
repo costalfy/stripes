@@ -7,7 +7,8 @@
 			<tr>
 				<td style="width: 25%; vertical-align: top;">
 				<!-- Somewhat contrived example of using the errors tag 'beanclass' attribute. -->
-				<stripes:errors action="/bugzooky/Login.action"/>
+
+						<stripes:errors action="/bugzooky/Login.action"/>
 				<stripes:form action="/bugzooky/Login.action" focus="username">
 					<table>
 						<tr>
@@ -41,7 +42,7 @@
 
 						<div class="sectionTitle">Intuitive development</div>
 
-						<p><a href="http://stripesframework.org">Stripes</a> is a mature framework for developing web
+						<p><a href="https://github.com/StripesFramework/stripes">Stripes</a> is a mature framework for developing web
 						applications in Java. It uses an action-oriented model that will be familiar to anyone who has previously used
 						Struts, SpringMVC or anything similar. Stripes is designed to be extremely easy to develop with - to be intuitive to
 						developers, and to require the minimum amount of code and configuration.</p>

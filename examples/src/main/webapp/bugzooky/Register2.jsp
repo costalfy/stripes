@@ -1,12 +1,12 @@
-<%@ page import="net.sourceforge.stripes.examples.bugzooky.biz.Status"%>
-<%@ page import="net.sourceforge.stripes.examples.bugzooky.RegisterActionBean" %>
+<%@ page import="net.sourceforge.stripes.examples.bugzooky.RegisterActionBean"%>
 <%@ include file="/bugzooky/taglibs.jsp"%>
 
 <stripes:layout-render name="/bugzooky/layout/standard.jsp" title="Register">
 	<stripes:layout-component name="contents">
 
 		<stripes:form beanclass="<%=RegisterActionBean.class%>" focus="user.password">
-			<stripes:errors />
+				<stripes:errors/>
+
 
 			<p>Welcome ${actionBean.user.firstName}, please pick a password:</p>
 

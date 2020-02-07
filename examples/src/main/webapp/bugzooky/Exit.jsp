@@ -9,7 +9,7 @@
         Stripes you might like to check out:</p>
 
         <ul>
-            <li>The Stripes Website - <a href="http://www.stripesframework.org">http://www.stripesframework.org</a></li>
+            <li>The Stripes Website - <a href="https://github.com/StripesFramework/stripes">https://github.com/StripesFramework/stripes</a></li>
             <li>The Stripes Downloads page at
                 <a href="https://github.com/StripesFramework/stripes/releases">Github</a>
             </li>
