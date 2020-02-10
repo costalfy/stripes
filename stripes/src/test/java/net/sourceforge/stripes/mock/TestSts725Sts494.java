@@ -19,7 +19,7 @@ public class TestSts725Sts494 {
     public void testSts725() {
         int count = 2;
         for (int i = 0; i < count; i++) {
-            Map<String, String> params = new HashMap<String, String>();
+            Map<String, String> params = new HashMap<>();
             params.put("ActionResolver.Packages", "foo.bar");
             MockServletContext mockServletContext = StripesTestFixture.createServletContext();
             try {
@@ -33,7 +33,7 @@ public class TestSts725Sts494 {
 
     @Test
     public void testSts494() {
-        final List<String> l = new ArrayList<String>();
+        final List<String> l = new ArrayList<>();
         MockServletContext c = StripesTestFixture.createServletContext();
         try {
             c.addListener(new ServletContextListener() {

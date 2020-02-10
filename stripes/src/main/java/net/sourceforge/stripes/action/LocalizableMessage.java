@@ -17,6 +17,7 @@ package net.sourceforge.stripes.action;
 import net.sourceforge.stripes.controller.StripesFilter;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -43,7 +44,7 @@ public class LocalizableMessage extends SimpleMessage {
      * message
      */
     public LocalizableMessage(String messageKey, Object... parameter) {
-        super((String) null, parameter);
+        super(null, parameter);
         this.messageKey = messageKey;
     }
 
@@ -84,11 +85,8 @@ public class LocalizableMessage extends SimpleMessage {
 
         final LocalizableMessage that = (LocalizableMessage) o;
 
-        if (messageKey != null ? !messageKey.equals(that.messageKey) : that.messageKey != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(messageKey,
+                              that.messageKey);
     }
 
     /**

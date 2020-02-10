@@ -1,24 +1,15 @@
 package net.sourceforge.stripes.controller;
 
+import net.sourceforge.stripes.FilterEnabledTestBase;
+import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.mock.MockRoundtrip;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.HandlesEvent;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.mock.MockServletContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.testng.Assert;
 
 /**
  * Tests that make sure the basic functions of the ActionResolver work as
@@ -115,9 +106,9 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test(groups = "fast")
-    public void testOverrideHandlerMethodReturnsSubtype() throws SecurityException, NoSuchMethodException {
+    public void testOverrideHandlerMethodReturnsSubtype() throws SecurityException {
         NameBasedActionResolver resolver = new NameBasedActionResolver();
-        Map<String, Method> classMappings = new HashMap<String, Method>();
+        Map<String, Method> classMappings = new HashMap<>();
         resolver.processMethods(ExtendedBaseAction.class, classMappings);
     }
 

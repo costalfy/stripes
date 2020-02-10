@@ -16,8 +16,8 @@ package net.sourceforge.stripes.validation.expression;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.controller.ParameterName;
-import net.sourceforge.stripes.validation.ValidationMetadata;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMetadata;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public interface ExpressionExecutor
      *
      * http://www.stripesframework.org/jira/browse/STS-822
      */
-    final String SELF = "self";
+    String SELF = "self";
 
     /**
      * Performs validation of an ActionBean property using the expression
@@ -79,6 +79,6 @@ public interface ExpressionExecutor
      * @param validationInfo the validation metadata for the field
      * @param errors the ValidationErrors object into which to place any errors
      */
-    public void evaluate( ActionBean bean, ParameterName name, List<Object> values,
-                          ValidationMetadata validationInfo, ValidationErrors errors );
+    void evaluate(ActionBean bean, ParameterName name, List<Object> values,
+                  ValidationMetadata validationInfo, ValidationErrors errors);
 }

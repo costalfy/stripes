@@ -14,14 +14,10 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+
+import java.lang.annotation.*;
 
 /**
  * <p>
@@ -67,7 +63,7 @@ public @interface StrictBinding {
     /**
      * The options for the {@link StrictBinding#defaultPolicy()} element.
      */
-    public enum Policy {
+    enum Policy {
         /*
          * In the event of a conflict, binding is allowed
          */

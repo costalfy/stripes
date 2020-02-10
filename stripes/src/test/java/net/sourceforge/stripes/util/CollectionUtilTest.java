@@ -1,7 +1,7 @@
 package net.sourceforge.stripes.util;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -67,9 +67,13 @@ public class CollectionUtilTest {
         Assert.assertEquals(list.size(), 0);
 
         list = CollectionUtil.asList(new int[]{0, 1, 2, 3});
-        Assert.assertEquals(list.get(0), new Integer(0));
-        Assert.assertEquals(list.get(1), new Integer(1));
-        Assert.assertEquals(list.get(2), new Integer(2));
-        Assert.assertEquals(list.get(3), new Integer(3));
+        Assert.assertEquals(list.get(0),
+                            0);
+        Assert.assertEquals(list.get(1),
+                            1);
+        Assert.assertEquals(list.get(2),
+                            2);
+        Assert.assertEquals(list.get(3),
+                            3);
     }
 }

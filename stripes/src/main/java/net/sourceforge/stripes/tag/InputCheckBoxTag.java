@@ -93,28 +93,25 @@ public class InputCheckBoxTag extends InputTagSupport implements BodyTag {
 
     /**
      * Does nothing.
-     * @return 
-     * @throws javax.servlet.jsp.JspException 
+     * @return
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     /**
      * Ensure that the body is evaluated only once.
-     * @return 
-     * @throws javax.servlet.jsp.JspException 
+     * @return
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -153,7 +150,7 @@ public class InputCheckBoxTag extends InputTagSupport implements BodyTag {
             getAttributes().put("checked", "checked");
         }
 
-        writeSingletonTag(getPageContext().getOut(), "input");
+        writeSingletonTag(getPageContext().getOut());
 
         // Restore the tags state to before we mucked with it
         getAttributes().remove("checked");

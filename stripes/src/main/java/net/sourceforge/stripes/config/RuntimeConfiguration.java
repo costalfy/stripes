@@ -14,18 +14,7 @@
  */
 package net.sourceforge.stripes.config;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.sourceforge.stripes.controller.ActionBeanContextFactory;
-import net.sourceforge.stripes.controller.ActionBeanPropertyBinder;
-import net.sourceforge.stripes.controller.ActionResolver;
-import net.sourceforge.stripes.controller.Interceptor;
-import net.sourceforge.stripes.controller.LifecycleStage;
-import net.sourceforge.stripes.controller.ObjectFactory;
+import net.sourceforge.stripes.controller.*;
 import net.sourceforge.stripes.controller.multipart.MultipartWrapperFactory;
 import net.sourceforge.stripes.exception.ExceptionHandler;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
@@ -40,6 +29,12 @@ import net.sourceforge.stripes.util.ReflectUtil;
 import net.sourceforge.stripes.validation.TypeConverter;
 import net.sourceforge.stripes.validation.TypeConverterFactory;
 import net.sourceforge.stripes.validation.ValidationMetadataProvider;
+
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -341,7 +336,7 @@ public class RuntimeConfiguration extends DefaultConfiguration {
     @SuppressWarnings("unchecked")
     protected Map<LifecycleStage, Collection<Interceptor>> initInterceptors(List classes) {
 
-        Map<LifecycleStage, Collection<Interceptor>> map = new HashMap<LifecycleStage, Collection<Interceptor>>();
+        Map<LifecycleStage, Collection<Interceptor>> map = new HashMap<>();
 
         for (Object type : classes) {
             try {

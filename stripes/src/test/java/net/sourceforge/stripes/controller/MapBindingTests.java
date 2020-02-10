@@ -1,25 +1,17 @@
 package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.mock.MockServletContext;
 import net.sourceforge.stripes.test.TestBean;
 import net.sourceforge.stripes.test.TestEnum;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Tests all reasonable variations of binding involving Maps. String keys,
@@ -257,9 +249,9 @@ public class MapBindingTests extends FilterEnabledTestBase implements ActionBean
         trip.execute();
 
         MapBindingTests bean = trip.getActionBean(MapBindingTests.class);
-        Assert.assertEquals(bean.getTestBean().getLongMap().get(1l), new Long(1));
-        Assert.assertEquals(bean.getTestBean().getLongMap().get(2l), new Long(2));
-        Assert.assertEquals(bean.getTestBean().getLongMap().get(3l), new Long(3));
+        Assert.assertEquals(bean.getTestBean().getLongMap().get(1L), new Long(1));
+        Assert.assertEquals(bean.getTestBean().getLongMap().get(2L), new Long(2));
+        Assert.assertEquals(bean.getTestBean().getLongMap().get(3L), new Long(3));
     }
 
     @Test(groups = "fast")
@@ -269,7 +261,7 @@ public class MapBindingTests extends FilterEnabledTestBase implements ActionBean
         trip.execute();
 
         MapBindingTests bean = trip.getActionBean(MapBindingTests.class);
-        Assert.assertEquals(bean.getTestBean().getLongMap().get(9999999999l), new Long(1));
+        Assert.assertEquals(bean.getTestBean().getLongMap().get(9999999999L), new Long(1));
     }
 
     @Test(groups = "fast")
@@ -279,7 +271,7 @@ public class MapBindingTests extends FilterEnabledTestBase implements ActionBean
         trip.execute();
 
         MapBindingTests bean = trip.getActionBean(MapBindingTests.class);
-        Assert.assertEquals(bean.getTestBean().getLongMap().get(9999999999l), new Long(1));
+        Assert.assertEquals(bean.getTestBean().getLongMap().get(9999999999L), new Long(1));
     }
 
     @Test(groups = "fast")
@@ -321,7 +313,7 @@ public class MapBindingTests extends FilterEnabledTestBase implements ActionBean
     public void populateTypelessMap() {
         this.typelessMap = new HashMap();
         this.typelessMap.put(1, new TestBean());
-        this.typelessMap.put(2l, new TestBean());
+        this.typelessMap.put(2L, new TestBean());
         this.typelessMap.put("foo", new TestBean());
     }
 
@@ -335,7 +327,7 @@ public class MapBindingTests extends FilterEnabledTestBase implements ActionBean
 
         MapBindingTests bean = trip.getActionBean(MapBindingTests.class);
         Assert.assertEquals(((TestBean) bean.getTypelessMap().get(1)).getLongProperty(), new Long(1234));
-        Assert.assertEquals(((TestBean) bean.getTypelessMap().get(2l)).getNestedBean().getLongProperty(), new Long(4321));
+        Assert.assertEquals(((TestBean) bean.getTypelessMap().get(2L)).getNestedBean().getLongProperty(), new Long(4321));
         Assert.assertEquals(((TestBean) bean.getTypelessMap().get("foo")).getEnumProperty(), TestEnum.Sixth);
     }
 }

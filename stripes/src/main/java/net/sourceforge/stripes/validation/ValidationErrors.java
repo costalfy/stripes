@@ -47,7 +47,7 @@ public class ValidationErrors extends HashMap<String, List<ValidationError>> {
     public void put(String field, ValidationError error) {
         List<ValidationError> errors = get(field);
         if (errors == null) {
-            errors = new ArrayList<ValidationError>();
+            errors = new ArrayList<>();
             put(field, errors);
         }
 

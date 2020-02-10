@@ -17,7 +17,7 @@ public class FlashResponseInvocationHandler implements InvocationHandler, Serial
 
     private static final long serialVersionUID = 1L;
 
-    public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
+    public Object invoke(Object object, Method method, Object[] objects) {
         throw new IllegalStateException(
                 "Attempt to call " + method + " after the request cycle has completed. "
                 + "This is most likely due to misuse of a flashed ActionBean or ActionBeanContext "

@@ -18,19 +18,8 @@ import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.util.ReflectUtil;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * The dynamic partner to a PropertyExpression that represents the evaluation of
@@ -67,12 +56,11 @@ public class PropertyExpressionEvaluation {
             NodeEvaluation evaluation = new NodeEvaluation(this, node);
             if (this.root == null) {
                 this.root = evaluation;
-                this.leaf = evaluation;
             } else {
                 this.leaf.setNext(evaluation);
                 evaluation.setPrevious(this.leaf);
-                this.leaf = evaluation;
             }
+            this.leaf = evaluation;
         }
 
         fillInTypeInformation();
@@ -431,8 +419,8 @@ public class PropertyExpressionEvaluation {
         // from parameterized types (and their super-types) discovered while going back up the
         // nodes.  The second map contains information gathered by going up the superclasses
         // from the last concrete Class in the expression
-        List<HashMap<TypeVariable<?>, Type>> typemap1 = new ArrayList<HashMap<TypeVariable<?>, Type>>();
-        List<HashMap<TypeVariable<?>, Type>> typemap2 = new ArrayList<HashMap<TypeVariable<?>, Type>>();
+        List<HashMap<TypeVariable<?>, Type>> typemap1 = new ArrayList<>();
+        List<HashMap<TypeVariable<?>, Type>> typemap2 = new ArrayList<>();
 
         // Scan the evaluation chain for the first class or any parameterized types.
         Class<?> lastBean = this.bean.getClass();
@@ -522,7 +510,7 @@ public class PropertyExpressionEvaluation {
             TypeVariable<?>[] vars = rawClass.getTypeParameters();
             Type[] args = paramType.getActualTypeArguments();
             HashMap<TypeVariable<?>, Type> entry
-                    = new HashMap<TypeVariable<?>, Type>(vars.length);
+                    = new HashMap<>(vars.length);
             for (int i = 0; i < vars.length && i < args.length; ++i) {
                 entry.put(vars[i], args[i]);
             }

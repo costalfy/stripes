@@ -43,12 +43,12 @@ public abstract class ObjectOutputBuilder< T extends ObjectOutputBuilder> {
     /**
      * Holds the set of classes representing the primitive types in Java.
      */
-    static final Set<Class<?>> simpleTypes = new HashSet<Class<?>>();
+    static final Set<Class<?>> simpleTypes = new HashSet<>();
 
     /**
      * Holds the set of types that will be skipped over by default.
      */
-    static final Set<Class<?>> ignoredTypes = new HashSet<Class<?>>();
+    static final Set<Class<?>> ignoredTypes = new HashSet<>();
 
     static {
         simpleTypes.add(Byte.TYPE);
@@ -96,8 +96,8 @@ public abstract class ObjectOutputBuilder< T extends ObjectOutputBuilder> {
      */
     public ObjectOutputBuilder(Object root, Object... objectsToExclude) {
         this.rootObject = root;
-        this.excludeClasses = new HashSet<Class<?>>();
-        this.excludeProperties = new HashSet<String>();
+        this.excludeClasses = new HashSet<>();
+        this.excludeProperties = new HashSet<>();
 
         for (Object object : objectsToExclude) {
             if (object instanceof Class<?>) {

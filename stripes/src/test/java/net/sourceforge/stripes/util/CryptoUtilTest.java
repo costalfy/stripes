@@ -1,12 +1,11 @@
 package net.sourceforge.stripes.util;
 
-import java.security.SecureRandom;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.security.SecureRandom;
 
 /**
  * Basic tests for the CryptoUtil
@@ -16,36 +15,46 @@ import org.testng.annotations.Test;
 public class CryptoUtilTest {
 
     @Test(groups = "fast")
-    public void basicEncryptionTest() throws Exception {
+    public void basicEncryptionTest() {
         String input = "A Basic String to Encrypt";
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
 
-        Assert.assertFalse(input.equals(encrypted), "Encrypted string should be different!");
-        Assert.assertTrue(input.equals(decrypted), "Decrypted string should match!");
+        Assert.assertNotEquals(encrypted,
+                               input,
+                               "Encrypted string should be different!");
+        Assert.assertEquals(decrypted,
+                            input,
+                            "Decrypted string should match!");
 
         input = "";
         for (int i = 0; i < 100; i++) {
             encrypted = CryptoUtil.encrypt(input);
             decrypted = CryptoUtil.decrypt(encrypted);
 
-            Assert.assertTrue(input.equals(decrypted), "Decrypted string should match!");
+            Assert.assertEquals(decrypted,
+                                input,
+                                "Decrypted string should match!");
             input += "x";
         }
     }
 
     @Test(groups = "fast")
-    public void encryptEmptyStringTest() throws Exception {
+    public void encryptEmptyStringTest() {
         String input = "";
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
 
-        Assert.assertFalse(input.equals(encrypted), "Encrypted string should be different!");
-        Assert.assertTrue(input.equals(decrypted), "Decrypted string should match!");
+        Assert.assertNotEquals(encrypted,
+                               input,
+                               "Encrypted string should be different!");
+        Assert.assertEquals(decrypted,
+                            input,
+                            "Decrypted string should match!");
     }
 
     @Test(groups = "fast")
-    public void encryptNullTest() throws Exception {
+    public void encryptNullTest() {
         String input = null;
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
@@ -54,7 +63,7 @@ public class CryptoUtilTest {
     }
 
     @Test(groups = "fast")
-    public void decryptNullTest() throws Exception {
+    public void decryptNullTest() {
         String input = null;
         String decrypted = CryptoUtil.decrypt(input);
 
@@ -62,7 +71,7 @@ public class CryptoUtilTest {
     }
 
     @Test(groups = "fast")
-    public void decryptBogusInputTest() throws Exception {
+    public void decryptBogusInputTest() {
         String input = "_sipApTvfAXjncUGTRUf4OwZJBdz4Mbp2ZxqVyzkKio=";
         String decrypted = CryptoUtil.decrypt(input);
         Assert.assertNull(decrypted, "Decrypting a bogus input should give back null.");
@@ -92,7 +101,7 @@ public class CryptoUtilTest {
      * verification.
      */
     @Test(groups = "slow", enabled = false)
-    public void failOnWeakHash() throws Exception {
+    public void failOnWeakHash() {
         String input = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         String encrypted = CryptoUtil.encrypt(input);
         SecureRandom rnd = new SecureRandom();
@@ -110,7 +119,7 @@ public class CryptoUtilTest {
     }
 
     @Test(groups = "fast")
-    public void failOnECB() throws Exception {
+    public void failOnECB() {
         String input1 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         String encrypted1 = CryptoUtil.encrypt(input1);
         String encrypted2 = CryptoUtil.encrypt(input1);

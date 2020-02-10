@@ -14,13 +14,13 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.format.Formatter;
 import net.sourceforge.stripes.util.UrlBuilder;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -50,7 +50,7 @@ public abstract class OnwardResolution<T extends OnwardResolution<T>> implements
 
     private String path;
     private String event = VALUE_NOT_SET;
-    private Map<String, Object> parameters = new HashMap<String, Object>();
+    private Map<String, Object> parameters = new HashMap<>();
     private String anchor;
 
     /**
@@ -202,8 +202,8 @@ public abstract class OnwardResolution<T extends OnwardResolution<T>> implements
      * @return this Resolution so that methods can be chained
      */
     @SuppressWarnings("unchecked")
-    public T addParameters(Map<String, ? extends Object> parameters) {
-        for (Map.Entry<String, ? extends Object> entry : parameters.entrySet()) {
+    public T addParameters(Map<String, ?> parameters) {
+        for (Map.Entry<String, ?> entry : parameters.entrySet()) {
             addParameter(entry.getKey(), entry.getValue());
         }
 

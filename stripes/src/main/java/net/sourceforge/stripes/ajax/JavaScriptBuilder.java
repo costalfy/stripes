@@ -14,23 +14,16 @@
  */
 package net.sourceforge.stripes.ajax;
 
+import net.sourceforge.stripes.action.ObjectOutputBuilder;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.ReflectUtil;
 
 import java.beans.PropertyDescriptor;
-import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.lang.reflect.Method;
 import java.lang.reflect.Array;
-import net.sourceforge.stripes.action.ObjectOutputBuilder;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * <p>
@@ -61,17 +54,17 @@ public class JavaScriptBuilder extends ObjectOutputBuilder<JavaScriptBuilder> {
     /**
      * Holds the set of objects that have been visited during conversion.
      */
-    private Set<Integer> visitedIdentities = new HashSet<Integer>();
+    private Set<Integer> visitedIdentities = new HashSet<>();
 
     /**
      * Holds a map of name to JSON value for JS Objects and Arrays.
      */
-    private Map<String, String> objectValues = new HashMap<String, String>();
+    private Map<String, String> objectValues = new HashMap<>();
 
     /**
      * Holds a map of object.property = object.
      */
-    private Map<String, String> assignments = new HashMap<String, String>();
+    private Map<String, String> assignments = new HashMap<>();
 
     /**
      * Constructs a new JavaScriptBuilder to build JS for the root object
@@ -247,7 +240,7 @@ public class JavaScriptBuilder extends ObjectOutputBuilder<JavaScriptBuilder> {
      * translated
      * @param in The Object who's JavaBean properties are to be translated
      */
-    void buildObjectNode(String targetName, Object in, String propertyPrefix) throws Exception {
+    void buildObjectNode(String targetName, Object in, String propertyPrefix) {
         StringBuilder out = new StringBuilder();
         out.append("{");
         PropertyDescriptor[] props = ReflectUtil.getPropertyDescriptors(in.getClass());
@@ -391,7 +384,7 @@ public class JavaScriptBuilder extends ObjectOutputBuilder<JavaScriptBuilder> {
             return "null";
         }
 
-        Class<? extends Object> type = in.getClass();
+        Class<?> type = in.getClass();
 
         if (String.class.isAssignableFrom(type)) {
             return quote((String) in);

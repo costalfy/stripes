@@ -1,27 +1,20 @@
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.FilterEnabledTestBase;
-import org.testng.annotations.Test;
-import org.testng.Assert;
-import net.sourceforge.stripes.mock.MockServletContext;
-import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.mock.MockHttpSession;
 import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.action.HandlesEvent;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.mock.MockHttpSession;
+import net.sourceforge.stripes.mock.MockRoundtrip;
+import net.sourceforge.stripes.mock.MockServletContext;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.lang.reflect.Proxy;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Performs some basic tests of FlashScope usage.

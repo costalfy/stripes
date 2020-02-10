@@ -1,15 +1,14 @@
 package net.sourceforge.stripes.validation;
 
+import net.sourceforge.stripes.StripesTestFixture;
+import net.sourceforge.stripes.util.Log;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Collection;
 import java.util.Locale;
-
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.util.Log;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class DefaultTypeConverterFactoryTest {
 
@@ -32,10 +31,10 @@ public class DefaultTypeConverterFactoryTest {
      * Some tests to make sure we're getting the right type converters.
      */
     @Retention(RetentionPolicy.RUNTIME)
-    public static @interface Ann {
+    public @interface Ann {
     }
 
-    public static interface A {
+    public interface A {
     }
 
     public static class B implements A {

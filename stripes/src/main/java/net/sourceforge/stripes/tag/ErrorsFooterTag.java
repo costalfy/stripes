@@ -14,8 +14,6 @@
  */
 package net.sourceforge.stripes.tag;
 
-import javax.servlet.jsp.JspException;
-
 /**
  * Can be used within a stripes:errors tag to show a footer on an error list.
  * The contents of this tag will only be displayed on the last iteration of an
@@ -26,7 +24,7 @@ import javax.servlet.jsp.JspException;
 public class ErrorsFooterTag extends HtmlTagSupport {
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         ErrorsTag errorsTag = getParentTag(ErrorsTag.class);
 
         if (errorsTag.isLast()) {
@@ -37,7 +35,7 @@ public class ErrorsFooterTag extends HtmlTagSupport {
     }
 
     @Override
-    public int doEndTag() throws JspException {
+    public int doEndTag() {
         return EVAL_PAGE;
     }
 

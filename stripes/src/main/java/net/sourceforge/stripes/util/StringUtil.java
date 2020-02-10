@@ -1,13 +1,13 @@
 package net.sourceforge.stripes.util;
 
+import net.sourceforge.stripes.exception.StripesRuntimeException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.sourceforge.stripes.exception.StripesRuntimeException;
 
 /**
  * Provides utility methods for manipulating and parsing Strings.
@@ -117,7 +117,9 @@ public class StringUtil {
                 buf = new StringBuilder(value.length() * 2);
             }
 
-            buf.append(value.substring(end, matcher.start())).append(
+            buf.append(value,
+                       end,
+                       matcher.start()).append(
                     String.format("%%%02X", (int) matcher.group().charAt(0)));
             end = matcher.end();
         }

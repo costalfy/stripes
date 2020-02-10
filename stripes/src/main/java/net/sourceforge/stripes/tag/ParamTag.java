@@ -14,11 +14,10 @@
  */
 package net.sourceforge.stripes.tag;
 
-import javax.servlet.jsp.tagext.BodyTag;
-import javax.servlet.jsp.tagext.BodyContent;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyContent;
+import javax.servlet.jsp.tagext.BodyTag;
+import javax.servlet.jsp.tagext.Tag;
 
 /**
  * <p>
@@ -112,18 +111,16 @@ public class ParamTag implements BodyTag {
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
         /* Do Nothing */ }
 
     /**
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -131,9 +128,8 @@ public class ParamTag implements BodyTag {
      * Does nothing.
      *
      * @return EVAL_BODY_BUFFERED in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         return EVAL_BODY_BUFFERED;
     }
 
@@ -142,9 +138,8 @@ public class ParamTag implements BodyTag {
      * adds the parameter.
      *
      * @return EVAL_PAGE in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doEndTag() throws JspException {
+    public int doEndTag() {
         Object valueToSet = value;
 
         // First figure out what value to send to the parent link tag

@@ -40,7 +40,7 @@ import java.util.Locale;
  */
 public class BooleanTypeConverter implements TypeConverter<Boolean> {
 
-    private static final Collection<String> truths = new HashSet<String>();
+    private static final Collection<String> truths = new HashSet<>();
 
     static {
         truths.add("true");
@@ -72,7 +72,7 @@ public class BooleanTypeConverter implements TypeConverter<Boolean> {
             retval = retval || truth.equalsIgnoreCase(input);
         }
 
-        if (retval == false) {
+        if (!retval) {
             try {
                 long number = Long.parseLong(input);
                 retval = (number > 0);

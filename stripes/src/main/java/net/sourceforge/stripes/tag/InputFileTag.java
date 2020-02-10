@@ -87,7 +87,7 @@ public class InputFileTag extends InputTagSupport {
      */
     @Override
     public int doEndInputTag() throws JspException {
-        writeSingletonTag(getPageContext().getOut(), "input");
+        writeSingletonTag(getPageContext().getOut());
         return EVAL_PAGE;
     }
 }

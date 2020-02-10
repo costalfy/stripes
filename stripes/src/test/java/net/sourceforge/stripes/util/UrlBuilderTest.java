@@ -15,17 +15,13 @@
  */
 package net.sourceforge.stripes.util;
 
+import net.sourceforge.stripes.FilterEnabledTestBase;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.mock.MockServletContext;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 /**
  * Simple set of tests for the UrlBuilder class.
@@ -35,7 +31,7 @@ import org.testng.annotations.Test;
 public class UrlBuilderTest extends FilterEnabledTestBase {
 
     @Test(groups = "fast")
-    public void testBasicUrl() throws Exception {
+    public void testBasicUrl() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         String result = builder.toString();
@@ -43,7 +39,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParameters() throws Exception {
+    public void testUrlWithParameters() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", 1);
@@ -54,7 +50,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParametersAndAnchor() throws Exception {
+    public void testUrlWithParametersAndAnchor() {
         String path = "/test/page.jsp#someAnchor";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", 1);
@@ -65,7 +61,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParametersAndAnchor2() throws Exception {
+    public void testUrlWithParametersAndAnchor2() {
         String path = "/test/page.jsp#someAnchor";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", 1);
@@ -77,7 +73,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParametersAndAnchor3() throws Exception {
+    public void testUrlWithParametersAndAnchor3() {
         String path = "/test/page.jsp#someAnchor";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", 1);
@@ -89,7 +85,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParameterVarargs() throws Exception {
+    public void testUrlWithParameterVarargs() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", 1, "one", "uno", "i");
@@ -98,7 +94,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithValuelessParameter() throws Exception {
+    public void testUrlWithValuelessParameter() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one");
@@ -109,16 +105,17 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParameterArray() throws Exception {
+    public void testUrlWithParameterArray() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
-        builder.addParameter("one", (Object[]) Literal.array("1", "one", "uno", "i"));
+        builder.addParameter("one",
+                             Literal.array("1", "one", "uno", "i"));
         String result = builder.toString();
         Assert.assertEquals(result, "/test/page.jsp?one=1&one=one&one=uno&one=i");
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParameterCollection() throws Exception {
+    public void testUrlWithParameterCollection() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
 
@@ -128,10 +125,10 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithParameterMap() throws Exception {
+    public void testUrlWithParameterMap() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
-        Map<Object, Object> map = new LinkedHashMap<Object, Object>();
+        Map<Object, Object> map = new LinkedHashMap<>();
         map.put("one", "one");
         map.put("two", Literal.list("2", "two"));
         map.put("three", Literal.array("3", "three"));
@@ -143,7 +140,7 @@ public class UrlBuilderTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testUrlWithRepeatedParameters() throws Exception {
+    public void testUrlWithRepeatedParameters() {
         String path = "/test/page.jsp";
         UrlBuilder builder = new UrlBuilder(Locale.getDefault(), path, false);
         builder.addParameter("one", "one");

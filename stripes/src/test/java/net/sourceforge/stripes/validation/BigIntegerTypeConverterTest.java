@@ -17,11 +17,11 @@ public class BigIntegerTypeConverterTest {
      * Returns an empty collection of validation errors.
      */
     public Collection<ValidationError> errors() {
-        return new ArrayList<ValidationError>();
+        return new ArrayList<>();
     }
 
     @Test(groups = "fast")
-    public void basicParse() throws Exception {
+    public void basicParse() {
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
         converter.setLocale(Locale.US);
         BigInteger result = converter.convert("1234567", BigInteger.class, errors());
@@ -29,8 +29,8 @@ public class BigIntegerTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseBigNumber() throws Exception {
-        String number = String.valueOf(Long.MAX_VALUE) + "8729839871981298798234";
+    public void parseBigNumber() {
+        String number = Long.MAX_VALUE + "8729839871981298798234";
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
         converter.setLocale(Locale.US);
         BigInteger result = converter.convert(number, BigInteger.class, errors());
@@ -39,7 +39,7 @@ public class BigIntegerTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseWithGroupingCharacters() throws Exception {
+    public void parseWithGroupingCharacters() {
         String number = "7297029872767869231987623498756389734567876534";
         String grouped = "7,297,029,872,767,869,231,987,623,498,756,389,734,567,876,534";
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
@@ -49,7 +49,7 @@ public class BigIntegerTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseAlternateLocale() throws Exception {
+    public void parseAlternateLocale() {
         String number = "123456789";
         String localized = "123.456.789";
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
@@ -59,7 +59,7 @@ public class BigIntegerTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void decimalTruncation() throws Exception {
+    public void decimalTruncation() {
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
         converter.setLocale(Locale.US);
         BigInteger result = converter.convert("123456789.98765", BigInteger.class, errors());
@@ -68,7 +68,7 @@ public class BigIntegerTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void invalidInput() throws Exception {
+    public void invalidInput() {
         String number = "a1b2vc3d4";
         TypeConverter<BigInteger> converter = new BigIntegerTypeConverter();
         converter.setLocale(Locale.US);

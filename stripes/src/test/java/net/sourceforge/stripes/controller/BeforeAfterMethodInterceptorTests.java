@@ -1,11 +1,6 @@
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.After;
-import net.sourceforge.stripes.action.Before;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -485,7 +480,7 @@ public class BeforeAfterMethodInterceptorTests {
     private static class TestExecutionContext extends ExecutionContext {
 
         @Override
-        public Resolution proceed() throws Exception {
+        public Resolution proceed() {
             return new ForwardResolution("wakker");
         }
     }

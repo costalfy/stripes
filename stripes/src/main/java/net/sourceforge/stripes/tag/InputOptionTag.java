@@ -114,27 +114,24 @@ public class InputOptionTag extends InputTagSupport implements BodyTag {
      * Does nothing.
      *
      * @return EVAL_BODY_BUFFERED in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -196,10 +193,9 @@ public class InputOptionTag extends InputTagSupport implements BodyTag {
      * Overridden to make sure that options do not try and register themselves
      * with the form tag. This is done because options are not standalone input
      * tags, but always part of a select tag (which gets registered).
-     * @throws net.sourceforge.stripes.exception.StripesJspException
      */
     @Override
-    protected void registerWithParentForm() throws StripesJspException {
+    protected void registerWithParentForm() {
         // Do nothing, options are not standalone fields and should not register
     }
 }

@@ -14,14 +14,14 @@
  */
 package net.sourceforge.stripes.vfs;
 
+import net.sourceforge.stripes.util.Log;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.stripes.util.Log;
 
 /**
  * A {@link VFS} implementation that works with the VFS API provided by JBoss 6.
@@ -58,7 +58,7 @@ public class JBoss6VFS extends net.sourceforge.stripes.vfs.VFS {
 
         List<VirtualFile> getChildren() throws IOException {
             List<?> objects = invoke(getChildrenRecursively, virtualFile);
-            List<VirtualFile> children = new ArrayList<VirtualFile>(objects.size());
+            List<VirtualFile> children = new ArrayList<>(objects.size());
             for (Object object : objects) {
                 children.add(new VirtualFile(object));
             }
@@ -178,7 +178,7 @@ public class JBoss6VFS extends net.sourceforge.stripes.vfs.VFS {
         }
 
         List<VirtualFile> children = directory.getChildren();
-        List<String> names = new ArrayList<String>(children.size());
+        List<String> names = new ArrayList<>(children.size());
         for (VirtualFile vf : children) {
             String relative = vf.getPathNameRelativeTo(directory);
             names.add(path + relative);

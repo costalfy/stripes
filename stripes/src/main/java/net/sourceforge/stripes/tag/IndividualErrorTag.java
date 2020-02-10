@@ -38,10 +38,9 @@ public class IndividualErrorTag extends HtmlTagSupport {
      * Does nothing
      *
      * @return SKIP_BODY always
-     * @throws JspException
      */
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         return SKIP_BODY;
     }
 

@@ -1,11 +1,10 @@
 package net.sourceforge.stripes.format;
 
-import java.util.Locale;
-
 import net.sourceforge.stripes.StripesTestFixture;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Locale;
 
 public class DefaultFormatterFactoryTest {
 
@@ -241,13 +240,13 @@ public class DefaultFormatterFactoryTest {
     public static class ZFormatter extends DummyFormatter<Z> {
     }
 
-    public static interface IfaceLevel1 {
+    public interface IfaceLevel1 {
     }
 
-    public static interface IfaceLevel2 extends IfaceLevel1 {
+    public interface IfaceLevel2 extends IfaceLevel1 {
     }
 
-    public static interface IfaceLevel3 extends IfaceLevel2 {
+    public interface IfaceLevel3 extends IfaceLevel2 {
     }
 
     public static class IfaceLevel1Formatter extends DummyFormatter<IfaceLevel1> {

@@ -19,6 +19,7 @@ import net.sourceforge.stripes.localization.LocalizationUtility;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.Objects;
 
 /**
  * <p>
@@ -145,11 +146,8 @@ public class LocalizableError extends SimpleError {
 
         final LocalizableError that = (LocalizableError) o;
 
-        if (messageKey != null ? !messageKey.equals(that.messageKey) : that.messageKey != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(messageKey,
+                              that.messageKey);
     }
 
     /**

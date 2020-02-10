@@ -14,17 +14,16 @@
  */
 package net.sourceforge.stripes.tag.layout;
 
-import java.io.IOException;
+import net.sourceforge.stripes.exception.StripesJspException;
+import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.DynamicAttributes;
 import javax.servlet.jsp.tagext.Tag;
-
-import net.sourceforge.stripes.exception.StripesJspException;
-import net.sourceforge.stripes.exception.StripesRuntimeException;
-import net.sourceforge.stripes.util.Log;
+import java.io.IOException;
 
 /**
  * Renders a named layout, optionally overriding one or more components in the
@@ -109,7 +108,7 @@ public class LayoutRenderTag extends LayoutTag implements BodyTag, DynamicAttrib
             LayoutTag parent = getLayoutParent();
             return parent instanceof LayoutComponentTag
                     && ((LayoutComponentTag) parent).isCurrentComponent();
-        } catch (StripesJspException e) {
+        } catch (Exception e) {
             // This exception would have been thrown before this tag ever executed
             throw new StripesRuntimeException("Something has happened that should never happen", e);
         }
@@ -120,9 +119,8 @@ public class LayoutRenderTag extends LayoutTag implements BodyTag, DynamicAttrib
      * @param uri
      * @param localName
      * @param value
-     * @throws javax.servlet.jsp.JspException
      */
-    public void setDynamicAttribute(String uri, String localName, Object value) throws JspException {
+    public void setDynamicAttribute(String uri, String localName, Object value) {
         context.getParameters().put(localName, value);
     }
 
@@ -174,17 +172,15 @@ public class LayoutRenderTag extends LayoutTag implements BodyTag, DynamicAttrib
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      * Returns {@link Tag#SKIP_BODY}.
-     * @return 
-     * @throws javax.servlet.jsp.JspException
+     * @return
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 

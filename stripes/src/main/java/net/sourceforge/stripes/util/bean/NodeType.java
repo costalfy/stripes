@@ -53,7 +53,7 @@ public enum NodeType {
      * @param accessor an instance of a PropertyAccessor applicable for this
      * node type
      */
-    private NodeType(PropertyAccessor<?> accessor) {
+    NodeType(PropertyAccessor<?> accessor) {
         this.propertyAccessor = accessor;
     }
 

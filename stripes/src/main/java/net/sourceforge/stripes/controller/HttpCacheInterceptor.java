@@ -14,16 +14,15 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.HttpCache;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.util.Log;
+
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Looks for an {@link HttpCache} annotation on the event handler method, the
@@ -73,7 +72,7 @@ public class HttpCacheInterceptor implements Interceptor {
         }
     }
 
-    private Map<CacheKey, HttpCache> cache = new ConcurrentHashMap<CacheKey, HttpCache>(128);
+    private Map<CacheKey, HttpCache> cache = new ConcurrentHashMap<>(128);
 
     /**
      * Null values are not allowed by {@link ConcurrentHashMap} so use this

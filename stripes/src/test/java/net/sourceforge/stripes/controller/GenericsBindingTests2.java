@@ -1,14 +1,7 @@
 package net.sourceforge.stripes.controller;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.mock.MockServletContext;
 import net.sourceforge.stripes.test.TestBean;
@@ -16,6 +9,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Basically a mirror of GenericsBindingTests except that in this case the type
@@ -131,9 +128,9 @@ public class GenericsBindingTests2
 
         GenericsBindingTests2 bean = trip.getActionBean(GenericsBindingTests2.class);
         Assert.assertNotNull(bean.getMap());
-        Assert.assertEquals(bean.getMap().get(10l), makeDate(2010, 1, 1));
-        Assert.assertEquals(bean.getMap().get(20l), makeDate(2020, 1, 1));
-        Assert.assertEquals(bean.getMap().get(30l), makeDate(2030, 1, 1));
+        Assert.assertEquals(bean.getMap().get(10L), makeDate(2010));
+        Assert.assertEquals(bean.getMap().get(20L), makeDate(2020));
+        Assert.assertEquals(bean.getMap().get(30L), makeDate(2030));
     }
 
     @Test(groups = "fast")
@@ -154,10 +151,11 @@ public class GenericsBindingTests2
      * based unlike the retarded Calendar API that uses 1 based everything else
      * and 0 based months. Sigh.
      */
-    private Date makeDate(int year, int month, int day) {
+    private Date makeDate(int year) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
-        cal.set(year, month - 1, day);
+        cal.set(year, 1 - 1,
+                1);
         return cal.getTime();
     }
 }

@@ -1,12 +1,8 @@
 package net.sourceforge.stripes.util.bean;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.mock.MockServletContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * Tests a corner cases where a property's getter and/or setter method(s) are
@@ -23,7 +19,7 @@ public class GenericInterfaceImplTest extends FilterEnabledTestBase {
     /**
      * An interface that has a type parameter for a property type.
      */
-    public static interface GenericInterface<T> {
+    public interface GenericInterface<T> {
 
         T getProp();
 
@@ -59,7 +55,7 @@ public class GenericInterfaceImplTest extends FilterEnabledTestBase {
     /**
      * An interface with a type parameter and only a write method.
      */
-    public static interface WriteOnlyGenericInterface<T> {
+    public interface WriteOnlyGenericInterface<T> {
 
         void setProp(T prop);
     }
@@ -74,14 +70,14 @@ public class GenericInterfaceImplTest extends FilterEnabledTestBase {
     }
 
     @Test(groups = "fast")
-    public void testInheritFromGenericInterface() throws Exception {
+    public void testInheritFromGenericInterface() {
         GenericImpl bean = new GenericImpl();
         BeanUtil.setPropertyValue("prop.stringProperty", bean, "whee");
         Assert.assertEquals(bean.getProp().getStringProperty(), "whee");
     }
 
     @Test(groups = "fast")
-    public void testInheritFromWriteOnlyGenericInterface() throws Exception {
+    public void testInheritFromWriteOnlyGenericInterface() {
         WriteOnlyGenericImpl bean = new WriteOnlyGenericImpl();
         Assert.assertEquals(BeanUtil.getPropertyType("prop", bean), WriteOnlyGenericImpl.class);
     }

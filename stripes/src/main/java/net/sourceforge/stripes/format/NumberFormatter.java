@@ -16,8 +16,8 @@ package net.sourceforge.stripes.format;
 
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 
-import java.text.NumberFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -56,7 +56,7 @@ public class NumberFormatter implements Formatter<Number> {
     /**
      * Maintains a set of named formats that can be used instead of patterns.
      */
-    protected static final Set<String> namedPatterns = new HashSet<String>();
+    protected static final Set<String> namedPatterns = new HashSet<>();
 
     static {
         namedPatterns.add("plain");

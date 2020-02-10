@@ -14,19 +14,18 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.stripes.controller.FlashScope;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.SourcePageNotFoundException;
 import net.sourceforge.stripes.util.CryptoUtil;
 import net.sourceforge.stripes.validation.ValidationErrors;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * <p>
@@ -214,7 +213,7 @@ public class ActionBeanContext {
         List<Message> messages = (List<Message>) scope.get(key);
 
         if (messages == null) {
-            messages = new ArrayList<Message>();
+            messages = new ArrayList<>();
 
             /*
              * Messages imported from previous flash scope will be present in request scope but not
@@ -223,9 +222,7 @@ public class ActionBeanContext {
              */
             if (getRequest().getAttribute(key) instanceof List) {
                 try {
-                    for (Message message : ((List<Message>) getRequest().getAttribute(key))) {
-                        messages.add(message);
-                    }
+                    messages.addAll(((List<Message>) getRequest().getAttribute(key)));
                 } catch (ClassCastException e) {
                     messages.clear();
                 }

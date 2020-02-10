@@ -14,14 +14,13 @@
  */
 package net.sourceforge.stripes.tag.layout;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import net.sourceforge.stripes.controller.StripesConstants;
+import net.sourceforge.stripes.util.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
-
-import net.sourceforge.stripes.controller.StripesConstants;
-import net.sourceforge.stripes.util.Log;
+import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * <p>
@@ -69,7 +68,7 @@ public class LayoutComponentRenderer {
      */
     public void pushPageContext(PageContext pageContext) {
         if (this.pageContext == null) {
-            this.pageContext = new LinkedList<PageContext>();
+            this.pageContext = new LinkedList<>();
         }
 
         this.pageContext.addFirst(pageContext);

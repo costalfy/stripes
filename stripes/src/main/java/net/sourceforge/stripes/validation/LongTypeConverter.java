@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Collection;
 import java.text.NumberFormat;
+import java.util.Collection;
 
 /**
  * Basic type converter for converting strings to integers.
@@ -37,7 +37,7 @@ public class LongTypeConverter extends NumberTypeConverterSupport implements Typ
         Number number = parse(input, errors);
         Long retval = null;
         if (errors.size() == 0) {
-            retval = Long.valueOf(number.longValue());
+            retval = number.longValue();
         }
 
         return retval;

@@ -14,7 +14,10 @@
  */
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.exception.StripesServletException;
 import net.sourceforge.stripes.util.Literal;
@@ -24,11 +27,7 @@ import javax.servlet.ServletContext;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -424,7 +423,7 @@ public class NameBasedActionResolver extends AnnotatedClassActionResolver {
      * @since Stripes 1.5
      */
     protected List<String> getFindViewAttempts(String urlBinding) {
-        List<String> attempts = new ArrayList<String>(3);
+        List<String> attempts = new ArrayList<>(3);
 
         int lastPeriod = urlBinding.lastIndexOf('.');
         String path = urlBinding.substring(0, urlBinding.lastIndexOf("/") + 1);
@@ -470,8 +469,8 @@ public class NameBasedActionResolver extends AnnotatedClassActionResolver {
     protected void addBeanNameMappings() {
         super.addBeanNameMappings();
 
-        Set<String> generatedAliases = new HashSet<String>();
-        Set<String> duplicateAliases = new HashSet<String>();
+        Set<String> generatedAliases = new HashSet<>();
+        Set<String> duplicateAliases = new HashSet<>();
         for (Class<? extends ActionBean> clazz : getActionBeanClasses()) {
             String name = clazz.getSimpleName();
             for (String suffix : getActionBeanSuffixes()) {

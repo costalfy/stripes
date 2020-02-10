@@ -17,7 +17,6 @@ public class DivideCalculatorRestActionBean implements ActionBean {
     private ActionBeanContext context;
     @Validate(required=true) private double numberOne;
     @Validate(required=true) private double numberTwo;
-    private double result;
     private String errorMessage;
 
 
@@ -28,8 +27,8 @@ public class DivideCalculatorRestActionBean implements ActionBean {
 
     /** An event handler method that divides number one by number two. */
     public Resolution post() {
-        result = numberOne / numberTwo;
-        return new JsonResolution( Double.toString( result ) );
+        double result = numberOne / numberTwo;
+        return new JsonResolution( Double.toString(result) );
     }
 
     /**

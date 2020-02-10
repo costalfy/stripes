@@ -1,13 +1,9 @@
 package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.mock.MockServletContext;
-import net.sourceforge.stripes.StripesTestFixture;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.Map;
