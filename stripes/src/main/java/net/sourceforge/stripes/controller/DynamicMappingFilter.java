@@ -14,21 +14,15 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.config.Configuration;
+import net.sourceforge.stripes.exception.StripesServletException;
+import net.sourceforge.stripes.util.HttpUtil;
+import net.sourceforge.stripes.util.Log;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -42,17 +36,10 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.exception.StripesServletException;
-import net.sourceforge.stripes.util.HttpUtil;
-import net.sourceforge.stripes.util.Log;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 /**
  * <p>
@@ -192,13 +179,13 @@ public class DynamicMappingFilter implements Filter {
         }
 
         @Override
-        public void flush() throws IOException {
+        public void flush() {
             overflow();
             out.flush();
         }
 
         @Override
-        public void write(char[] chars, int offset, int length) throws IOException {
+        public void write(char[] chars, int offset, int length) {
             if (buffer == null) {
                 out.write(chars, offset, length);
             } else if (buffer.getBuffer().length() + length > includeBufferSize) {
@@ -253,10 +240,9 @@ public class DynamicMappingFilter implements Filter {
          * 
          * @param errorCode - HTTP status code
          * @param errorMessage - Error message to send
-         * @throws IOException - If an error occurs setting the message or error code
          */
         @Override
-        public void sendError(int errorCode, String errorMessage) throws IOException {
+        public void sendError(int errorCode, String errorMessage) {
             this.errorCode = errorCode;
             this.errorMessage = errorMessage;
         }
@@ -265,10 +251,9 @@ public class DynamicMappingFilter implements Filter {
          * Sets the error code with no error message for a container error response.
          * 
          * @param errorCode - HTTP status code
-         * @throws IOException - If an error occurs setting the error code
          */
         @Override
-        public void sendError(int errorCode) throws IOException {
+        public void sendError(int errorCode) {
             this.errorCode = errorCode;
             this.errorMessage = null;
         }
@@ -430,7 +415,7 @@ public class DynamicMappingFilter implements Filter {
         try {
             String value = config.getInitParameter(INCLUDE_BUFFER_SIZE_PARAM);
             if (value != null) {
-                includeBufferSize = Integer.valueOf(value.trim());
+                includeBufferSize = Integer.parseInt(value.trim());
                 log.info(getClass().getSimpleName(), " include buffer size is ", includeBufferSize);
             }
         } catch (Exception e) {
@@ -544,22 +529,21 @@ public class DynamicMappingFilter implements Filter {
                 sf = getStripesFilter();
             }
 
-            sf.doFilter(request, response, new FilterChain() {
-                public void doFilter(ServletRequest request, ServletResponse response)
-                        throws IOException, ServletException {
-                    // Look for an ActionBean that is mapped to the URI
-                    String uri = HttpUtil.getRequestedPath((HttpServletRequest) request);
-                    Class<? extends ActionBean> beanType = getStripesFilter()
-                            .getInstanceConfiguration().getActionResolver().getActionBeanType(uri);
+            sf.doFilter(request, response,
+                        (request1, response1) -> {
+                            // Look for an ActionBean that is mapped to the URI
+                            String uri = HttpUtil.getRequestedPath((HttpServletRequest) request1);
+                            Class<? extends ActionBean> beanType = getStripesFilter()
+                                    .getInstanceConfiguration().getActionResolver().getActionBeanType(uri);
 
-                    // If found then call the dispatcher directly. Otherwise, send the error.
-                    if (beanType == null) {
-                        wrapper.proceed();
-                    } else {
-                        stripesDispatcher.service(request, response);
-                    }
-                }
-            });
+                            // If found then call the dispatcher directly. Otherwise, send the error.
+                            if (beanType == null) {
+                                wrapper.proceed();
+                            } else {
+                                stripesDispatcher.service(request1,
+                                                          response1);
+                            }
+                        });
         } else {
             wrapper.proceed();
         }
@@ -722,7 +706,7 @@ public class DynamicMappingFilter implements Filter {
         NodeList servletMappings = eval("/web-app/filter-mapping/filter-name[text()='" + filterName
                 + "']/../servlet-name", document, XPathConstants.NODESET);
 
-        List<String> patterns = new ArrayList<String>();
+        List<String> patterns = new ArrayList<>();
         if (urlMappings != null && urlMappings.getLength() > 0) {
             for (int i = 0; i < urlMappings.getLength(); i++) {
                 patterns.add(urlMappings.item(i).getTextContent().trim());
@@ -756,7 +740,7 @@ public class DynamicMappingFilter implements Filter {
      */
     protected Map<String, String> getFilterParameters(Node filterNode)
             throws XPathExpressionException {
-        Map<String, String> params = new LinkedHashMap<String, String>();
+        Map<String, String> params = new LinkedHashMap<>();
         NodeList paramNodes = eval("init-param", filterNode, XPathConstants.NODESET);
         for (int i = 0; i < paramNodes.getLength(); i++) {
             Node node = paramNodes.item(i);
@@ -800,7 +784,7 @@ public class DynamicMappingFilter implements Filter {
             HttpServletResponse response) {
         // Replace globs in the patterns with a random string
         String random = "stripes-dmf-request-" + UUID.randomUUID();
-        List<String> uris = new ArrayList<String>(patterns.size());
+        List<String> uris = new ArrayList<>(patterns.size());
         for (String pattern : patterns) {
             String uri = pattern.replace("*", random);
             if (!uri.startsWith("/")) {
@@ -820,10 +804,10 @@ public class DynamicMappingFilter implements Filter {
         // Response swallows all output
         HttpServletResponseWrapper rsp = new HttpServletResponseWrapper(response) {
             @Override
-            public ServletOutputStream getOutputStream() throws IOException {
+            public ServletOutputStream getOutputStream() {
                 return new ServletOutputStream() {
                     @Override
-                    public void write(int b) throws IOException {
+                    public void write(int b) {
                         // No output
                     }
 

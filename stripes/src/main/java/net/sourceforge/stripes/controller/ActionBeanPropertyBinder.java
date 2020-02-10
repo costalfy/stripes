@@ -16,8 +16,8 @@ package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.config.ConfigurableComponent;
+import net.sourceforge.stripes.validation.ValidationErrors;
 
 /**
  * Interface for class(es) responsible for taking the String/String[] properties
@@ -59,7 +59,6 @@ public interface ActionBeanPropertyBinder extends ConfigurableComponent {
      * @param propertyName the name (including nested, indexed and mapped
      * property names) of the property being bound
      * @param propertyValue the value to be bound to the property on the bean
-     * @throws Exception thrown if the property cannot be bound for any reason
      */
-    void bind(ActionBean bean, String propertyName, Object propertyValue) throws Exception;
+    void bind(ActionBean bean, String propertyName, Object propertyValue);
 }

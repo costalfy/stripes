@@ -48,7 +48,7 @@ public class ConcurrentHashSet<T> implements Set<T> {
      * and concurrencyLevel.
      */
     public ConcurrentHashSet() {
-        map = new ConcurrentHashMap<T, Object>();
+        map = new ConcurrentHashMap<>();
     }
 
     /**
@@ -61,7 +61,7 @@ public class ConcurrentHashSet<T> implements Set<T> {
      * negative.
      */
     public ConcurrentHashSet(int initialCapacity) {
-        map = new ConcurrentHashMap<T, Object>(initialCapacity);
+        map = new ConcurrentHashMap<>(initialCapacity);
     }
 
     /**
@@ -80,7 +80,9 @@ public class ConcurrentHashSet<T> implements Set<T> {
      * the load factor or concurrencyLevel are nonpositive.
      */
     public ConcurrentHashSet(int initialCapacity, float loadFactor, int concurrencyLevel) {
-        map = new ConcurrentHashMap<T, Object>(initialCapacity, loadFactor, concurrencyLevel);
+        map = new ConcurrentHashMap<>(initialCapacity,
+                                      loadFactor,
+                                      concurrencyLevel);
     }
 
     /**
@@ -113,7 +115,7 @@ public class ConcurrentHashSet<T> implements Set<T> {
     }
 
     public boolean contains(Object o) {
-        return map.keySet().contains(o);
+        return map.containsKey(o);
     }
 
     public boolean containsAll(Collection<?> c) {

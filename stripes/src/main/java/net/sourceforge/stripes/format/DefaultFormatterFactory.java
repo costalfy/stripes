@@ -14,13 +14,13 @@
  */
 package net.sourceforge.stripes.format;
 
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.TypeHandlerCache;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Implementation of {@link FormatterFactory} that contains a set of built-in
@@ -49,11 +49,10 @@ public class DefaultFormatterFactory implements FormatterFactory {
     /**
      * Stores a reference to the configuration and configures the default
      * formatters.
-     * @throws java.lang.Exception - If an error occurs during initialization
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.configuration = configuration;
-        this.cache = new TypeHandlerCache<Class<? extends Formatter<?>>>();
+        this.cache = new TypeHandlerCache<>();
         this.cache.setDefaultHandler(ObjectFormatter.class);
 
         add(Date.class, DateFormatter.class);
@@ -126,11 +125,9 @@ public class DefaultFormatterFactory implements FormatterFactory {
      * @param formatPattern - Format pattern to use
      * @param locale - The locale to format into
      * @return an instance of the Formatter specified
-     * @throws Exception if there is a problem instantiating the Formatter
      */
     public Formatter<?> getInstance(Class<? extends Formatter<?>> clazz,
-            String formatType, String formatPattern, Locale locale)
-            throws Exception {
+            String formatType, String formatPattern, Locale locale) {
 
         Formatter<?> formatter = getConfiguration().getObjectFactory().newInstance(clazz);
         formatter.setFormatType(formatType);

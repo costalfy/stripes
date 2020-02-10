@@ -15,8 +15,8 @@
 package net.sourceforge.stripes.tag;
 
 import net.sourceforge.stripes.exception.StripesJspException;
-import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.HtmlUtil;
+import net.sourceforge.stripes.util.Log;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -45,7 +45,7 @@ public abstract class HtmlTagSupport extends StripesTagSupport implements Dynami
     /**
      * Map containing all attributes of the tag.
      */
-    private final Map<String, String> attributes = new HashMap<String, String>();
+    private final Map<String, String> attributes = new HashMap<>();
 
     /**
      * Storage for a BodyContent instance, should the eventual child class
@@ -91,10 +91,8 @@ public abstract class HtmlTagSupport extends StripesTagSupport implements Dynami
      * Totally ignored!
      * @param name the name of the attribute
      * @param value the value of the attribute
-     * @throws JspException not thrown from this class; included so that
-     * subclasses can override the method and throw the interface exception
      */
-    public void setDynamicAttribute(String uri, String name, Object value) throws JspException {
+    public void setDynamicAttribute(String uri, String name, Object value) {
         set(name, value == null ? "" : value.toString());
     }
 
@@ -208,18 +206,17 @@ public abstract class HtmlTagSupport extends StripesTagSupport implements Dynami
      * closes the tag.
      *
      * @param writer the JspWriter to write the open tag to
-     * @param tag the name of the tag to use
      * @throws JspException if the JspWriter causes an exception
      */
-    protected void writeSingletonTag(JspWriter writer, String tag) throws JspException {
+    protected void writeSingletonTag(JspWriter writer) throws JspException {
         try {
             writer.print("<");
-            writer.print(tag);
+            writer.print("input");
             writeAttributes(writer);
             writer.print(isXmlTags() ? " />" : ">");
         } catch (IOException ioe) {
             JspException jspe = new JspException("IOException encountered while writing singleton tag <"
-                    + tag + "/> to the JspWriter.", ioe);
+                                                 + "input" + "/> to the JspWriter.", ioe);
             log.warn(jspe);
             throw jspe;
         }

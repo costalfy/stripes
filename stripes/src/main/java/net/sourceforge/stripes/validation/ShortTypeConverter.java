@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Collection;
 import java.text.NumberFormat;
+import java.util.Collection;
 
 /**
  * Basic type converter for converting strings to short integers.
@@ -44,7 +44,7 @@ public class ShortTypeConverter extends NumberTypeConverterSupport implements Ty
                 errors.add(new ScopedLocalizableError("converter.short", "outOfRange",
                         Short.MIN_VALUE, Short.MAX_VALUE));
             } else {
-                retval = Short.valueOf((short) output);
+                retval = (short) output;
             }
         }
 

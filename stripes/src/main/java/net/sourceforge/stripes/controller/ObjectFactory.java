@@ -14,9 +14,9 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.lang.reflect.Constructor;
-
 import net.sourceforge.stripes.config.ConfigurableComponent;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Used throughout Stripes to instantiate classes. The default implementation is
@@ -49,14 +49,14 @@ public interface ObjectFactory extends ConfigurableComponent {
      *
      * @param <T> Type of constructor wrapper
      */
-    public static interface ConstructorWrapper<T> {
+    interface ConstructorWrapper<T> {
 
         /**
          * Get the {@link Constructor} object wrapped by this instance.
          *
          * @return Constructor for this instance
          */
-        public Constructor<T> getConstructor();
+        Constructor<T> getConstructor();
 
         /**
          * Invoke the constructor with the specified arguments and return the
@@ -65,7 +65,7 @@ public interface ObjectFactory extends ConfigurableComponent {
          * @param args - Arbitary listing of arguments
          * @return The new instance
          */
-        public T newInstance(Object... args);
+        T newInstance(Object... args);
     }
 
     /**

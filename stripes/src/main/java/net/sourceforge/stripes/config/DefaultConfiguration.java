@@ -14,32 +14,7 @@
  */
 package net.sourceforge.stripes.config;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.ServletContext;
-
-import net.sourceforge.stripes.controller.ActionBeanContextFactory;
-import net.sourceforge.stripes.controller.ActionBeanPropertyBinder;
-import net.sourceforge.stripes.controller.ActionResolver;
-import net.sourceforge.stripes.controller.BeforeAfterMethodInterceptor;
-import net.sourceforge.stripes.controller.DefaultActionBeanContextFactory;
-import net.sourceforge.stripes.controller.DefaultActionBeanPropertyBinder;
-import net.sourceforge.stripes.controller.DefaultObjectFactory;
-import net.sourceforge.stripes.controller.HttpCacheInterceptor;
-import net.sourceforge.stripes.controller.Interceptor;
-import net.sourceforge.stripes.controller.Intercepts;
-import net.sourceforge.stripes.controller.LifecycleStage;
-import net.sourceforge.stripes.controller.NameBasedActionResolver;
-import net.sourceforge.stripes.controller.ObjectFactory;
-import net.sourceforge.stripes.controller.ObjectPostProcessor;
+import net.sourceforge.stripes.controller.*;
 import net.sourceforge.stripes.controller.multipart.DefaultMultipartWrapperFactory;
 import net.sourceforge.stripes.controller.multipart.MultipartWrapperFactory;
 import net.sourceforge.stripes.exception.DefaultExceptionHandler;
@@ -60,6 +35,9 @@ import net.sourceforge.stripes.validation.DefaultTypeConverterFactory;
 import net.sourceforge.stripes.validation.DefaultValidationMetadataProvider;
 import net.sourceforge.stripes.validation.TypeConverterFactory;
 import net.sourceforge.stripes.validation.ValidationMetadataProvider;
+
+import javax.servlet.ServletContext;
+import java.util.*;
 
 /**
  * <p>
@@ -143,7 +121,7 @@ public class DefaultConfiguration implements Configuration {
             if (this.objectFactory instanceof DefaultObjectFactory) {
                 List<Class<? extends ObjectPostProcessor>> classes = getBootstrapPropertyResolver()
                         .getClassPropertyList(ObjectPostProcessor.class);
-                List<ObjectPostProcessor> instances = new ArrayList<ObjectPostProcessor>();
+                List<ObjectPostProcessor> instances = new ArrayList<>();
                 for (Class<? extends ObjectPostProcessor> clazz : classes) {
                     log.debug("Instantiating object post-processor ", clazz);
                     instances.add(this.objectFactory.newInstance(clazz));
@@ -225,7 +203,7 @@ public class DefaultConfiguration implements Configuration {
                 this.validationMetadataProvider.init(this);
             }
 
-            this.interceptors = new HashMap<LifecycleStage, Collection<Interceptor>>();
+            this.interceptors = new HashMap<>();
             Map<LifecycleStage, Collection<Interceptor>> map = initCoreInterceptors();
             if (map != null) {
                 mergeInterceptorMaps(this.interceptors, map);
@@ -237,7 +215,7 @@ public class DefaultConfiguration implements Configuration {
 
             // do a quick check to see if any interceptor classes are configured more than once
             for (Map.Entry<LifecycleStage, Collection<Interceptor>> entry : this.interceptors.entrySet()) {
-                Set<Class<? extends Interceptor>> classes = new HashSet<Class<? extends Interceptor>>();
+                Set<Class<? extends Interceptor>> classes = new HashSet<>();
                 Collection<Interceptor> interceptors = entry.getValue();
                 if (interceptors == null) {
                     continue;
@@ -577,11 +555,8 @@ public class DefaultConfiguration implements Configuration {
     protected void mergeInterceptorMaps(Map<LifecycleStage, Collection<Interceptor>> dst,
             Map<LifecycleStage, Collection<Interceptor>> src) {
         for (Map.Entry<LifecycleStage, Collection<Interceptor>> entry : src.entrySet()) {
-            Collection<Interceptor> collection = dst.get(entry.getKey());
-            if (collection == null) {
-                collection = new LinkedList<Interceptor>();
-                dst.put(entry.getKey(), collection);
-            }
+            Collection<Interceptor> collection = dst.computeIfAbsent(entry.getKey(),
+                                                                     k -> new LinkedList<>());
             collection.addAll(entry.getValue());
         }
     }
@@ -621,11 +596,8 @@ public class DefaultConfiguration implements Configuration {
         }
 
         for (LifecycleStage stage : intercepts.value()) {
-            Collection<Interceptor> stack = map.get(stage);
-            if (stack == null) {
-                stack = new LinkedList<Interceptor>();
-                map.put(stage, stack);
-            }
+            Collection<Interceptor> stack = map.computeIfAbsent(stage,
+                                                                k -> new LinkedList<>());
 
             stack.add(interceptor);
         }
@@ -638,7 +610,7 @@ public class DefaultConfiguration implements Configuration {
      * @return Map of initialized interceptors
      */
     protected Map<LifecycleStage, Collection<Interceptor>> initCoreInterceptors() {
-        Map<LifecycleStage, Collection<Interceptor>> interceptors = new HashMap<LifecycleStage, Collection<Interceptor>>();
+        Map<LifecycleStage, Collection<Interceptor>> interceptors = new HashMap<>();
         addInterceptor(interceptors, new BeforeAfterMethodInterceptor());
         addInterceptor(interceptors, new HttpCacheInterceptor());
         return interceptors;

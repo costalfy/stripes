@@ -74,7 +74,8 @@ public class PropertyExpressionTests {
         Node root = expr.getRootNode();
         Assert.assertEquals(root.getStringValue(), "foo");
         Assert.assertEquals(root.getNext().getStringValue(), "123");
-        Assert.assertEquals(root.getNext().getTypedValue(), new Integer(123));
+        Assert.assertEquals(root.getNext().getTypedValue(),
+                            123);
     }
 
     @Test(groups = "fast")
@@ -83,7 +84,8 @@ public class PropertyExpressionTests {
         Node root = expr.getRootNode();
         Assert.assertEquals(root.getStringValue(), "foo");
         Assert.assertEquals(root.getNext().getStringValue(), "123.4");
-        Assert.assertEquals(root.getNext().getTypedValue(), new Double(123.4));
+        Assert.assertEquals(root.getNext().getTypedValue(),
+                            123.4);
     }
 
     @Test(groups = "fast")
@@ -92,7 +94,8 @@ public class PropertyExpressionTests {
         Node root = expr.getRootNode();
         Assert.assertEquals(root.getStringValue(), "foo");
         Assert.assertEquals(root.getNext().getStringValue(), "123l");
-        Assert.assertEquals(root.getNext().getTypedValue(), new Long(123));
+        Assert.assertEquals(root.getNext().getTypedValue(),
+                            123L);
     }
 
     @Test(groups = "fast")
@@ -101,7 +104,8 @@ public class PropertyExpressionTests {
         Node root = expr.getRootNode();
         Assert.assertEquals(root.getStringValue(), "foo");
         Assert.assertEquals(root.getNext().getStringValue(), "123F");
-        Assert.assertEquals(root.getNext().getTypedValue(), new Float(123f));
+        Assert.assertEquals(root.getNext().getTypedValue(),
+                            123f);
     }
 
     @Test(groups = "fast")

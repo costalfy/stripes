@@ -75,13 +75,13 @@ public class SpringHelper {
      * Lazily filled in map of Class to methods annotated with SpringBean.
      */
     private static Map<Class<?>, Collection<Method>> methodMap
-            = new ConcurrentHashMap<Class<?>, Collection<Method>>();
+            = new ConcurrentHashMap<>();
 
     /**
      * Lazily filled in map of Class to fields annotated with SpringBean.
      */
     private static Map<Class<?>, Collection<Field>> fieldMap
-            = new ConcurrentHashMap<Class<?>, Collection<Field>>();
+            = new ConcurrentHashMap<>();
 
     /**
      * Injects Spring managed beans into using a Web Application Context that is

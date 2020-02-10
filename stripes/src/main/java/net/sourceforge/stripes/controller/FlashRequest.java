@@ -1,13 +1,12 @@
 package net.sourceforge.stripes.controller;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.*;
-
-import javax.servlet.*;
-import javax.servlet.http.*;
 
 /**
  * Captures the state of an {@link javax.servlet.http.HttpServletRequest} so
@@ -32,10 +31,10 @@ public class FlashRequest implements HttpServletRequest, Serializable {
     private HttpServletRequest delegate;
     private List<Locale> locales;
     private Locale locale;
-    private Map<String, List<String>> headers = new HashMap<String, List<String>>();
-    private Map<String, Long> dateHeaders = new HashMap<String, Long>();
-    private Map<String, Object> attributes = new HashMap<String, Object>();
-    private Map<String, String[]> parameters = new HashMap<String, String[]>();
+    private Map<String, List<String>> headers = new HashMap<>();
+    private Map<String, Long> dateHeaders = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>();
+    private Map<String, String[]> parameters = new HashMap<>();
     private String authType;
     private String characterEncoding;
     private String contentType;

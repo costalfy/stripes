@@ -14,12 +14,13 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.lang.reflect.Method;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.exception.StripesServletException;
+
+import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * A parameter to a clean URL.
@@ -170,7 +171,8 @@ public class UrlBindingParameter {
         }
 
         UrlBindingParameter that = (UrlBindingParameter) o;
-        return this.value == null ? that.value == null : this.value.equals(that.value);
+        return Objects.equals(this.value,
+                              that.value);
     }
 
     @Override

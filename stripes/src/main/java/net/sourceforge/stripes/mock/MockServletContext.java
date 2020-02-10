@@ -19,12 +19,8 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -55,10 +51,10 @@ import java.util.concurrent.TimeUnit;
 public class MockServletContext implements ServletContext {
 
     private String contextName;
-    private Map<String, String> initParameters = new HashMap<String, String>();
-    private Map<String, Object> attributes = new HashMap<String, Object>();
-    private List<Filter> filters = new ArrayList<Filter>();
-    private List<ServletContextListener> listeners = new ArrayList<ServletContextListener>();
+    private Map<String, String> initParameters = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>();
+    private List<Filter> filters = new ArrayList<>();
+    private List<ServletContextListener> listeners = new ArrayList<>();
     private HttpServlet servlet;
 
     /**
@@ -129,10 +125,9 @@ public class MockServletContext implements ServletContext {
     /**
      * Uses the current classloader to fetch the resource if it can.
      * @param name
-     * @return 
-     * @throws java.net.MalformedURLException 
+     * @return
      */
-    public URL getResource(String name) throws MalformedURLException {
+    public URL getResource(String name) {
         while (name.startsWith("/")) {
             name = name.substring(1);
         }
@@ -172,10 +167,9 @@ public class MockServletContext implements ServletContext {
     /**
      * Deprecated method always returns null.
      * @param string
-     * @return 
-     * @throws javax.servlet.ServletException 
+     * @return
      */
-    public Servlet getServlet(String string) throws ServletException {
+    public Servlet getServlet(String string) {
         return null;
     }
 
@@ -184,7 +178,7 @@ public class MockServletContext implements ServletContext {
      * @return 
      */
     public Enumeration<Servlet> getServlets() {
-        return Collections.enumeration(Collections.<Servlet>emptySet());
+        return Collections.enumeration(Collections.emptySet());
     }
 
     /**
@@ -192,7 +186,7 @@ public class MockServletContext implements ServletContext {
      * @return 
      */
     public Enumeration<String> getServletNames() {
-        return Collections.enumeration(Collections.<String>emptySet());
+        return Collections.enumeration(Collections.emptySet());
     }
 
     /**
@@ -543,9 +537,8 @@ public class MockServletContext implements ServletContext {
      * @param <T>
      * @param clazz
      * @return
-     * @throws ServletException
      */
-    public <T extends Servlet> T createServlet(Class<T> clazz) throws ServletException {
+    public <T extends Servlet> T createServlet(Class<T> clazz) {
         return null;
     }
 
@@ -601,9 +594,8 @@ public class MockServletContext implements ServletContext {
      * @param <T>
      * @param clazz
      * @return
-     * @throws ServletException
      */
-    public <T extends Filter> T createFilter(Class<T> clazz) throws ServletException {
+    public <T extends Filter> T createFilter(Class<T> clazz) {
         return null;
     }
 
@@ -686,9 +678,8 @@ public class MockServletContext implements ServletContext {
      * @param <T>
      * @param clazz
      * @return
-     * @throws ServletException
      */
-    public <T extends EventListener> T createListener(Class<T> clazz) throws ServletException {
+    public <T extends EventListener> T createListener(Class<T> clazz) {
         return null;
     }
 

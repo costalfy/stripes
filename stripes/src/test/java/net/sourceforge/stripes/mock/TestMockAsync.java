@@ -2,21 +2,16 @@ package net.sourceforge.stripes.mock;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.action.*;
-import static org.testng.Assert.*;
-
 import net.sourceforge.stripes.controller.AsyncEvent;
 import net.sourceforge.stripes.controller.AsyncListener;
 import net.sourceforge.stripes.controller.AsyncResponse;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
+import static org.testng.Assert.*;
 
 public class TestMockAsync extends FilterEnabledTestBase {
 
@@ -48,7 +43,7 @@ public class TestMockAsync extends FilterEnabledTestBase {
     }
 
     @Test
-    public void testTimeout() throws Exception {
+    public void testTimeout() {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
         boolean caught = false;
         try {
@@ -60,14 +55,14 @@ public class TestMockAsync extends FilterEnabledTestBase {
         assertTrue(caught);
         AsyncActionBean bean = trip.getActionBean(AsyncActionBean.class);
         assertNotNull(bean);
-        assertTrue(!bean.isCompleted());
+        assertFalse(bean.isCompleted());
         HttpServletResponse response = bean.getContext().getResponse();
         assertEquals(response.getStatus(), 500);
         assertTrue(trip.getRequest().getAsyncContext().isCompleted());
     }
 
     @Test
-    public void testRegularException() throws Exception {
+    public void testRegularException() {
         boolean caught = false;
         try {
             MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
@@ -93,7 +88,7 @@ public class TestMockAsync extends FilterEnabledTestBase {
     }
 
     @Test
-    public void testAsyncException() throws Exception {
+    public void testAsyncException() {
         assertThrows("doAsyncException");
     }
 
@@ -113,7 +108,7 @@ public class TestMockAsync extends FilterEnabledTestBase {
     }
 
     @Test
-    public void doAsyncWithResolutionThatThrows() throws Exception {
+    public void doAsyncWithResolutionThatThrows() {
         assertThrows("doAsyncWithResolutionThatThrows");
     }
 
@@ -150,18 +145,15 @@ public class TestMockAsync extends FilterEnabledTestBase {
             r.complete();
         }
 
-        public void doReallyAsync(final AsyncResponse r) throws Exception {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("Really Async !");
-                    try {
-                        r.getResponse().getWriter().write("DONE");
-                        completed = true;
-                        r.complete();
-                    } catch (IOException e) {
-                        e.printStackTrace(); // we let it timeout...
-                    }
+        public void doReallyAsync(final AsyncResponse r) {
+            new Thread(() -> {
+                System.out.println("Really Async !");
+                try {
+                    r.getResponse().getWriter().write("DONE");
+                    completed = true;
+                    r.complete();
+                } catch (IOException e) {
+                    e.printStackTrace(); // we let it timeout...
                 }
             }).start();
         }
@@ -186,14 +178,11 @@ public class TestMockAsync extends FilterEnabledTestBase {
         }
 
         public void doAsyncInThreadAndCompleteWithForwardResolution(final AsyncResponse response) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("hiya, I'm inside a separate thread");
-                    completed = true;
-                    System.out.println("Completing");
-                    response.complete(new ForwardResolution("/foo/bar.jsp"));
-                }
+            new Thread(() -> {
+                System.out.println("hiya, I'm inside a separate thread");
+                completed = true;
+                System.out.println("Completing");
+                response.complete(new ForwardResolution("/foo/bar.jsp"));
             }).start();
         }
 
@@ -213,20 +202,17 @@ public class TestMockAsync extends FilterEnabledTestBase {
                 public void onTimeout(AsyncEvent event) {
                 }
             });
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        for (int i = 0; i < 10; i++) {
-                            response.getResponse().getWriter().write("i=" + i);
-                            Thread.sleep(100);
-                        }
-                        System.out.println("hiya, I'm inside a separate thread and I use listeners");
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            new Thread(() -> {
+                try {
+                    for (int i = 0; i < 10; i++) {
+                        response.getResponse().getWriter().write("i=" + i);
+                        Thread.sleep(100);
                     }
-                    response.complete();
+                    System.out.println("hiya, I'm inside a separate thread and I use listeners");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                response.complete();
             }).start();
         }
 
@@ -247,7 +233,7 @@ public class TestMockAsync extends FilterEnabledTestBase {
     private static class ResolutionThatThrows implements Resolution {
 
         @Override
-        public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void execute(HttpServletRequest request, HttpServletResponse response) {
             throw new RuntimeException("I throw exceptions only");
         }
     }

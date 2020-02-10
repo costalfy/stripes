@@ -1,9 +1,6 @@
 package net.sourceforge.stripes.validation;
 
-import java.util.Locale;
-
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Resolution;
@@ -11,13 +8,11 @@ import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.extensions.MyIntegerTypeConverter;
 import net.sourceforge.stripes.extensions.MyStringTypeConverter;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.mock.MockServletContext;
 import net.sourceforge.stripes.util.CryptoUtil;
-
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Locale;
 
 /**
  * Tests combinations of validation annotations.

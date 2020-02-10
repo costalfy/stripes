@@ -14,15 +14,14 @@
  */
 package net.sourceforge.stripes.tag.layout;
 
-import java.io.IOException;
-import java.util.regex.Pattern;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-
 import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * Defines a component in a layout. Used both to define the components in a
@@ -86,10 +85,9 @@ public class LayoutComponentTag extends LayoutTag {
      * True if this tag is the component to be rendered on this pass from
      * {@link LayoutDefinitionTag}.
      *
-     * @return 
-     * @throws StripesJspException If a {@link LayoutContext} is not found.
+     * @return
      */
-    public boolean isCurrentComponent() throws StripesJspException {
+    public boolean isCurrentComponent() {
         String name = context.getComponent();
         if (name == null || !name.equals(getName())) {
             return false;

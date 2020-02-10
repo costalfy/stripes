@@ -93,7 +93,7 @@ public class BasicBindingTests extends FilterEnabledTestBase {
         Assert.assertNotNull(bean);
         Assert.assertEquals(bean.getIntProperty(), 10);
         Assert.assertEquals(bean.getLongProperty(), new Long(20));
-        Assert.assertEquals(bean.isBooleanProperty(), true);
+        Assert.assertTrue(bean.isBooleanProperty());
         Assert.assertEquals(bean.getEnumProperty(), TestEnum.Third);
     }
 
@@ -213,7 +213,8 @@ public class BasicBindingTests extends FilterEnabledTestBase {
 
         TestActionBean bean = trip.getActionBean(TestActionBean.class);
         ActionBeanContext context = bean.getContext();
-        Assert.assertFalse("woohaa!".equals(context.getEventName()));
+        Assert.assertNotEquals(context.getEventName(),
+                               "woohaa!");
     }
 
     @Test(groups = "fast")
@@ -226,7 +227,8 @@ public class BasicBindingTests extends FilterEnabledTestBase {
 
         TestActionBean bean = trip.getActionBean(TestActionBean.class);
         ActionBeanContext context = bean.getContext();
-        Assert.assertFalse("woohaa!".equals(context.getEventName()));
+        Assert.assertNotEquals(context.getEventName(),
+                               "woohaa!");
     }
 
     @Test(groups = "fast")
@@ -254,6 +256,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
         TestActionBean bean = trip.getActionBean(TestActionBean.class);
         TestActionBean.PropertyLess item = bean.getItem();
         Assert.assertEquals(item.getClass(), TestActionBean.Item.class);
-        Assert.assertEquals(((TestActionBean.Item) item).getId(), new Long(1000000l));
+        Assert.assertEquals(((TestActionBean.Item) item).getId(), new Long(1000000L));
     }
 }

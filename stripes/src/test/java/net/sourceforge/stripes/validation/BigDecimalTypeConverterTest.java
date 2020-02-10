@@ -1,11 +1,11 @@
 package net.sourceforge.stripes.validation;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -17,11 +17,11 @@ public class BigDecimalTypeConverterTest {
      * Returns an empty collection of validation errors.
      */
     public Collection<ValidationError> errors() {
-        return new ArrayList<ValidationError>();
+        return new ArrayList<>();
     }
 
     @Test(groups = "fast")
-    public void basicParse() throws Exception {
+    public void basicParse() {
         TypeConverter<BigDecimal> converter = new BigDecimalTypeConverter();
         converter.setLocale(Locale.US);
         BigDecimal result = converter.convert("12345.67", BigDecimal.class, errors());
@@ -29,7 +29,7 @@ public class BigDecimalTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseBigNumber() throws Exception {
+    public void parseBigNumber() {
         String number = "7297029872767869231987623498756389734567893246934298765342987563489723497"
                 + ".97982730927907092387409872340987234698750987129872348970982374076283764";
         TypeConverter<BigDecimal> converter = new BigDecimalTypeConverter();
@@ -39,7 +39,7 @@ public class BigDecimalTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseWithGroupingCharacters() throws Exception {
+    public void parseWithGroupingCharacters() {
         String number = "7297029872767869231987623498756389734567876534.2987563489723497";
         String grouped = "7,297,029,872,767,869,231,987,623,498,756,389,734,567,876,534.2987563489723497";
         TypeConverter<BigDecimal> converter = new BigDecimalTypeConverter();
@@ -49,7 +49,7 @@ public class BigDecimalTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void parseAlternateLocale() throws Exception {
+    public void parseAlternateLocale() {
         String number = "123456789.99";
         String localized = "123.456.789,99";
         TypeConverter<BigDecimal> converter = new BigDecimalTypeConverter();
@@ -59,7 +59,7 @@ public class BigDecimalTypeConverterTest {
     }
 
     @Test(groups = "fast")
-    public void invalidInput() throws Exception {
+    public void invalidInput() {
         String number = "a1b2vc3d4";
         TypeConverter<BigDecimal> converter = new BigDecimalTypeConverter();
         converter.setLocale(Locale.US);

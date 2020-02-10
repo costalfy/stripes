@@ -1,20 +1,15 @@
 package net.sourceforge.stripes.examples.bugzooky;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.examples.bugzooky.biz.Bug;
 import net.sourceforge.stripes.examples.bugzooky.biz.BugManager;
 import net.sourceforge.stripes.examples.bugzooky.ext.BugzookyActionBeanContext;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ActionBean that deals with setting up and saving edits to multiple bugs at once. Can also
@@ -32,7 +27,7 @@ public class MultiBugActionBean extends BugzookyActionBean {
         @Validate(field="owner", required=true),
         @Validate(field="priority", required=true)
     })
-    private List<Bug> bugs = new ArrayList<Bug>();
+    private List<Bug> bugs = new ArrayList<>();
 
     /**
      * Simple getter that returns the List of Bugs. Note the use of generics syntax - this is

@@ -18,6 +18,7 @@ import net.sourceforge.stripes.localization.LocalizationUtility;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.Objects;
 
 /**
  * <p>
@@ -200,14 +201,12 @@ public class ScopedLocalizableError extends LocalizableError {
 
         final ScopedLocalizableError that = (ScopedLocalizableError) o;
 
-        if (defaultScope != null ? !defaultScope.equals(that.defaultScope) : that.defaultScope != null) {
+        if (!Objects.equals(defaultScope,
+                            that.defaultScope)) {
             return false;
         }
-        if (key != null ? !key.equals(that.key) : that.key != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(key,
+                              that.key);
     }
 
     /**

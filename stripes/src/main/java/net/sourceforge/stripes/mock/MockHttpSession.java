@@ -16,11 +16,7 @@ package net.sourceforge.stripes.mock;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Simple mock implementation of HttpSession that implements most basic
@@ -35,7 +31,7 @@ public class MockHttpSession implements HttpSession {
     private long creationTime = System.currentTimeMillis();
     private String sessionId = String.valueOf(new Random().nextLong());
     private ServletContext context;
-    private Map<String, Object> attributes = new HashMap<String, Object>();
+    private Map<String, Object> attributes = new HashMap<>();
 
     /**
      * Default constructor which provides the session with access to the
@@ -140,7 +136,7 @@ public class MockHttpSession implements HttpSession {
      * @return 
      */
     public String[] getValueNames() {
-        return this.attributes.keySet().toArray(new String[this.attributes.size()]);
+        return this.attributes.keySet().toArray(new String[0]);
     }
 
     /**

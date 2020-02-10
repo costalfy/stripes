@@ -1,16 +1,11 @@
 package net.sourceforge.stripes.validation;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import java.util.Locale;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.MissingResourceException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Tests that ensure that the DateTypeConverter does the right thing given an
@@ -37,7 +32,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testBasicUsLocaleDates() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("1/31/07", Date.class, errors);
         Assert.assertNotNull(date);
@@ -57,7 +52,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testVariantUsLocaleDates() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("01/31/2007", Date.class, errors);
         Assert.assertNotNull(date);
@@ -77,7 +72,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testAlternateSeparatorsDates() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("01 31 2007", Date.class, errors);
         Assert.assertNotNull(date);
@@ -97,7 +92,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testUkLocaleDates() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.UK);
         Date date = converter.convert("31 01 2007", Date.class, errors);
         Assert.assertNotNull(date);
@@ -117,7 +112,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testWhackySeparators() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("01, 31, 2007", Date.class, errors);
         Assert.assertNotNull(date);
@@ -137,7 +132,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testNonStandardFormats() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("Jan 31 2007", Date.class, errors);
         Assert.assertNotNull(date);
@@ -157,7 +152,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testPartialInputFormats() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date date = converter.convert("Jan 31", Date.class, errors);
         Assert.assertNotNull(date);
@@ -180,7 +175,7 @@ public class DateTypeConverterTest {
 
     @Test(groups = "fast")
     public void testDateToStringFormat() {
-        Collection<ValidationError> errors = new ArrayList<ValidationError>();
+        Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date now = new Date();
 

@@ -1,19 +1,10 @@
 package net.sourceforge.stripes.validation;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.HandlesEvent;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.mock.MockServletContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * Test out various aspects of the validation subsystem in Stripes with regard
@@ -70,7 +61,7 @@ public class ValidationFlowTest extends FilterEnabledTestBase implements ActionB
         this.numberTwo = numberTwo;
     }
 
-    @ValidationMethod(priority = 0)
+    @ValidationMethod()
     public void validateAlways(ValidationErrors errors) {
         if (errors == null) {
             throw new RuntimeException("errors must not be null");

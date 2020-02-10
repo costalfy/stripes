@@ -1,8 +1,5 @@
 package net.sourceforge.stripes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sourceforge.stripes.config.BootstrapPropertyResolver;
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.config.DefaultConfiguration;
@@ -10,6 +7,9 @@ import net.sourceforge.stripes.controller.DispatcherServlet;
 import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.mock.MockFilterConfig;
 import net.sourceforge.stripes.mock.MockServletContext;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Test fixture that sets up a MockServletContext in a way that it can then be
@@ -60,7 +60,7 @@ public class StripesTestFixture {
      * StripesFilter
      */
     public static Map<String, String> getDefaultFilterParams() {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("ActionResolver.Packages", "net.sourceforge.stripes");
         map.put("LocalePicker.Class", "net.sourceforge.stripes.localization.MockLocalePicker");
         return map;

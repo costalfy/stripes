@@ -1,22 +1,13 @@
 package net.sourceforge.stripes.mock;
 
-import java.io.StringReader;
-
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.HandlesEvent;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
-import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.io.StringReader;
 
 /**
  * Unit test that is designed to do some fairly simple testing of the mock
@@ -223,7 +214,8 @@ public class TestMockRoundtrip extends FilterEnabledTestBase implements ActionBe
         Assert.assertEquals(bean.getResult(), 2.5);
         Assert.assertEquals(trip.getValidationErrors().size(), 0);
         Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
-        Assert.assertEquals(trip.getRequest().getAttribute("integerResult"), new Integer(2));
+        Assert.assertEquals(trip.getRequest().getAttribute("integerResult"),
+                            2);
     }
 
     @Test(groups = "fast")

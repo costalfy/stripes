@@ -35,7 +35,7 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
 
     private static final Log log = Log.getInstance(JsonContentTypeRequestWrapper.class);
 
-    private Map< String, Set<String>> parameters = new HashMap< String, Set<String>>();
+    private Map< String, Set<String>> parameters = new HashMap<>();
 
     public void build(HttpServletRequest request) throws IOException {
 
@@ -76,16 +76,16 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
                 processNode(childNode, currentPath);
             }
         } else {
-            String name = parent;
-            Set<String> parameterValues = parameters.get(name);
+            Set<String> parameterValues = parameters.get(parent);
             if (parameterValues == null) {
-                parameterValues = new HashSet<String>();
+                parameterValues = new HashSet<>();
             }
             parameterValues.add(node.asText());
 
-            log.debug("Adding parameter (name=", name, ",value=", node.asText(), ")");
+            log.debug("Adding parameter (name=",
+                      parent, ",value=", node.asText(), ")");
 
-            parameters.put(name, parameterValues);
+            parameters.put(parent, parameterValues);
         }
     }
 
@@ -126,7 +126,7 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
         Set<String> values = parameters.get(name);
 
         if (values != null) {
-            returnValues = values.toArray(new String[values.size()]);
+            returnValues = values.toArray(new String[0]);
         }
 
         log.debug("Returning parameter value (", returnValues, ") for name (", name, ") to a caller.");

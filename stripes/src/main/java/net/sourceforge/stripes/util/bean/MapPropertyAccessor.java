@@ -15,15 +15,15 @@
 package net.sourceforge.stripes.util.bean;
 
 import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.validation.ValidationError;
-import net.sourceforge.stripes.validation.TypeConverter;
 import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.validation.TypeConverter;
+import net.sourceforge.stripes.validation.ValidationError;
 
-import java.util.Map;
-import java.util.Locale;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Implementation of {@link PropertyAccessor} for interacting with Maps. Uses
@@ -90,37 +90,46 @@ public class MapPropertyAccessor implements PropertyAccessor<Map<?, ?>> {
         Class declaredType = evaluation.getKeyType();
         Class nodeType = evaluation.getNode().getTypedValue().getClass();
 
-        if (nodeType.equals(declaredType) || declaredType == null) {
-            return evaluation.getNode().getTypedValue();
-        } else {
+        if (!nodeType.equals(declaredType) && declaredType != null) {
             try {
                 // Collect the things needed to grab a type converter
-                String stringKey = evaluation.getNode().getStringValue();
-                ActionBean bean = (ActionBean) evaluation.getExpressionEvaluation().getBean();
-                Locale locale = bean.getContext().getLocale();
+                String stringKey = evaluation.getNode()
+                        .getStringValue();
+                ActionBean bean = (ActionBean) evaluation.getExpressionEvaluation()
+                        .getBean();
+                Locale locale = bean.getContext()
+                        .getLocale();
                 Collection errors = new ArrayList<ValidationError>();
 
                 TypeConverter tc = StripesFilter.getConfiguration()
-                        .getTypeConverterFactory().getTypeConverter(declaredType, locale);
+                        .getTypeConverterFactory()
+                        .getTypeConverter(declaredType,
+                                          locale);
 
                 // If there is a type converter, try using it!
                 if (tc != null) {
-                    Object retval = tc.convert(stringKey, declaredType, errors);
+                    Object retval = tc.convert(stringKey,
+                                               declaredType,
+                                               errors);
                     if (errors.size() == 0) {
                         return retval;
                     }
                 } // Otherwise look for a String constructor
                 else {
-                    return StripesFilter.getConfiguration().getObjectFactory()
-                            .constructor(declaredType, String.class).newInstance(stringKey);
+                    return StripesFilter.getConfiguration()
+                            .getObjectFactory()
+                            .constructor(declaredType,
+                                         String.class)
+                            .newInstance(stringKey);
                 }
             } catch (Exception e) {
                 log.warn("Exception while converting Map key to appropriate type. Key: ",
-                        evaluation.getNode().getStringValue());
+                         evaluation.getNode()
+                                 .getStringValue());
             }
 
             // Return the original key if we couldn't type convert it
-            return evaluation.getNode().getTypedValue();
         }
+        return evaluation.getNode().getTypedValue();
     }
 }

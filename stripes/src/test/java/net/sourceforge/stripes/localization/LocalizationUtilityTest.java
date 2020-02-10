@@ -1,8 +1,7 @@
 package net.sourceforge.stripes.localization;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
-import net.sourceforge.stripes.localization.LocalizationUtility;
+import org.testng.annotations.Test;
 
 /**
  * Simple test cases for the LocalizationUtility.
@@ -12,42 +11,42 @@ import net.sourceforge.stripes.localization.LocalizationUtility;
 public class LocalizationUtilityTest {
 
     @Test(groups = "fast")
-    public void testBaseCase() throws Exception {
+    public void testBaseCase() {
         String input = "Hello";
         String output = LocalizationUtility.makePseudoFriendlyName(input);
         Assert.assertEquals(output, input);
     }
 
     @Test(groups = "fast")
-    public void testSimpleCase() throws Exception {
+    public void testSimpleCase() {
         String input = "hello";
         String output = LocalizationUtility.makePseudoFriendlyName(input);
         Assert.assertEquals(output, "Hello");
     }
 
     @Test(groups = "fast")
-    public void testWithPeriod() throws Exception {
+    public void testWithPeriod() {
         String input = "bug.name";
         String output = LocalizationUtility.makePseudoFriendlyName(input);
         Assert.assertEquals(output, "Bug Name");
     }
 
     @Test(groups = "fast")
-    public void testWithStudlyCaps() throws Exception {
+    public void testWithStudlyCaps() {
         String input = "bugName";
         String output = LocalizationUtility.makePseudoFriendlyName(input);
         Assert.assertEquals(output, "Bug Name");
     }
 
     @Test(groups = "fast")
-    public void testComplexName() throws Exception {
+    public void testComplexName() {
         String input = "bug.submittedBy.firstName";
         String output = LocalizationUtility.makePseudoFriendlyName(input);
         Assert.assertEquals(output, "Bug Submitted By First Name");
     }
 
-    public static enum TestEnum {
-        A, B, C;
+    public enum TestEnum {
+        A, B, C
     }
 
     public static class A {
@@ -60,7 +59,7 @@ public class LocalizationUtilityTest {
     }
 
     @Test(groups = "fast")
-    public void testSimpleClassName() throws Exception {
+    public void testSimpleClassName() {
         String output = LocalizationUtility.getSimpleName(TestEnum.class);
         Assert.assertEquals(output, "LocalizationUtilityTest.TestEnum");
 

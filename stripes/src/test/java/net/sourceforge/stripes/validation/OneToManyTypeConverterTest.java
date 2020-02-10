@@ -1,25 +1,17 @@
 package net.sourceforge.stripes.validation;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.mock.MockServletContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.testng.Assert;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.util.Literal;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.mock.MockRoundtrip;
+import net.sourceforge.stripes.util.Literal;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Date;
-import java.util.Collection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -44,7 +36,9 @@ public class OneToManyTypeConverterTest extends FilterEnabledTestBase implements
         trip.execute();
         OneToManyTypeConverterTest bean = trip.getActionBean(getClass());
         List<Long> numbers = bean.getNumbers();
-        Assert.assertEquals(numbers, Literal.list(123l, 456l, 789l));
+        Assert.assertEquals(numbers, Literal.list(123L,
+                                                  456L,
+                                                  789L));
     }
 
     @Test(groups = "fast")
@@ -86,7 +80,9 @@ public class OneToManyTypeConverterTest extends FilterEnabledTestBase implements
         trip.execute();
         OneToManyTypeConverterTest bean = trip.getActionBean(getClass());
         List<Long> numbers = bean.getNumbers();
-        Assert.assertEquals(numbers, Literal.list(123l, 456l, 789l));
+        Assert.assertEquals(numbers, Literal.list(123L,
+                                                  456L,
+                                                  789L));
     }
 
     @Test(groups = "fast")
@@ -96,7 +92,10 @@ public class OneToManyTypeConverterTest extends FilterEnabledTestBase implements
         trip.execute();
         OneToManyTypeConverterTest bean = trip.getActionBean(getClass());
         List<Long> numbers = bean.getNumbers();
-        Assert.assertEquals(numbers, Literal.list(123l, 456l, 789l, 999l));
+        Assert.assertEquals(numbers, Literal.list(123L,
+                                                  456L,
+                                                  789L,
+                                                  999L));
     }
 
     @Test(groups = "fast")

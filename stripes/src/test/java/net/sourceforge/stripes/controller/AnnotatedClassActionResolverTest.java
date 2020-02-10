@@ -1,6 +1,7 @@
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.UrlBinding;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -14,7 +15,7 @@ public class AnnotatedClassActionResolverTest {
     private AnnotatedClassActionResolver resolver = new AnnotatedClassActionResolver() {
         @Override
         protected Set<Class<? extends ActionBean>> findClasses() {
-            Set<Class<? extends ActionBean>> classes = new HashSet<Class<? extends ActionBean>>();
+            Set<Class<? extends ActionBean>> classes = new HashSet<>();
             classes.add(SimpleActionBean.class);
             classes.add(OverloadedActionBean.class);
             classes.add(Container1.OverloadedActionBean.class);

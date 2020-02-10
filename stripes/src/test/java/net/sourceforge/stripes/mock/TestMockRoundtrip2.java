@@ -1,18 +1,10 @@
 package net.sourceforge.stripes.mock;
 
-import static org.testng.Assert.assertEquals;
-
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
-
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import net.sourceforge.stripes.action.*;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Submitted by Nathan Maves and Remi Vankeisbelck to test a specific failure in

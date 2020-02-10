@@ -5,7 +5,6 @@ import net.sourceforge.stripes.controller.AsyncResponse;
 import net.sourceforge.stripes.examples.bugzooky.ext.Public;
 import net.sourceforge.stripes.validation.Validate;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,43 +55,34 @@ public class AsyncActionBean implements ActionBean {
 		HttpHost host = new HttpHost("api.github.com", 443, "https");
 		new AsyncHttpClient(host)
 			.buildRequest("/repos/StripesFramework/stripes/commits")
-			.completed(new AsyncHttpClient.Consumer<HttpResponse>() {
-				@Override
-				public void accept(HttpResponse result) {
-					// response is returned, deserialize result
-					status = result.getStatusLine().getStatusCode();
-					if (status == 200) {
-						ByteArrayOutputStream bos = new ByteArrayOutputStream();
-						try {
-							result.getEntity().writeTo(bos);
-							bos.close();
-							ghResponse = bos.toString("UTF-8");
-						} catch (Exception e) {
-							clientException = e;
-						}
-						async.complete(forwardResolution);
-					} else {
-						ghResponse = result.getStatusLine().getReasonPhrase();
-						async.complete(forwardResolution);
+			.completed(result -> {
+				// response is returned, deserialize result
+				status = result.getStatusLine().getStatusCode();
+				if (status == 200) {
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					try {
+						result.getEntity().writeTo(bos);
+						bos.close();
+						ghResponse = bos.toString("UTF-8");
+					} catch (Exception e) {
+						clientException = e;
 					}
-				}
-			})
-			.failed(new AsyncHttpClient.Consumer<Exception>() {
-				@Override
-				public void accept(Exception e) {
-					// http client failure
-					clientException = e;
+					async.complete(forwardResolution);
+				} else {
+					ghResponse = result.getStatusLine().getReasonPhrase();
 					async.complete(forwardResolution);
 				}
 			})
-			.cancelled(new Runnable() {
-				@Override
-				public void run() {
-					// just for demo, we never call it...
-					cancelled = true;
-					async.complete(forwardResolution);
+			.failed(e -> {
+				// http client failure
+				clientException = e;
+				async.complete(forwardResolution);
+			})
+			.cancelled(() -> {
+				// just for demo, we never call it...
+				cancelled = true;
+				async.complete(forwardResolution);
 
-				}
 			}).get(); // trigger async request
 	}
 
@@ -116,28 +106,25 @@ public class AsyncActionBean implements ActionBean {
 			"order", "to", "be", "notified", "when", "the",
 			"server", "pushes", "some", "data"
 		};
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				boolean error = false;
-				try {
-					PrintWriter w = r.getResponse().getWriter();
-					for (int i = 0; i < parts.length; i++) {
-						w.println("<div class=\"asyncWrite\">" + parts[i] + "</div>");
-						w.flush();
-						try {
-							Thread.sleep(200);
-						} catch (InterruptedException e) {
-							// don't care
-						}
+		new Thread(() -> {
+			boolean error = false;
+			try {
+				PrintWriter w = r.getResponse().getWriter();
+				for (int i = 0; i < parts.length; i++) {
+					w.println("<div class=\"asyncWrite\">" + parts[i] + "</div>");
+					w.flush();
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						// don't care
 					}
-				} catch (IOException e) {
-					error = true;
-					r.complete(new ErrorResolution(500, e.getMessage()));
 				}
-				if (!error) {
-					r.complete(new StreamingResolution("text/plain", "<em>Bye</em>"));
-				}
+			} catch (IOException e) {
+				error = true;
+				r.complete(new ErrorResolution(500, e.getMessage()));
+			}
+			if (!error) {
+				r.complete(new StreamingResolution("text/plain", "<em>Bye</em>"));
 			}
 		}).start();
 	}

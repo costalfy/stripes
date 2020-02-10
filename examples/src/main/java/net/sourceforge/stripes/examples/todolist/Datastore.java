@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class Datastore {
 
-    private static final Map< Long, Todo> OBJECT_STORE = new HashMap< Long, Todo >();
+    private static final Map< Long, Todo> OBJECT_STORE = new HashMap<>();
 
     /**
      * Populate the Datastore with some initial objects

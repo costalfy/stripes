@@ -35,12 +35,7 @@ import javax.servlet.jsp.tagext.TryCatchFinally;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Parent class for all input tags in stripes. Provides support methods for
@@ -134,7 +129,7 @@ public abstract class InputTagSupport extends HtmlTagSupport implements TryCatch
             if (Array.getLength(unknown) > 0) {
                 returnValue = Array.get(unknown, 0);
             }
-        } else if (unknown != null && unknown instanceof Collection<?>) {
+        } else if (unknown instanceof Collection<?>) {
             Collection<?> collection = (Collection<?>) unknown;
             if (collection.size() > 0) {
                 returnValue = collection.iterator().next();
@@ -239,9 +234,8 @@ public abstract class InputTagSupport extends HtmlTagSupport implements TryCatch
                     }
                 }
             } else {
-                if (format(selected, false).equals(stringValue)) {
-                    return true;
-                }
+                return format(selected,
+                              false).equals(stringValue);
             }
         }
 
@@ -272,9 +266,8 @@ public abstract class InputTagSupport extends HtmlTagSupport implements TryCatch
      *
      * @param name the field name or resource to look up
      * @return the localized String corresponding to the name provided
-     * @throws StripesJspException
      */
-    protected String getLocalizedFieldName(final String name) throws StripesJspException {
+    protected String getLocalizedFieldName(final String name) {
         Locale locale = getPageContext().getRequest().getLocale();
         FormTag form = null;
 

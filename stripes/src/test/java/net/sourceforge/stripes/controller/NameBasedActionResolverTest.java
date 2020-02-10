@@ -1,15 +1,15 @@
 package net.sourceforge.stripes.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.UrlBinding;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import net.sourceforge.stripes.action.UrlBinding;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Tests for various methods in the NameBasedActionResolver that can be tested
@@ -23,7 +23,7 @@ public class NameBasedActionResolverTest {
     private NameBasedActionResolver resolver = new NameBasedActionResolver() {
         @Override
         protected Set<Class<? extends ActionBean>> findClasses() {
-            Set<Class<? extends ActionBean>> classes = new HashSet<Class<? extends ActionBean>>();
+            Set<Class<? extends ActionBean>> classes = new HashSet<>();
             classes.add(SimpleActionBean.class);
             classes.add(OverloadedActionBean.class);
             classes.add(Container1.OverloadedActionBean.class);

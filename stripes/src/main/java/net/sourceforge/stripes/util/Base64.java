@@ -358,7 +358,7 @@ public class Base64 {
      * URLSAFE in which case one of them will be picked, though there is no
      * guarantee as to which one will be picked.
      */
-    private final static byte[] getAlphabet(int options) {
+    private static byte[] getAlphabet(int options) {
         if ((options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_ALPHABET;
         } else if ((options & ORDERED) == ORDERED) {
@@ -375,7 +375,7 @@ public class Base64 {
      * URL_SAFE in which case one of them will be picked, though there is no
      * guarantee as to which one will be picked.
      */
-    private final static byte[] getDecodabet(int options) {
+    private static byte[] getDecodabet(int options) {
         if ((options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_DECODABET;
         } else if ((options & ORDERED) == ORDERED) {
@@ -398,7 +398,7 @@ public class Base64 {
      * you're embedding this code into a larger program.</strong>
      * @param args
      */
-    public final static void main(String[] args) {
+    public static void main(String[] args) {
         if (args.length < 3) {
             usage("Not enough arguments.");
         } // end if: args.length < 3
@@ -423,7 +423,7 @@ public class Base64 {
      *
      * @param msg A message to include with usage info.
      */
-    private final static void usage(String msg) {
+    private static void usage(String msg) {
         System.err.println(msg);
         System.err.println("Usage: java Base64 -e|-d inputfile outputfile");
     }   // end usage
@@ -799,7 +799,6 @@ public class Base64 {
      *
      *
      * @param source the array to convert
-     * @param srcOffset the index where conversion begins
      * @param destination the array to hold the conversion
      * @param destOffset the index where output will be put
      * @param options alphabet type is pulled from this (standard, url-safe,
@@ -807,28 +806,28 @@ public class Base64 {
      * @return the number of decoded bytes converted
      * @since 1.3
      */
-    private static int decode4to3(byte[] source, int srcOffset, byte[] destination, int destOffset, int options) {
+    private static int decode4to3(byte[] source, byte[] destination, int destOffset, int options) {
         byte[] DECODABET = getDecodabet(options);
 
         // Example: Dk==
-        if (source[srcOffset + 2] == EQUALS_SIGN) {
+        if (source[0 + 2] == EQUALS_SIGN) {
             // Two ways to do the same thing. Don't know which way I like best.
             //int outBuff =   ( ( DECODABET[ source[ srcOffset    ] ] << 24 ) >>>  6 )
             //              | ( ( DECODABET[ source[ srcOffset + 1] ] << 24 ) >>> 12 );
-            int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18)
-                    | ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12);
+            int outBuff = ((DECODABET[source[0]] & 0xFF) << 18)
+                    | ((DECODABET[source[0 + 1]] & 0xFF) << 12);
 
             destination[destOffset] = (byte) (outBuff >>> 16);
             return 1;
         } // Example: DkL=
-        else if (source[srcOffset + 3] == EQUALS_SIGN) {
+        else if (source[0 + 3] == EQUALS_SIGN) {
             // Two ways to do the same thing. Don't know which way I like best.
             //int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] << 24 ) >>>  6 )
             //              | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
             //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 );
-            int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18)
-                    | ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12)
-                    | ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6);
+            int outBuff = ((DECODABET[source[0]] & 0xFF) << 18)
+                    | ((DECODABET[source[0 + 1]] & 0xFF) << 12)
+                    | ((DECODABET[source[0 + 2]] & 0xFF) << 6);
 
             destination[destOffset] = (byte) (outBuff >>> 16);
             destination[destOffset + 1] = (byte) (outBuff >>> 8);
@@ -841,10 +840,10 @@ public class Base64 {
                 //              | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
                 //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 )
                 //              | ( ( DECODABET[ source[ srcOffset + 3 ] ] << 24 ) >>> 24 );
-                int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18)
-                        | ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12)
-                        | ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6)
-                        | ((DECODABET[source[srcOffset + 3]] & 0xFF));
+                int outBuff = ((DECODABET[source[0]] & 0xFF) << 18)
+                        | ((DECODABET[source[0 + 1]] & 0xFF) << 12)
+                        | ((DECODABET[source[0 + 2]] & 0xFF) << 6)
+                        | ((DECODABET[source[0 + 3]] & 0xFF));
 
                 destination[destOffset] = (byte) (outBuff >> 16);
                 destination[destOffset + 1] = (byte) (outBuff >> 8);
@@ -852,10 +851,10 @@ public class Base64 {
 
                 return 3;
             } catch (Exception e) {
-                System.out.println("" + source[srcOffset] + ": " + (DECODABET[source[srcOffset]]));
-                System.out.println("" + source[srcOffset + 1] + ": " + (DECODABET[source[srcOffset + 1]]));
-                System.out.println("" + source[srcOffset + 2] + ": " + (DECODABET[source[srcOffset + 2]]));
-                System.out.println("" + source[srcOffset + 3] + ": " + (DECODABET[source[srcOffset + 3]]));
+                System.out.println("" + source[0] + ": " + (DECODABET[source[0]]));
+                System.out.println("" + source[0 + 1] + ": " + (DECODABET[source[0 + 1]]));
+                System.out.println("" + source[0 + 2] + ": " + (DECODABET[source[0 + 2]]));
+                System.out.println("" + source[0 + 3] + ": " + (DECODABET[source[0 + 3]]));
                 return -1;
             }   // end catch
         }
@@ -894,7 +893,8 @@ public class Base64 {
                 if (sbiDecode >= EQUALS_SIGN_ENC) {
                     b4[b4Posn++] = sbiCrop;
                     if (b4Posn > 3) {
-                        outBuffPosn += decode4to3(b4, 0, outBuff, outBuffPosn, options);
+                        outBuffPosn += decode4to3(b4,
+                                                  outBuff, outBuffPosn, options);
                         b4Posn = 0;
 
                         // If that was the equals sign, break out of 'for' loop
@@ -1304,8 +1304,6 @@ public class Base64 {
         private int lineLength;
         private boolean breakLines;     // Break lines at less than 80 characters
         private int options;        // Record options used to create the stream.
-        @SuppressWarnings("unused")
-        private byte[] alphabet;	    // Local copies to avoid extra method calls
         private byte[] decodabet;		// Local copies to avoid extra method calls
 
         /**
@@ -1349,7 +1347,8 @@ public class Base64 {
             this.position = -1;
             this.lineLength = 0;
             this.options = options; // Record for later, mostly to determine which alphabet to use
-            this.alphabet = getAlphabet(options);
+            // Local copies to avoid extra method calls
+            byte[] alphabet = getAlphabet(options);
             this.decodabet = getDecodabet(options);
         }   // end constructor
 
@@ -1415,7 +1414,8 @@ public class Base64 {
                     }   // end for: each needed input byte
 
                     if (i == 4) {
-                        numSigBytes = decode4to3(b4, 0, buffer, 0, options);
+                        numSigBytes = decode4to3(b4,
+                                                 buffer, 0, options);
                         position = 0;
                     } // end if: got four characters
                     else if (i == 0) {
@@ -1516,8 +1516,6 @@ public class Base64 {
         private byte[] b4; // Scratch used in a few places
         private boolean suspendEncoding;
         private int options; // Record for later
-        @SuppressWarnings("unused")
-        private byte[] alphabet;	    // Local copies to avoid extra method calls
         private byte[] decodabet;		// Local copies to avoid extra method calls
 
         /**
@@ -1564,7 +1562,8 @@ public class Base64 {
             this.suspendEncoding = false;
             this.b4 = new byte[4];
             this.options = options;
-            this.alphabet = getAlphabet(options);
+            // Local copies to avoid extra method calls
+            byte[] alphabet = getAlphabet(options);
             this.decodabet = getDecodabet(options);
         }   // end constructor
 
@@ -1609,7 +1608,8 @@ public class Base64 {
                     buffer[position++] = (byte) theByte;
                     if (position >= bufferLength) // Enough to output.
                     {
-                        int len = Base64.decode4to3(buffer, 0, b4, 0, options);
+                        int len = Base64.decode4to3(buffer,
+                                                    b4, 0, options);
                         out.write(b4, 0, len);
                         //out.write( Base64.decode4to3( buffer ) );
                         position = 0;

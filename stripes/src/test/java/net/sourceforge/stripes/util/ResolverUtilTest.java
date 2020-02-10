@@ -1,11 +1,6 @@
 package net.sourceforge.stripes.util;
 
-import net.sourceforge.stripes.validation.BooleanTypeConverter;
-import net.sourceforge.stripes.validation.DateTypeConverter;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.ScopedLocalizableError;
-import net.sourceforge.stripes.validation.SimpleError;
-import net.sourceforge.stripes.validation.TypeConverter;
+import net.sourceforge.stripes.validation.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,10 +15,10 @@ import java.util.Set;
 public class ResolverUtilTest {
 
     @Test(groups = "slow")
-    public void testSimpleFind() throws Exception {
+    public void testSimpleFind() {
         // Because the tests package depends on stripes, it's safe to assume that
         // there will be some TypeConverter subclasses in the classpath
-        ResolverUtil<TypeConverter<?>> resolver = new ResolverUtil<TypeConverter<?>>();
+        ResolverUtil<TypeConverter<?>> resolver = new ResolverUtil<>();
         resolver.findImplementations(TypeConverter.class, "net");
         Set<Class<? extends TypeConverter<?>>> impls = resolver.getClasses();
 
@@ -40,10 +35,10 @@ public class ResolverUtilTest {
     }
 
     @Test(groups = "fast")
-    public void testMoreSpecificFind() throws Exception {
+    public void testMoreSpecificFind() {
         // Because the tests package depends on stripes, it's safe to assume that
         // there will be some TypeConverter subclasses in the classpath
-        ResolverUtil<TypeConverter<?>> resolver = new ResolverUtil<TypeConverter<?>>();
+        ResolverUtil<TypeConverter<?>> resolver = new ResolverUtil<>();
         resolver.findImplementations(TypeConverter.class, "net.sourceforge.stripes.validation");
         Set<Class<? extends TypeConverter<?>>> impls = resolver.getClasses();
 
@@ -60,8 +55,8 @@ public class ResolverUtilTest {
     }
 
     @Test(groups = "fast")
-    public void testFindExtensionsOfClass() throws Exception {
-        ResolverUtil<SimpleError> resolver = new ResolverUtil<SimpleError>();
+    public void testFindExtensionsOfClass() {
+        ResolverUtil<SimpleError> resolver = new ResolverUtil<>();
         resolver.findImplementations(SimpleError.class, "net.sourceforge.stripes");
 
         Set<Class<? extends SimpleError>> impls = resolver.getClasses();
@@ -77,12 +72,12 @@ public class ResolverUtilTest {
     /**
      * Test interface used with the testFindZeroImplementatios() method.
      */
-    private static interface ZeroImplementations {
+    private interface ZeroImplementations {
     }
 
     @Test(groups = "fast")
-    public void testFindZeroImplementations() throws Exception {
-        ResolverUtil<ZeroImplementations> resolver = new ResolverUtil<ZeroImplementations>();
+    public void testFindZeroImplementations() {
+        ResolverUtil<ZeroImplementations> resolver = new ResolverUtil<>();
         resolver.findImplementations(ZeroImplementations.class, "net.sourceforge.stripes");
 
         Set<Class<? extends ZeroImplementations>> impls = resolver.getClasses();

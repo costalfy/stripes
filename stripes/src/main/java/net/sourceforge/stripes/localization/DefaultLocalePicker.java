@@ -19,13 +19,8 @@ import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
 import java.nio.charset.Charset;
+import java.util.*;
 
 /**
  * <p>
@@ -72,20 +67,19 @@ public class DefaultLocalePicker implements LocalePicker {
      * Stores the configured set of Locales that the system supports, looked up
      * at init time.
      */
-    protected List<Locale> locales = new ArrayList<Locale>();
+    protected List<Locale> locales = new ArrayList<>();
 
     /**
      * Contains a map of Locale to preferred character encoding.
      */
-    protected Map<Locale, String> encodings = new HashMap<Locale, String>();
+    protected Map<Locale, String> encodings = new HashMap<>();
 
     /**
      * Attempts to read the
      *
      * @param configuration
-     * @throws Exception
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.configuration = configuration;
 
         String configuredLocales

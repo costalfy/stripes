@@ -1,19 +1,18 @@
 package net.sourceforge.stripes.controller;
 
-import static java.lang.String.format;
-
-import java.util.List;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.config.DontAutoLoad;
 import net.sourceforge.stripes.exception.UrlBindingConflictException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.bean.ParseException;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.List;
+
+import static java.lang.String.format;
 
 /**
  * Tests for {@link UrlBindingFactory}.
@@ -263,7 +262,7 @@ public class UrlBindingFactoryTests {
             log.debug("Parsing URL binding ", annotation.value(), ", expecting failure");
             try {
                 UrlBindingFactory.parseUrlBinding(clazz);
-                Assert.assertTrue(false, "Expected parse exception but did not get one");
+                Assert.fail("Expected parse exception but did not get one");
             } catch (ParseException e) {
                 log.debug("As expected: ", e.getMessage());
             }
@@ -422,7 +421,7 @@ public class UrlBindingFactoryTests {
         factory.addBinding(FooActionBean2.class, UrlBindingFactory.parseUrlBinding(FooActionBean.class));
         try {
             factory.getBindingPrototype("/foo");
-            Assert.assertTrue(false, "A URL binding conflict was expected but it didn't happen!");
+            Assert.fail("A URL binding conflict was expected but it didn't happen!");
         } catch (UrlBindingConflictException e) {
             log.debug("Got expected URL binding conflict");
         }

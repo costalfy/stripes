@@ -14,15 +14,15 @@
  */
 package net.sourceforge.stripes.validation;
 
+import net.sourceforge.stripes.config.Configuration;
+import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.util.TypeHandlerCache;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-
-import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.TypeHandlerCache;
 
 /**
  * Default TypeConverterFactory implementation that simply creates an instance
@@ -52,7 +52,7 @@ public class DefaultTypeConverterFactory implements TypeConverterFactory {
      */
     public void init(final Configuration configuration) {
         this.configuration = configuration;
-        this.cache = new TypeHandlerCache<Class<? extends TypeConverter<?>>>();
+        this.cache = new TypeHandlerCache<>();
         this.cache.setSearchHierarchy(false);
 
         cache.add(Boolean.class, BooleanTypeConverter.class);
@@ -125,10 +125,9 @@ public class DefaultTypeConverterFactory implements TypeConverterFactory {
      * Date object you would supply java.util.Date.class.
      * @return an instance of a TypeConverter which will convert Strings to the
      * desired type
-     * @throws Exception if the TypeConverter cannot be instantiated
      */
     @SuppressWarnings("unchecked")
-    public TypeConverter getTypeConverter(Class forType, Locale locale) throws Exception {
+    public TypeConverter getTypeConverter(Class forType, Locale locale) {
         Class<? extends TypeConverter<?>> converterClass = cache.getHandler(forType);
         if (converterClass != null) {
             try {
@@ -148,10 +147,9 @@ public class DefaultTypeConverterFactory implements TypeConverterFactory {
      *
      * @param clazz the TypeConverter type that is desired
      * @return an instance of the TypeConverter specified
-     * @throws Exception if there is a problem instantiating the TypeConverter
      */
     @SuppressWarnings("unchecked")
-    public TypeConverter getInstance(Class<? extends TypeConverter> clazz, Locale locale) throws Exception {
+    public TypeConverter getInstance(Class<? extends TypeConverter> clazz, Locale locale) {
         TypeConverter converter = getConfiguration().getObjectFactory().newInstance(clazz);
         converter.setLocale(locale);
         return converter;

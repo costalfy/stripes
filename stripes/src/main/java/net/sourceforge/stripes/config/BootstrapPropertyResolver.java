@@ -14,21 +14,17 @@
  */
 package net.sourceforge.stripes.config;
 
-import java.lang.reflect.Modifier;
-import java.security.AccessControlException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import javax.servlet.FilterConfig;
-
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.ReflectUtil;
 import net.sourceforge.stripes.util.ResolverUtil;
 import net.sourceforge.stripes.util.StringUtil;
 import net.sourceforge.stripes.vfs.VFS;
+
+import javax.servlet.FilterConfig;
+import java.lang.reflect.Modifier;
+import java.security.AccessControlException;
+import java.util.*;
 
 /**
  * <p>
@@ -173,7 +169,7 @@ public class BootstrapPropertyResolver {
             }
         } else {
             // we didn't find it in web.xml so now we check any extension packages
-            ResolverUtil<T> resolver = new ResolverUtil<T>();
+            ResolverUtil<T> resolver = new ResolverUtil<>();
             String[] packages = StringUtil.standardSplit(getProperty(PACKAGES));
             resolver.findImplementations(targetType, packages);
             Set<Class<? extends T>> classes = resolver.getClasses();
@@ -201,7 +197,7 @@ public class BootstrapPropertyResolver {
      * @return a List of classes found
      */
     public List<Class<?>> getClassPropertyList(String paramName) {
-        List<Class<?>> classes = new ArrayList<Class<?>>();
+        List<Class<?>> classes = new ArrayList<>();
 
         String classList = getProperty(paramName);
 
@@ -232,13 +228,13 @@ public class BootstrapPropertyResolver {
      * @return a List of classes found
      */
     public <T> List<Class<? extends T>> getClassPropertyList(Class<T> targetType) {
-        ResolverUtil<T> resolver = new ResolverUtil<T>();
+        ResolverUtil<T> resolver = new ResolverUtil<>();
         String[] packages = StringUtil.standardSplit(getProperty(PACKAGES));
         resolver.findImplementations(targetType, packages);
         Set<Class<? extends T>> classes = resolver.getClasses();
         removeDontAutoloadClasses(classes);
         removeAbstractClasses(classes);
-        return new ArrayList<Class<? extends T>>(classes);
+        return new ArrayList<>(classes);
     }
 
     /**
@@ -253,7 +249,7 @@ public class BootstrapPropertyResolver {
      */
     @SuppressWarnings("unchecked")
     public <T> List<Class<? extends T>> getClassPropertyList(String paramName, Class<T> targetType) {
-        List<Class<? extends T>> classes = new ArrayList<Class<? extends T>>();
+        List<Class<? extends T>> classes = new ArrayList<>();
 
         for (Class<?> clazz : getClassPropertyList(paramName)) {
             // can't use addAll :(

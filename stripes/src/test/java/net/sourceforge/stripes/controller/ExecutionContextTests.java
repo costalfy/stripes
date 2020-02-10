@@ -1,13 +1,11 @@
 package net.sourceforge.stripes.controller;
 
-import java.util.Collections;
-import java.util.List;
-
-import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.util.Log;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Tests for {@link ExecutionContext}.
@@ -30,12 +28,10 @@ public class ExecutionContextTests {
             List<Interceptor> interceptors = Collections.emptyList();
             ctx.setInterceptors(interceptors);
 
-            ctx.wrap(new Interceptor() {
-                public Resolution intercept(ExecutionContext context) throws Exception {
-                    Assert.assertSame(ExecutionContext.currentContext(), ctx,
-                            "The current context is not what was expected!");
-                    return null;
-                }
+            ctx.wrap(context -> {
+                Assert.assertSame(ExecutionContext.currentContext(), ctx,
+                        "The current context is not what was expected!");
+                return null;
             });
         }
 

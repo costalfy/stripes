@@ -17,24 +17,17 @@ package net.sourceforge.stripes.tag;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.controller.StripesFilter;
+import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.validation.ValidationError;
 import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.exception.StripesJspException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * <p>
@@ -265,10 +258,9 @@ public class ErrorsTag extends HtmlTagSupport implements BodyTag {
      * @return SKIP_BODY if the errors are not to be output, or there aren't
      * any<br>
      * EVAL_BODY_TAG if there are errors to display
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
         ActionBean mainBean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
         FormTag formTag = getParentTag(FormTag.class);
@@ -302,7 +294,7 @@ public class ErrorsTag extends HtmlTagSupport implements BodyTag {
         if (errors != null) {
             // Using a set ensures that duplicate messages get filtered out, which can
             // happen during multi-row validation
-            this.allErrors = new TreeSet<ValidationError>(new ErrorComparator());
+            this.allErrors = new TreeSet<>(new ErrorComparator());
 
             if (this.field != null) {
                 // we're filtering for a specific field
@@ -339,9 +331,8 @@ public class ErrorsTag extends HtmlTagSupport implements BodyTag {
 
     /**
      * Sets the context variables for the current error and index
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
         // Apply TEI attributes
         getPageContext().setAttribute("index", this.index);
         getPageContext().setAttribute("error", this.currentError);
@@ -354,9 +345,8 @@ public class ErrorsTag extends HtmlTagSupport implements BodyTag {
      *
      * @return EVAL_BODY_TAG if there are more errors to display, SKIP_BODY
      * otherwise
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         if (this.display && this.nestedErrorTagPresent && this.errorIterator.hasNext()) {
             this.currentError = this.errorIterator.next();
             this.index++;
@@ -416,7 +406,7 @@ public class ErrorsTag extends HtmlTagSupport implements BodyTag {
                 }
 
                 writer.write(footer);
-            } else if (this.display && this.nestedErrorTagPresent) {
+            } else if (this.display) {
                 // Output the collective body content
                 getBodyContent().writeOut(writer);
             }

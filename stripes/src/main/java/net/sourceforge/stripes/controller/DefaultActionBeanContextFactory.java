@@ -48,9 +48,8 @@ public class DefaultActionBeanContextFactory implements ActionBeanContextFactory
     /**
      * Stores the configuration, and looks up the ActionBeanContext class
      * specified.
-     * @throws java.lang.Exception If an error occurs initializing this action bean context
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         setConfiguration(configuration);
 
         Class<? extends ActionBeanContext> clazz = configuration.getBootstrapPropertyResolver()

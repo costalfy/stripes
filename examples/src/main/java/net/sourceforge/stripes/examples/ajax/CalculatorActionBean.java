@@ -1,16 +1,11 @@
 package net.sourceforge.stripes.examples.ajax;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.examples.bugzooky.ext.Public;
 import net.sourceforge.stripes.validation.*;
 
 import java.io.StringReader;
 import java.util.List;
-import net.sourceforge.stripes.action.UrlBinding;
 
 /**
  * A very simple calculator action that is designed to work with an ajax front end.
@@ -32,7 +27,7 @@ public class CalculatorActionBean implements ActionBean, ValidationErrorHandler 
     public void setContext(ActionBeanContext context) { this.context = context; }
 
     /** Converts errors to HTML and streams them back to the browser. */
-    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
+    public Resolution handleValidationErrors(ValidationErrors errors) {
         StringBuilder message = new StringBuilder();
 
         for (List<ValidationError> fieldErrors : errors.values()) {

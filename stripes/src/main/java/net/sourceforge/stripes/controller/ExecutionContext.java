@@ -19,9 +19,9 @@ import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.util.Log;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
-import java.lang.reflect.Method;
 
 /**
  * <p>
@@ -40,14 +40,14 @@ import java.lang.reflect.Method;
 public class ExecutionContext {
 
     private static final Log log = Log.getInstance(ExecutionContext.class);
-    private static final ThreadLocal<ExecutionContext> currentContext = new ThreadLocal<ExecutionContext>();
+    private static final ThreadLocal<ExecutionContext> currentContext = new ThreadLocal<>();
 
     /**
      * Get the execution context for the current thread.
      *
      * @return Execution context for the current thread.
      */
-    public static final ExecutionContext currentContext() {
+    public static ExecutionContext currentContext() {
         return currentContext.get();
     }
 

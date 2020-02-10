@@ -15,25 +15,15 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.validation.SimpleError;
-import net.sourceforge.stripes.validation.TypeConverter;
-import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
-import net.sourceforge.stripes.validation.ValidationError;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.net.HttpURLConnection;
+import java.util.*;
 
 /**
  * This is a series of tests for Stripes REST action beans.
@@ -58,12 +48,12 @@ public class RestActionBeanTest extends FilterEnabledTestBase implements ActionB
     }
 
     public Resolution get() {
-        Map< String, Object> response = new HashMap< String, Object>();
+        Map< String, Object> response = new HashMap<>();
         response.put("foo", "bar");
         response.put("hello", "world");
         response.put("person", new Person());
 
-        Map< String, Number> nested = new HashMap< String, Number>();
+        Map< String, Number> nested = new HashMap<>();
         nested.put("one", 1);
         nested.put("two", 2);
 
@@ -214,7 +204,7 @@ public class RestActionBeanTest extends FilterEnabledTestBase implements ActionB
         Assert.assertEquals(bean.getPerson().getFirstName(), "Jane");
         Assert.assertEquals(bean.getPerson().getLastName(), "Johnson");
         Assert.assertEquals(bean.getPerson().getChildren().size(), 2);
-        List< String> favoriteFoods = new ArrayList< String>();
+        List< String> favoriteFoods = new ArrayList<>();
         favoriteFoods.add("Snickers");
         favoriteFoods.add("Scotch");
         favoriteFoods.add("Pizza");
@@ -270,8 +260,8 @@ public class RestActionBeanTest extends FilterEnabledTestBase implements ActionB
         String id = null;
         String firstName = "John";
         String lastName = "Doe";
-        List< String> favoriteFoods = new ArrayList< String>();
-        List< Person> children = new ArrayList<Person>();
+        List< String> favoriteFoods = new ArrayList<>();
+        List< Person> children = new ArrayList<>();
 
         public void setChildren(List< Person> children) {
             this.children = children;

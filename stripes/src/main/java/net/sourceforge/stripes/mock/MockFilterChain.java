@@ -14,12 +14,7 @@
  */
 package net.sourceforge.stripes.mock;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,7 +30,7 @@ import java.util.List;
  */
 public class MockFilterChain implements FilterChain {
 
-    private List<Filter> filters = new ArrayList<Filter>();
+    private List<Filter> filters = new ArrayList<>();
     private Iterator<Filter> iterator;
     private Servlet servlet;
 

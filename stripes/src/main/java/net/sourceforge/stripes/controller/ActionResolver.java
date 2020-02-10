@@ -16,8 +16,8 @@ package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.exception.StripesServletException;
 import net.sourceforge.stripes.config.ConfigurableComponent;
+import net.sourceforge.stripes.exception.StripesServletException;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -163,10 +163,8 @@ public interface ActionResolver extends ConfigurableComponent {
      * @param handler the handler method who's event name to find
      * @return String the name of the event handled by this method, or null if
      * an event is not mapped to this method.
-     * @throws net.sourceforge.stripes.exception.StripesServletException If an
-     * error occurs getting the handled event
      */
-    String getHandledEvent(Method handler) throws StripesServletException;
+    String getHandledEvent(Method handler);
 
     /**
      * Get all the classes implementing {@link ActionBean} that are recognized

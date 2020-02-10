@@ -1,13 +1,13 @@
 package net.sourceforge.stripes.util;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.Map;
 import java.util.HashMap;
-import java.beans.PropertyDescriptor;
+import java.util.Map;
 
 /**
  * Tests for the ReflectUtil class
@@ -25,7 +25,7 @@ public class ReflectUtilTest {
 
     @Test(groups = "fast")
     public void testAccessibleMethodWithMapEntry() throws Exception {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("foo", "bar");
         Map.Entry<String, String> entry = map.entrySet().iterator().next();
         PropertyDescriptor pd = ReflectUtil.getPropertyDescriptor(entry.getClass(), "value");

@@ -1,11 +1,6 @@
 package net.sourceforge.stripes.examples.bugzooky.biz;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Maintains an in memory list of bugs in the system.
@@ -17,7 +12,7 @@ public class BugManager {
     private static int idSequence = 0;
 
     /** Storage for all known bugs. */
-    private static Map<Integer,Bug> bugs = new TreeMap<Integer,Bug>();
+    private static Map<Integer,Bug> bugs = new TreeMap<>();
 
     static {
         ComponentManager cm = new ComponentManager();
@@ -81,7 +76,7 @@ public class BugManager {
 
     /** Returns a sorted list of all bugs in the system. */
     public List<Bug> getAllBugs() {
-        return Collections.unmodifiableList( new ArrayList<Bug>(bugs.values()) );
+        return Collections.unmodifiableList(new ArrayList<>(bugs.values()) );
     }
 
     /** Updates an existing bug, or saves a new bug if the bug is a new one. */

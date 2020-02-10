@@ -16,6 +16,8 @@ package net.sourceforge.stripes.action;
 
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Interface for all classes that respond to user interface events.
@@ -105,7 +107,7 @@ import net.sourceforge.stripes.validation.ValidationErrorHandler;
  * @see ValidationErrorHandler
  * @author Tim Fennell
  */
-public interface ActionBean {
+public interface ActionBean extends Serializable {
 
     /**
      * Called by the Stripes dispatcher to provide context to the ActionBean
@@ -114,7 +116,7 @@ public interface ActionBean {
      *
      * @param context ActionBeanContext associated with the current request
      */
-    public void setContext(ActionBeanContext context);
+    void setContext(ActionBeanContext context);
 
     /**
      * Implementations must implement this method to return a reference to the
@@ -123,5 +125,5 @@ public interface ActionBean {
      *
      * @return ActionBeanContext associated with the current request
      */
-    public ActionBeanContext getContext();
+    ActionBeanContext getContext();
 }

@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Collection;
 import java.text.NumberFormat;
+import java.util.Collection;
 
 /**
  * Basic type converter for converting strings to bytes. Will produce one error
@@ -45,7 +45,7 @@ public class ByteTypeConverter extends NumberTypeConverterSupport implements Typ
                 errors.add(new ScopedLocalizableError("converter.byte", "outOfRange",
                         Byte.MIN_VALUE, Byte.MAX_VALUE));
             } else {
-                retval = Byte.valueOf((byte) output);
+                retval = (byte) output;
             }
         }
 

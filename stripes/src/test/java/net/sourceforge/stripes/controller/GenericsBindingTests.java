@@ -1,11 +1,7 @@
 package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.mock.MockServletContext;
 import net.sourceforge.stripes.test.TestBean;
@@ -116,9 +112,9 @@ public class GenericsBindingTests
 
         GenericsBindingTests bean = trip.getActionBean(GenericsBindingTests.class);
         Assert.assertNotNull(bean.getMap());
-        Assert.assertEquals(bean.getMap().get(10l), makeDate(2010, 1, 1));
-        Assert.assertEquals(bean.getMap().get(20l), makeDate(2020, 1, 1));
-        Assert.assertEquals(bean.getMap().get(30l), makeDate(2030, 1, 1));
+        Assert.assertEquals(bean.getMap().get(10L), makeDate(2010));
+        Assert.assertEquals(bean.getMap().get(20L), makeDate(2020));
+        Assert.assertEquals(bean.getMap().get(30L), makeDate(2030));
     }
 
     @Test(groups = "fast")
@@ -139,10 +135,11 @@ public class GenericsBindingTests
      * based unlike the retarded Calendar API that uses 1 based everything else
      * and 0 based months. Sigh.
      */
-    private Date makeDate(int year, int month, int day) {
+    private Date makeDate(int year) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
-        cal.set(year, month - 1, day);
+        cal.set(year, 1 - 1,
+                1);
         return cal.getTime();
     }
 }

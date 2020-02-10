@@ -55,9 +55,8 @@ public class DefaultPopulationStrategy implements PopulationStrategy {
 
     /**
      * Called by the Configuration to configure the component.
-     * @throws java.lang.Exception
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.config = configuration;
     }
 

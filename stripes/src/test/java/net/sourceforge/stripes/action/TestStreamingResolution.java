@@ -14,18 +14,16 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.UUID;
+import net.sourceforge.stripes.mock.MockHttpServletResponse;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import javax.mail.internet.ContentDisposition;
 import javax.mail.internet.ParseException;
-
-import net.sourceforge.stripes.mock.MockHttpServletResponse;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.UUID;
 
 public class TestStreamingResolution {
 
@@ -38,7 +36,7 @@ public class TestStreamingResolution {
     }
 
     private void doTestContentDisposition(boolean attachment, String filename) throws Exception {
-        byte[] data = UUID.randomUUID().toString().getBytes(Charset.forName("UTF-8"));
+        byte[] data = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
         ByteArrayInputStream is = new ByteArrayInputStream(data);
 
         StreamingResolution resolution = new StreamingResolution("application/octet-stream", is);

@@ -16,8 +16,8 @@ package net.sourceforge.stripes.tag;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
-import java.util.Collection;
 import java.lang.reflect.Array;
+import java.util.Collection;
 
 /**
  * Generates one or more {@literal <input type="hidden" ... />} HTML tags based
@@ -76,18 +76,16 @@ public class InputHiddenTag extends InputTagSupport implements BodyTag {
      *
      * @return EVAL_BODY_BUFFERED to always buffer the body (so it can be used
      * as the value)
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
 
     }
 
@@ -95,9 +93,8 @@ public class InputHiddenTag extends InputTagSupport implements BodyTag {
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -117,22 +114,22 @@ public class InputHiddenTag extends InputTagSupport implements BodyTag {
         // Figure out how many times to write it out
         if (valueOrValues == null) {
             getAttributes().put("value", "");
-            writeSingletonTag(getPageContext().getOut(), "input");
+            writeSingletonTag(getPageContext().getOut());
         } else if (valueOrValues.getClass().isArray()) {
             int len = Array.getLength(valueOrValues);
             for (int i = 0; i < len; ++i) {
                 Object value = Array.get(valueOrValues, i);
                 getAttributes().put("value", format(value));
-                writeSingletonTag(getPageContext().getOut(), "input");
+                writeSingletonTag(getPageContext().getOut());
             }
         } else if (valueOrValues instanceof Collection<?>) {
             for (Object value : (Collection<?>) valueOrValues) {
                 getAttributes().put("value", format(value));
-                writeSingletonTag(getPageContext().getOut(), "input");
+                writeSingletonTag(getPageContext().getOut());
             }
         } else {
             getAttributes().put("value", format(valueOrValues));
-            writeSingletonTag(getPageContext().getOut(), "input");
+            writeSingletonTag(getPageContext().getOut());
         }
 
         // Clear out the value from the attributes

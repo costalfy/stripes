@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Collection;
 import java.text.NumberFormat;
+import java.util.Collection;
 
 /**
  * Basic type converter for converting strings to integers.
@@ -44,7 +44,7 @@ public class IntegerTypeConverter extends NumberTypeConverterSupport implements 
                 errors.add(new ScopedLocalizableError("converter.integer", "outOfRange",
                         Integer.MIN_VALUE, Integer.MAX_VALUE));
             } else {
-                retval = Integer.valueOf((int) output);
+                retval = (int) output;
             }
         }
 
