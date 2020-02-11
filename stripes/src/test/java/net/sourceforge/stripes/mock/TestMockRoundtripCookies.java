@@ -1,17 +1,11 @@
 package net.sourceforge.stripes.mock;
 
-import javax.servlet.http.Cookie;
-
 import net.sourceforge.stripes.StripesTestFixture;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.action.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import javax.servlet.http.Cookie;
 
 /**
  * Unit test that is designed to test how MockRoundTrip copies cookies from the
@@ -45,7 +39,7 @@ public class TestMockRoundtripCookies implements ActionBean {
     // End of ActionBean methods and beginning of test methods. Everything
     // below this line is a test!
     // /////////////////////////////////////////////////////////////////////////
-    @Test(groups = "fast")
+    @Test
     public void testDefaultEvent() throws Exception {
         // Setup the servlet engine
         MockServletContext ctx = StripesTestFixture.createServletContext();
@@ -57,17 +51,23 @@ public class TestMockRoundtripCookies implements ActionBean {
             trip.getRequest().setCookies(cookies);
             trip.execute();
 
-            Assert.assertEquals(trip.getResponse().getCookies().length, 4);
+            Assertions.assertEquals(trip.getResponse()
+                                            .getCookies().length,
+                                    4);
 
             for (Cookie cookie : trip.getResponse().getCookies()) {
                 if ("Cookie".equals(cookie.getName())) {
-                    Assert.assertEquals(cookie.getValue(), "1");
+                    Assertions.assertEquals(cookie.getValue(),
+                                            "1");
                 } else if ("Monster".equals(cookie.getName())) {
-                    Assert.assertEquals(cookie.getValue(), "2");
+                    Assertions.assertEquals(cookie.getValue(),
+                                            "2");
                 } else if ("Test".equals(cookie.getName())) {
-                    Assert.assertEquals(cookie.getValue(), "3");
+                    Assertions.assertEquals(cookie.getValue(),
+                                            "3");
                 } else if ("testCookie".equals(cookie.getName())) {
-                    Assert.assertEquals(cookie.getValue(), "testCookie");
+                    Assertions.assertEquals(cookie.getValue(),
+                                            "testCookie");
                 } else {
                     throw new RuntimeException("Unexected cookie found in response!");
                 }

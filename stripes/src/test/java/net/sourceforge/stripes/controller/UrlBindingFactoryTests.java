@@ -6,9 +6,9 @@ import net.sourceforge.stripes.config.DontAutoLoad;
 import net.sourceforge.stripes.exception.UrlBindingConflictException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.bean.ParseException;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -219,16 +219,16 @@ public class UrlBindingFactoryTests {
     private static final Log log = Log.getInstance(UrlBindingFactoryTests.class);
     private static UrlBindingFactory urlBindingFactory;
 
-    @BeforeClass
+    @BeforeAll
     @SuppressWarnings("unchecked")
-    public void setupClass() {
+    static void setupClass() {
         Class<? extends ActionBean>[] classes = new Class[]{ConflictActionBean1.class,
-            ConflictActionBean2.class, ConflictActionBean3.class, ConflictActionBean4.class,
-            FooActionBean.class, FooActionBean1.class, FooActionBean2.class,
-            FooActionBean3.class, FooActionBean4.class, FooActionBean5.class,
-            FooActionBean6.class, FooActionBean7.class, FooActionBean8.class,
-            SuffixActionBean1.class, SuffixActionBean2.class,
-            STS731ActionBean1.class, STS731ActionBean2.class, STS731ActionBean3.class
+                ConflictActionBean2.class, ConflictActionBean3.class, ConflictActionBean4.class,
+                FooActionBean.class, FooActionBean1.class, FooActionBean2.class,
+                FooActionBean3.class, FooActionBean4.class, FooActionBean5.class,
+                FooActionBean6.class, FooActionBean7.class, FooActionBean8.class,
+                SuffixActionBean1.class, SuffixActionBean2.class,
+                STS731ActionBean1.class, STS731ActionBean2.class, STS731ActionBean3.class
         };
 
         UrlBindingFactory factory = new UrlBindingFactory();
@@ -241,14 +241,19 @@ public class UrlBindingFactoryTests {
     }
 
     private List<UrlBindingParameter> checkBinding(String uri, Class<? extends ActionBean> expected) {
-        log.debug("Checking that ", uri, " maps to ", expected);
+        log.debug("Checking that ",
+                  uri,
+                  " maps to ",
+                  expected);
         UrlBinding binding = urlBindingFactory.getBinding(uri);
-        Assert.assertNotNull(binding, "The uri \"" + uri + "\" matched nothing");
-        Assert.assertSame(binding.getBeanType(), expected);
+        Assertions.assertNotNull(binding,
+                                 "The uri \"" + uri + "\" matched nothing");
+        Assertions.assertSame(binding.getBeanType(),
+                              expected);
         return binding.getParameters();
     }
 
-    @Test(groups = "fast")
+    @Test
     @SuppressWarnings("unchecked")
     public void testParser1() {
         Class<? extends ActionBean>[] classes = new Class[]{BadSyntaxActionBean1.class,
@@ -262,7 +267,7 @@ public class UrlBindingFactoryTests {
             log.debug("Parsing URL binding ", annotation.value(), ", expecting failure");
             try {
                 UrlBindingFactory.parseUrlBinding(clazz);
-                Assert.fail("Expected parse exception but did not get one");
+                Assertions.fail("Expected parse exception but did not get one");
             } catch (ParseException e) {
                 log.debug("As expected: ", e.getMessage());
             }
@@ -273,7 +278,7 @@ public class UrlBindingFactoryTests {
         return s.replaceAll("\\\\(.)", "$1");
     }
 
-    @Test(groups = "fast")
+    @Test
     @SuppressWarnings("unchecked")
     public void testParser2() {
         Class<? extends ActionBean>[] classes = new Class[]{GoodSyntaxActionBean1.class,
@@ -286,12 +291,15 @@ public class UrlBindingFactoryTests {
         for (Class<? extends ActionBean> clazz : classes) {
             net.sourceforge.stripes.action.UrlBinding annotation = clazz
                     .getAnnotation(net.sourceforge.stripes.action.UrlBinding.class);
-            log.debug("Parsing URL binding ", annotation.value());
+            log.debug("Parsing URL binding ",
+                      annotation.value());
             UrlBinding binding = UrlBindingFactory.parseUrlBinding(clazz);
-            log.debug("Expression parsed to ", binding);
-            Assert.assertNotNull(binding);
-            Assert.assertEquals(binding.toString(), removeEscapes(annotation.value()),
-                    "Parsed expression is not the same as original expression");
+            log.debug("Expression parsed to ",
+                      binding);
+            Assertions.assertNotNull(binding);
+            Assertions.assertEquals(binding.toString(),
+                                    removeEscapes(annotation.value()),
+                                    "Parsed expression is not the same as original expression");
         }
 
         // Check weird parameter names
@@ -304,23 +312,34 @@ public class UrlBindingFactoryTests {
             String value = annotation.value();
             log.debug("Checking URL binding parameters for ", value);
             UrlBinding binding = UrlBindingFactory.parseUrlBinding(clazz);
-            Assert.assertEquals(binding.getParameters().size(), 1,
-                    "Was expecting exactly one parameter");
+            Assertions.assertEquals(binding.getParameters()
+                                            .size(),
+                                    1,
+                                    "Was expecting exactly one parameter");
             String pname = removeEscapes(value.substring(value.indexOf('{') + 1, value
                     .lastIndexOf('}')));
-            log.debug("Parameter name is ", pname);
-            Assert.assertEquals(binding.getParameters().get(0).getName(), pname);
+            log.debug("Parameter name is ",
+                      pname);
+            Assertions.assertEquals(binding.getParameters()
+                                            .get(0)
+                                            .getName(),
+                                    pname);
         }
     }
 
-    @Test(groups = "fast", expectedExceptions = UrlBindingConflictException.class)
+    @Test
     public void testUrlBindingConflict() {
-        checkBinding("/clash/not", ConflictActionBean4.class);
-        checkBinding("/clash/not/", ConflictActionBean4.class);
-        urlBindingFactory.getBinding("/clash");
+        Assertions.assertThrows(UrlBindingConflictException.class,
+                                () -> {
+                                    checkBinding("/clash/not",
+                                                 ConflictActionBean4.class);
+                                    checkBinding("/clash/not/",
+                                                 ConflictActionBean4.class);
+                                    urlBindingFactory.getBinding("/clash");
+                                });
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testUrlBindings() {
         // No extensions
         checkBinding("/foo", FooActionBean.class);
@@ -373,55 +392,87 @@ public class UrlBindingFactoryTests {
         // Suffixes, as reported in STS-731
         for (String value : new String[]{"really-long", "long", "XX", "X"}) {
             List<UrlBindingParameter> param;
-            param = checkBinding(format("/sts731/%s/", value), STS731ActionBean1.class);
-            Assert.assertEquals(param.get(0).getValue(), value);
-            param = checkBinding(format("/sts731/%s/foo/", value), STS731ActionBean2.class);
-            Assert.assertEquals(param.get(0).getValue(), value);
-            param = checkBinding(format("/sts731/%s/bar/", value), STS731ActionBean3.class);
-            Assert.assertEquals(param.get(0).getValue(), value);
+            param = checkBinding(format("/sts731/%s/",
+                                        value),
+                                 STS731ActionBean1.class);
+            Assertions.assertEquals(param.get(0)
+                                            .getValue(),
+                                    value);
+            param = checkBinding(format("/sts731/%s/foo/",
+                                        value),
+                                 STS731ActionBean2.class);
+            Assertions.assertEquals(param.get(0)
+                                            .getValue(),
+                                    value);
+            param = checkBinding(format("/sts731/%s/bar/",
+                                        value),
+                                 STS731ActionBean3.class);
+            Assertions.assertEquals(param.get(0)
+                                            .getValue(),
+                                    value);
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testConflictDetectionIndependentOfClassLoadingOrder() {
         UrlBindingFactory factory;
         UrlBinding prototype;
 
         // This order works
         factory = new UrlBindingFactory();
-        factory.addBinding(FooActionBean.class, UrlBindingFactory.parseUrlBinding(FooActionBean.class));
-        factory.addBinding(FooActionBean2.class, UrlBindingFactory.parseUrlBinding(FooActionBean2.class));
-        factory.addBinding(FooActionBean3.class, UrlBindingFactory.parseUrlBinding(FooActionBean3.class));
-        factory.addBinding(FooActionBean4.class, UrlBindingFactory.parseUrlBinding(FooActionBean4.class));
-        factory.addBinding(FooActionBean5.class, UrlBindingFactory.parseUrlBinding(FooActionBean5.class));
-        factory.addBinding(FooActionBean6.class, UrlBindingFactory.parseUrlBinding(FooActionBean6.class));
-        factory.addBinding(FooActionBean7.class, UrlBindingFactory.parseUrlBinding(FooActionBean7.class));
-        factory.addBinding(FooActionBean8.class, UrlBindingFactory.parseUrlBinding(FooActionBean8.class));
+        factory.addBinding(FooActionBean.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean.class));
+        factory.addBinding(FooActionBean2.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean2.class));
+        factory.addBinding(FooActionBean3.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean3.class));
+        factory.addBinding(FooActionBean4.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean4.class));
+        factory.addBinding(FooActionBean5.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean5.class));
+        factory.addBinding(FooActionBean6.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean6.class));
+        factory.addBinding(FooActionBean7.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean7.class));
+        factory.addBinding(FooActionBean8.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean8.class));
         prototype = factory.getBindingPrototype("/foo");
-        Assert.assertNotNull(prototype);
-        Assert.assertSame(prototype.getBeanType(), FooActionBean.class);
+        Assertions.assertNotNull(prototype);
+        Assertions.assertSame(prototype.getBeanType(),
+                              FooActionBean.class);
 
         // This order was failing
         factory = new UrlBindingFactory();
-        factory.addBinding(FooActionBean8.class, UrlBindingFactory.parseUrlBinding(FooActionBean8.class));
-        factory.addBinding(FooActionBean7.class, UrlBindingFactory.parseUrlBinding(FooActionBean7.class));
-        factory.addBinding(FooActionBean6.class, UrlBindingFactory.parseUrlBinding(FooActionBean6.class));
-        factory.addBinding(FooActionBean5.class, UrlBindingFactory.parseUrlBinding(FooActionBean5.class));
-        factory.addBinding(FooActionBean4.class, UrlBindingFactory.parseUrlBinding(FooActionBean4.class));
-        factory.addBinding(FooActionBean3.class, UrlBindingFactory.parseUrlBinding(FooActionBean3.class));
-        factory.addBinding(FooActionBean2.class, UrlBindingFactory.parseUrlBinding(FooActionBean2.class));
-        factory.addBinding(FooActionBean.class, UrlBindingFactory.parseUrlBinding(FooActionBean.class));
+        factory.addBinding(FooActionBean8.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean8.class));
+        factory.addBinding(FooActionBean7.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean7.class));
+        factory.addBinding(FooActionBean6.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean6.class));
+        factory.addBinding(FooActionBean5.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean5.class));
+        factory.addBinding(FooActionBean4.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean4.class));
+        factory.addBinding(FooActionBean3.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean3.class));
+        factory.addBinding(FooActionBean2.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean2.class));
+        factory.addBinding(FooActionBean.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean.class));
         factory.getBindingPrototype("/foo");
-        Assert.assertNotNull(prototype);
-        Assert.assertSame(prototype.getBeanType(), FooActionBean.class);
+        Assertions.assertNotNull(prototype);
+        Assertions.assertSame(prototype.getBeanType(),
+                              FooActionBean.class);
 
         // And this should still fail, regardless of order
         factory = new UrlBindingFactory();
-        factory.addBinding(FooActionBean.class, UrlBindingFactory.parseUrlBinding(FooActionBean.class));
-        factory.addBinding(FooActionBean2.class, UrlBindingFactory.parseUrlBinding(FooActionBean.class));
+        factory.addBinding(FooActionBean.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean.class));
+        factory.addBinding(FooActionBean2.class,
+                           UrlBindingFactory.parseUrlBinding(FooActionBean.class));
         try {
             factory.getBindingPrototype("/foo");
-            Assert.fail("A URL binding conflict was expected but it didn't happen!");
+            Assertions.fail("A URL binding conflict was expected but it didn't happen!");
         } catch (UrlBindingConflictException e) {
             log.debug("Got expected URL binding conflict");
         }

@@ -4,8 +4,8 @@ import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
 
@@ -83,7 +83,8 @@ public class TestMockRoundtrip extends FilterEnabledTestBase implements ActionBe
     @HandlesEvent("addAndStream")
     public Resolution addAndStream() {
         this.result = lhs + rhs;
-        return new StreamingResolution("text/plain", new StringReader(String.valueOf(this.result)));
+        return new StreamingResolution("text/plain",
+                                       new StringReader(String.valueOf(this.result)));
     }
 
     /**
@@ -101,12 +102,16 @@ public class TestMockRoundtrip extends FilterEnabledTestBase implements ActionBe
     @HandlesEvent("divide")
     public Resolution divide() {
         if (rhs == 0) {
-            getContext().getValidationErrors().add("rhs", new SimpleError("Rhs may not be zero"));
+            getContext().getValidationErrors()
+                    .add("rhs",
+                         new SimpleError("Rhs may not be zero"));
             return getContext().getSourcePageResolution();
         }
 
         this.result = lhs / rhs;
-        getContext().getRequest().setAttribute("integerResult", (int) this.result);
+        getContext().getRequest()
+                .setAttribute("integerResult",
+                              (int) this.result);
         return new ForwardResolution("/mock/success.jsp");
     }
 
@@ -114,144 +119,215 @@ public class TestMockRoundtrip extends FilterEnabledTestBase implements ActionBe
     // End of ActionBean methods and beginning of test methods. Everything
     // below this line is a test!
     ///////////////////////////////////////////////////////////////////////////
-    @Test(groups = "fast")
+    @Test
     public void testDefaultEvent() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "2");
-        trip.setParameter("rhs", "2");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "2");
+        trip.setParameter("rhs",
+                          "2");
         trip.execute();
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 4.0);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
+        Assertions.assertEquals(bean.getResult(),
+                                4.0);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(trip.getDestination(),
+                                "/mock/success.jsp");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithNamedEvent() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "2");
-        trip.setParameter("rhs", "2");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "2");
+        trip.setParameter("rhs",
+                          "2");
         trip.execute("add");
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 4.0);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
+        Assertions.assertEquals(bean.getResult(),
+                                4.0);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(trip.getDestination(),
+                                "/mock/success.jsp");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithRedirect() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "2");
-        trip.setParameter("rhs", "2");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "2");
+        trip.setParameter("rhs",
+                          "2");
         trip.execute("addAndRedirect");
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 4.0);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
-        Assert.assertNull(trip.getRequest().getForwardUrl());
+        Assertions.assertEquals(bean.getResult(),
+                                4.0);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(trip.getDestination(),
+                                "/mock/success.jsp");
+        Assertions.assertNull(trip.getRequest()
+                                      .getForwardUrl());
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithStreamingOutput() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "2");
-        trip.setParameter("rhs", "2");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "2");
+        trip.setParameter("rhs",
+                          "2");
         trip.execute("addAndStream");
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 4.0);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertNull(trip.getDestination());
-        Assert.assertEquals(trip.getOutputString(), "4.0");
+        Assertions.assertEquals(bean.getResult(),
+                                4.0);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertNull(trip.getDestination());
+        Assertions.assertEquals(trip.getOutputString(),
+                                "4.0");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithValidationErrors() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "");
-        trip.setParameter("rhs", "abc");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "");
+        trip.setParameter("rhs",
+                          "abc");
         trip.execute();
 
-        Assert.assertEquals(trip.getValidationErrors().size(), 2); // both fields in error
-        Assert.assertEquals(trip.getDestination(), MockRoundtrip.DEFAULT_SOURCE_PAGE);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                2); // both fields in error
+        Assertions.assertEquals(trip.getDestination(),
+                                MockRoundtrip.DEFAULT_SOURCE_PAGE);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithDifferentNamedEvent() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "4");
-        trip.setParameter("rhs", "4");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "4");
+        trip.setParameter("rhs",
+                          "4");
         trip.execute("multiply");
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 16.0);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
+        Assertions.assertEquals(bean.getResult(),
+                                16.0);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(trip.getDestination(),
+                                "/mock/success.jsp");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testWithCustomValidationErrors() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "2");
-        trip.setParameter("rhs", "0");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "2");
+        trip.setParameter("rhs",
+                          "0");
         trip.execute("divide");
 
-        Assert.assertEquals(trip.getValidationErrors().size(), 1);
-        Assert.assertEquals(trip.getDestination(), MockRoundtrip.DEFAULT_SOURCE_PAGE);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                1);
+        Assertions.assertEquals(trip.getDestination(),
+                                MockRoundtrip.DEFAULT_SOURCE_PAGE);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testFetchingRequestAttributes() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.setParameter("lhs", "10");
-        trip.setParameter("rhs", "4");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.setParameter("lhs",
+                          "10");
+        trip.setParameter("rhs",
+                          "4");
         trip.execute("divide");
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        Assert.assertEquals(bean.getResult(), 2.5);
-        Assert.assertEquals(trip.getValidationErrors().size(), 0);
-        Assert.assertEquals(trip.getDestination(), "/mock/success.jsp");
-        Assert.assertEquals(trip.getRequest().getAttribute("integerResult"),
-                            2);
+        Assertions.assertEquals(bean.getResult(),
+                                2.5);
+        Assertions.assertEquals(trip.getValidationErrors()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(trip.getDestination(),
+                                "/mock/success.jsp");
+        Assertions.assertEquals(trip.getRequest()
+                                        .getAttribute("integerResult"),
+                                2);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testRequestCaseInsensitive() {
-        final MockHttpServletRequest request = new MockHttpServletRequest("", "");
+        final MockHttpServletRequest request = new MockHttpServletRequest("",
+                                                                          "");
 
         String headerName = "User-Agent";
         Object value = "Netscape/6.0";
-        request.addHeader(headerName, value);
+        request.addHeader(headerName,
+                          value);
         String[] variants = {headerName, headerName.toLowerCase(), headerName.toUpperCase()};
         for (String v : variants) {
-            Assert.assertEquals(request.getHeader(v), value,
-                    "MockHttpServletRequest.addHeader/getHeader are case sensitive");
+            Assertions.assertEquals(request.getHeader(v),
+                                    value,
+                                    "MockHttpServletRequest.addHeader/getHeader are case sensitive");
         }
 
         headerName = "Content-Length";
         value = 1024;
-        request.addHeader(headerName, value);
+        request.addHeader(headerName,
+                          value);
         variants = new String[]{headerName, headerName.toLowerCase(), headerName.toUpperCase()};
         for (String v : variants) {
-            Assert.assertEquals(request.getIntHeader(v), value,
-                    "MockHttpServletRequest.addHeader/getIntHeader are case sensitive");
+            Assertions.assertEquals(request.getIntHeader(v),
+                                    value,
+                                    "MockHttpServletRequest.addHeader/getIntHeader are case sensitive");
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testAddParameter() throws Exception {
         // Setup the servlet engine
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), TestMockRoundtrip.class);
-        trip.addParameter("param", "a");
-        trip.addParameter("param", "b");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               TestMockRoundtrip.class);
+        trip.addParameter("param",
+                          "a");
+        trip.addParameter("param",
+                          "b");
         trip.execute();
 
         TestMockRoundtrip bean = trip.getActionBean(TestMockRoundtrip.class);
-        String[] params = bean.getContext().getRequest().getParameterValues("param");
-        Assert.assertEquals(2, params.length);
-        Assert.assertEquals(new String[]{"a", "b"}, params);
+        String[] params = bean.getContext()
+                .getRequest()
+                .getParameterValues("param");
+        Assertions.assertAll("",
+                             () -> Assertions.assertEquals(2,
+                                                           params.length),
+                             () -> Assertions.assertEquals("a",
+                                                           params[0]),
+                             () -> Assertions.assertEquals("b",
+                                                           params[1]));
     }
 }

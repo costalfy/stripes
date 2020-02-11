@@ -5,25 +5,31 @@ import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.AsyncEvent;
 import net.sourceforge.stripes.controller.AsyncListener;
 import net.sourceforge.stripes.controller.AsyncResponse;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.testng.Assert.*;
+
 
 public class TestMockAsync extends FilterEnabledTestBase {
 
     private AsyncActionBean execute(String eventName) throws Exception {
         System.out.println("==> Executing : " + eventName);
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               AsyncActionBean.class);
         trip.execute(eventName);
         AsyncActionBean bean = trip.getActionBean(AsyncActionBean.class);
-        assertNotNull(bean);
-        assertEquals(eventName, bean.getContext().getEventName());
-        assertTrue(bean.completed);
-        assertTrue(trip.getRequest().getAsyncContext().isCompleted());
+        Assertions.assertNotNull(bean);
+        Assertions.assertEquals(eventName,
+                                bean.getContext()
+                                        .getEventName());
+        Assertions.assertTrue(bean.completed);
+        Assertions.assertTrue(trip.getRequest()
+                                      .getAsyncContext()
+                                      .isCompleted());
         System.out.println("==> done with : " + eventName);
         return bean;
     }
@@ -31,20 +37,21 @@ public class TestMockAsync extends FilterEnabledTestBase {
     @Test
     public void testSuccess() throws Exception {
         AsyncActionBean bean = execute("doAsync");
-        assertNotNull(bean);
-        assertTrue(bean.isCompleted());
+        Assertions.assertNotNull(bean);
+        Assertions.assertTrue(bean.isCompleted());
     }
 
     @Test
     public void testReallyAsync() throws Exception {
         AsyncActionBean bean = execute("doReallyAsync");
-        assertNotNull(bean);
-        assertTrue(bean.isCompleted());
+        Assertions.assertNotNull(bean);
+        Assertions.assertTrue(bean.isCompleted());
     }
 
     @Test
     public void testTimeout() {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               AsyncActionBean.class);
         boolean caught = false;
         try {
             trip.execute("doAsyncTimeout");
@@ -52,13 +59,17 @@ public class TestMockAsync extends FilterEnabledTestBase {
             caught = true;
             e.printStackTrace();
         }
-        assertTrue(caught);
+        Assertions.assertTrue(caught);
         AsyncActionBean bean = trip.getActionBean(AsyncActionBean.class);
-        assertNotNull(bean);
-        assertFalse(bean.isCompleted());
-        HttpServletResponse response = bean.getContext().getResponse();
-        assertEquals(response.getStatus(), 500);
-        assertTrue(trip.getRequest().getAsyncContext().isCompleted());
+        Assertions.assertNotNull(bean);
+        Assertions.assertFalse(bean.isCompleted());
+        HttpServletResponse response = bean.getContext()
+                .getResponse();
+        Assertions.assertEquals(response.getStatus(),
+                                500);
+        Assertions.assertTrue(trip.getRequest()
+                                      .getAsyncContext()
+                                      .isCompleted());
     }
 
     @Test
@@ -71,7 +82,7 @@ public class TestMockAsync extends FilterEnabledTestBase {
             e.printStackTrace();
             caught = true;
         }
-        assertTrue(caught);
+        Assertions.assertTrue(caught);
     }
 
     private void assertThrows(String event) {
@@ -79,12 +90,14 @@ public class TestMockAsync extends FilterEnabledTestBase {
         try {
             MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
             trip.execute(event);
-            assertTrue(trip.getRequest().getAsyncContext().isCompleted());
+            Assertions.assertTrue(trip.getRequest()
+                                          .getAsyncContext()
+                                          .isCompleted());
         } catch (Exception e) {
             e.printStackTrace();
             caught = true;
         }
-        assertTrue(caught);
+        Assertions.assertTrue(caught);
     }
 
     @Test
@@ -114,13 +127,18 @@ public class TestMockAsync extends FilterEnabledTestBase {
 
     @Test
     public void doAsyncWithForwardToNowhere() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), AsyncActionBean.class);
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               AsyncActionBean.class);
         trip.execute("doAsyncWithForwardToNowhere");
         AsyncActionBean bean = trip.getActionBean(AsyncActionBean.class);
-        assertNotNull(bean);
-        assertEquals("doAsyncWithForwardToNowhere", bean.getContext().getEventName());
-        assertFalse(bean.completed);
-        assertTrue(trip.getRequest().getAsyncContext().isCompleted());
+        Assertions.assertNotNull(bean);
+        Assertions.assertEquals("doAsyncWithForwardToNowhere",
+                                bean.getContext()
+                                        .getEventName());
+        Assertions.assertFalse(bean.completed);
+        Assertions.assertTrue(trip.getRequest()
+                                      .getAsyncContext()
+                                      .isCompleted());
     }
 
     @UrlBinding("/async")

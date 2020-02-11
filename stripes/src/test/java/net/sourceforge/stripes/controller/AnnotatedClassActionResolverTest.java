@@ -3,9 +3,9 @@ package net.sourceforge.stripes.controller;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.UrlBinding;
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -74,20 +74,22 @@ public class AnnotatedClassActionResolverTest {
         }
     }
 
-    @BeforeTest
+    @BeforeEach
     public void setUp() throws Exception {
         resolver.init(null);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void findByName() {
         Class<? extends ActionBean> actionBean = resolver.getActionBeanByName("SimpleActionBean");
-        Assert.assertNotNull(actionBean);
+        Assertions.assertNotNull(actionBean);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void multipleActionBeansWithSameSimpleName() {
         Class<? extends ActionBean> actionBean = resolver.getActionBeanByName("OverloadedActionBean");
-        Assert.assertNull(actionBean);
+        Assertions.assertNull(actionBean);
     }
 }

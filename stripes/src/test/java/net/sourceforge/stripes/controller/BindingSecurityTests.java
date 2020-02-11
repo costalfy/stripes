@@ -1,15 +1,7 @@
 package net.sourceforge.stripes.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StrictBinding;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.action.StrictBinding.Policy;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.mock.MockRoundtrip;
@@ -18,9 +10,12 @@ import net.sourceforge.stripes.util.bean.PropertyExpression;
 import net.sourceforge.stripes.util.bean.PropertyExpressionEvaluation;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Tests binding security.
@@ -202,7 +197,8 @@ public class BindingSecurityTests extends FilterEnabledTestBase {
 
     private static final Log log = Log.getInstance(BindingSecurityTests.class);
 
-    @Test(groups = "fast")
+    @Test
+
     public void bindingPolicyEnforcement() {
         try {
             evaluate(new NoAnnotation());
@@ -233,16 +229,21 @@ public class BindingSecurityTests extends FilterEnabledTestBase {
         bean = trip.getActionBean(beanType);
         for (int i = 0; i < properties.length; i++) {
             String fullName = beanType.getSimpleName() + "." + properties[i];
-            log.debug("Testing binding security on ", fullName);
+            log.debug("Testing binding security on ",
+                      fullName);
             PropertyExpression pe = PropertyExpression.getExpression(properties[i]);
-            PropertyExpressionEvaluation eval = new PropertyExpressionEvaluation(pe, bean);
+            PropertyExpressionEvaluation eval = new PropertyExpressionEvaluation(pe,
+                                                                                 bean);
             Object value = eval.getValue();
-            Assert.assertEquals(value != null, expect[i], "Property " + fullName + " should"
-                    + (expect[i] ? " not" : "") + " be null but it is" + (expect[i] ? "" : " not"));
+            Assertions.assertEquals(value != null,
+                                    expect[i],
+                                    "Property " + fullName + " should"
+                                    + (expect[i] ? " not" : "") + " be null but it is" + (expect[i] ? "" : " not"));
         }
     }
 
-    @Test(groups = "fast")
+    @Test
+
     @SuppressWarnings("unused")
     public void protectedClasses() {
         class TestBean implements ActionBean {
@@ -301,7 +302,8 @@ public class BindingSecurityTests extends FilterEnabledTestBase {
             log.debug("Testing illegal expression: " + expression);
             PropertyExpression pe = PropertyExpression.getExpression(expression);
             PropertyExpressionEvaluation eval = new PropertyExpressionEvaluation(pe, bean);
-            Assert.assertFalse(bpm.isBindingAllowed(eval), "Binding should not be allowed for expression " + expression);
+            Assertions.assertFalse(bpm.isBindingAllowed(eval),
+                                   "Binding should not be allowed for expression " + expression);
         }
     }
 

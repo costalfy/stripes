@@ -1,20 +1,20 @@
 package net.sourceforge.stripes.integration.spring;
 
-import javax.servlet.ServletContext;
-
 import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.controller.DefaultObjectFactory;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.test.TestActionBean;
 import net.sourceforge.stripes.test.TestBean;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.StaticWebApplicationContext;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+
+import javax.servlet.ServletContext;
 
 /**
  * Unit tests for the SpringHelper class that injects spring managed beans into
@@ -24,14 +24,17 @@ import org.testng.annotations.Test;
  */
 public class SpringHelperTests {
 
-    StaticApplicationContext ctx;
+    static StaticApplicationContext ctx;
 
-    @BeforeClass(alwaysRun = true)
-    protected void setupSpringContext() {
+    @BeforeAll
+    static void setupSpringContext() {
         ctx = new StaticWebApplicationContext();
-        ctx.registerSingleton("test/TestBean", TestBean.class);
-        ctx.registerSingleton("testActionBean", TestActionBean.class);
-        ctx.registerPrototype("test/testActionBean", TestActionBean.class);
+        ctx.registerSingleton("test/TestBean",
+                              TestBean.class);
+        ctx.registerSingleton("testActionBean",
+                              TestActionBean.class);
+        ctx.registerPrototype("test/testActionBean",
+                              TestActionBean.class);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -50,11 +53,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testExplicitSetterInjection() {
         ExplicitPublicSetterTarget target = new ExplicitPublicSetterTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -73,11 +77,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testPrivateSetterInjection() {
         ExplicitPrivateSetterTarget target = new ExplicitPrivateSetterTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -91,11 +96,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testPrivateFieldInjection() {
         ExplicitPrivateFieldTarget target = new ExplicitPrivateFieldTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -114,11 +120,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testExplicitNonStandardSetterInjection() {
         ExplicitNonStandardSetterTarget target = new ExplicitNonStandardSetterTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -137,11 +144,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testImplicitNonStandardSetterInjection() {
         ImplicitNonStandardSetterTarget target = new ImplicitNonStandardSetterTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -160,11 +168,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testImplicitStandardSetterInjection() {
         ImplicitStandardSetterTarget target = new ImplicitStandardSetterTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -178,22 +187,24 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testImplicitFieldInjection() {
         ImplicitFieldTarget target = new ImplicitFieldTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
     private static class DerivedFromImplicitFieldTarget extends ImplicitFieldTarget {
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testDerivedFromImplicitFieldInjection() {
         DerivedFromImplicitFieldTarget target = new DerivedFromImplicitFieldTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -207,11 +218,12 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testByTypeInjection() {
         ByTypeTarget target = new ByTypeTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getBean());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -237,14 +249,15 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testMultipleInjection() {
         MultipleInjectionTarget target = new MultipleInjectionTarget();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.someBeanOrOther);
-        Assert.assertNotNull(target.testActionBean);
-        Assert.assertNotNull(target.number3);
-        Assert.assertNotNull(target.number4);
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.someBeanOrOther);
+        Assertions.assertNotNull(target.testActionBean);
+        Assertions.assertNotNull(target.number3);
+        Assertions.assertNotNull(target.number4);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -255,10 +268,14 @@ public class SpringHelperTests {
         TestActionBean someBeanOrOther;
     }
 
-    @Test(groups = "fast", expectedExceptions = StripesRuntimeException.class)
+    @Test
     public void testAmbiguousByTypeInjection() {
-        AmbiguousByTypeTarget target = new AmbiguousByTypeTarget();
-        SpringHelper.injectBeans(target, ctx);
+        Assertions.assertThrows(StripesRuntimeException.class,
+                                () -> {
+                                    AmbiguousByTypeTarget target = new AmbiguousByTypeTarget();
+                                    SpringHelper.injectBeans(target,
+                                                             ctx);
+                                });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -269,10 +286,15 @@ public class SpringHelperTests {
         TestActionBean someBeanOrOther;
     }
 
-    @Test(groups = "fast", expectedExceptions = StripesRuntimeException.class)
+    @Test
     public void testExplicitMisNamedTargetInjection() {
-        ExplicitMisNamedTarget target = new ExplicitMisNamedTarget();
-        SpringHelper.injectBeans(target, ctx);
+        Assertions.assertThrows(StripesRuntimeException.class,
+                                () -> {
+                                    ExplicitMisNamedTarget target = new ExplicitMisNamedTarget();
+                                    SpringHelper.injectBeans(target,
+                                                             ctx);
+                                });
+
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -283,10 +305,14 @@ public class SpringHelperTests {
         TestActionBean tstActionBea;
     }
 
-    @Test(groups = "fast", expectedExceptions = StripesRuntimeException.class)
+    @Test
     public void testImplicitMisNamedTargetInjection() {
-        ImplicitMisNamedTarget target = new ImplicitMisNamedTarget();
-        SpringHelper.injectBeans(target, ctx);
+        Assertions.assertThrows(StripesRuntimeException.class,
+                                () -> {
+                                    ImplicitMisNamedTarget target = new ImplicitMisNamedTarget();
+                                    SpringHelper.injectBeans(target,
+                                                             ctx);
+                                });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -297,10 +323,14 @@ public class SpringHelperTests {
         SpringHelperTests noBeansOfType;
     }
 
-    @Test(groups = "fast", expectedExceptions = StripesRuntimeException.class)
+    @Test
     public void testNoBeansOfTargetTypeInjection() {
-        NoBeanOfTypeTarget target = new NoBeanOfTypeTarget();
-        SpringHelper.injectBeans(target, ctx);
+        Assertions.assertThrows(StripesRuntimeException.class,
+                                () -> {
+                                    NoBeanOfTypeTarget target = new NoBeanOfTypeTarget();
+                                    SpringHelper.injectBeans(target,
+                                                             ctx);
+                                });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -316,10 +346,14 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast", expectedExceptions = StripesRuntimeException.class)
+    @Test
     public void testInvalidSetterSignatureInjection() {
-        InvalidSetterSignatureTarget target = new InvalidSetterSignatureTarget();
-        SpringHelper.injectBeans(target, ctx);
+        Assertions.assertThrows(StripesRuntimeException.class,
+                                () -> {
+                                    InvalidSetterSignatureTarget target = new InvalidSetterSignatureTarget();
+                                    SpringHelper.injectBeans(target,
+                                                             ctx);
+                                });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -345,14 +379,15 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "slow", threadPoolSize = 10, invocationCount = 1000)
+    @RepeatedTest(1000)
     public void testConcurrentInjection() {
         MultipleInjectionTarget2 target = new MultipleInjectionTarget2();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.someBeanOrOther);
-        Assert.assertNotNull(target.testActionBean);
-        Assert.assertNotNull(target.number3);
-        Assert.assertNotNull(target.number4);
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.someBeanOrOther);
+        Assertions.assertNotNull(target.testActionBean);
+        Assertions.assertNotNull(target.number3);
+        Assertions.assertNotNull(target.number4);
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -370,16 +405,18 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast", dependsOnMethods = "testExplicitSetterInjection")
+    @Test/*( dependsOnMethods = "testExplicitSetterInjection")*/
+
     public void testInjectionViaObjectPostProcessor() throws Exception {
         Configuration configuration = StripesTestFixture.getDefaultConfiguration();
         ServletContext sc = configuration.getServletContext();
-        sc.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.ctx);
+        sc.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
+                        this.ctx);
         DefaultObjectFactory factory = new DefaultObjectFactory();
         factory.init(configuration);
         factory.addPostProcessor(new SpringInjectionPostProcessor());
         PostProcessorTarget target = factory.newInstance(PostProcessorTarget.class);
-        Assert.assertNotNull(target.getBean());
+        Assertions.assertNotNull(target.getBean());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -439,17 +476,18 @@ public class SpringHelperTests {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testHiddenFields() {
         HiddenPrivateFieldTarget2 target = new HiddenPrivateFieldTarget2();
-        SpringHelper.injectBeans(target, ctx);
-        Assert.assertNotNull(target.getA1());
-        Assert.assertNotNull(target.getA2());
-        Assert.assertNotNull(target.getB1());
-        Assert.assertNotNull(target.getB2());
-        Assert.assertNotNull(target.getC1());
-        Assert.assertNotNull(target.getC2());
-        Assert.assertNotNull(target.getD1());
-        Assert.assertNotNull(target.getD2());
+        SpringHelper.injectBeans(target,
+                                 ctx);
+        Assertions.assertNotNull(target.getA1());
+        Assertions.assertNotNull(target.getA2());
+        Assertions.assertNotNull(target.getB1());
+        Assertions.assertNotNull(target.getB2());
+        Assertions.assertNotNull(target.getC1());
+        Assertions.assertNotNull(target.getC2());
+        Assertions.assertNotNull(target.getD1());
+        Assertions.assertNotNull(target.getD2());
     }
 }

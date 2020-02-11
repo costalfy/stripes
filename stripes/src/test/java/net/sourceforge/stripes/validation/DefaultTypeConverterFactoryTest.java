@@ -2,8 +2,8 @@ package net.sourceforge.stripes.validation;
 
 import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.util.Log;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,16 +15,19 @@ public class DefaultTypeConverterFactoryTest {
     private static final Log log = Log.getInstance(DefaultTypeConverterFactoryTest.class);
 
     @SuppressWarnings("unchecked")
-    @Test(groups = "fast")
+    @Test
     public void testCharTypeConverter() throws Exception {
         DefaultTypeConverterFactory factory = new DefaultTypeConverterFactory();
         factory.init(StripesTestFixture.getDefaultConfiguration());
 
         TypeConverter typeConverter = factory.getTypeConverter(Character.class, Locale.getDefault());
-        Assert.assertEquals(CharacterTypeConverter.class, typeConverter.getClass());
+        Assertions.assertEquals(CharacterTypeConverter.class,
+                                typeConverter.getClass());
 
-        typeConverter = factory.getTypeConverter(Character.TYPE, Locale.getDefault());
-        Assert.assertEquals(CharacterTypeConverter.class, typeConverter.getClass());
+        typeConverter = factory.getTypeConverter(Character.TYPE,
+                                                 Locale.getDefault());
+        Assertions.assertEquals(CharacterTypeConverter.class,
+                                typeConverter.getClass());
     }
 
     /*
@@ -79,12 +82,13 @@ public class DefaultTypeConverterFactoryTest {
                 expect == null ? "null" : ATC.class.getSimpleName());
         TypeConverter<?> tc = factory.getTypeConverter(targetType, null);
         if (expect != null) {
-            Assert.assertNotNull(tc);
-            Assert.assertSame(tc.getClass(), expect);
+            Assertions.assertNotNull(tc);
+            Assertions.assertSame(tc.getClass(),
+                                  expect);
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testTypeConverters() throws Exception {
         DefaultTypeConverterFactory factory = new DefaultTypeConverterFactory();
         factory.init(StripesTestFixture.getDefaultConfiguration());

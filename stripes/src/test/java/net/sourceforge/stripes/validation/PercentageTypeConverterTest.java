@@ -1,7 +1,7 @@
 package net.sourceforge.stripes.validation;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,129 +28,129 @@ public class PercentageTypeConverterTest {
         return converter;
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseBasic() {
         Number result = getConverter().convert("80%", Float.class, errors());
-        Assert.assertEquals(result,
-                            0.8f);
+        Assertions.assertEquals(result,
+                                0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseSpaceBeforePercentSign() {
         Number result = getConverter().convert("80 %", Float.class, errors());
-        Assert.assertEquals(result,
-                            0.8f);
+        Assertions.assertEquals(result,
+                                0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseWithoutPercentSign() {
         Number result = getConverter().convert("80", Float.class, errors());
-        Assert.assertEquals(result,
-                            0.8f);
+        Assertions.assertEquals(result,
+                                0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegative() {
         Number result = getConverter().convert("-80%", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegativeSpaceBeforePercentSign() {
         Number result = getConverter().convert("-80 %", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegativeWithoutPercentSign() {
         Number result = getConverter().convert("-80", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParentheses() {
         Number result = getConverter().convert("(80%)", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParenthesesSpaceBeforePercentSign() {
         Number result = getConverter().convert("(80 %)", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParenthesesWithoutPercentSign() {
         Number result = getConverter().convert("(80)", Float.class, errors());
-        Assert.assertEquals(result,
-                            -0.8f);
+        Assertions.assertEquals(result,
+                                -0.8f);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseBasicDouble() {
         Number result = getConverter().convert("0.8%", Double.class, errors());
-        Assert.assertEquals(result,
-                            0.008);
+        Assertions.assertEquals(result,
+                                0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseSpaceBeforePercentSignDouble() {
         Number result = getConverter().convert("0.8 %", Double.class, errors());
-        Assert.assertEquals(result,
-                            0.008);
+        Assertions.assertEquals(result,
+                                0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseWithoutPercentSignDouble() {
         Number result = getConverter().convert("0.8", Double.class, errors());
-        Assert.assertEquals(result,
-                            0.008);
+        Assertions.assertEquals(result,
+                                0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegativeDouble() {
         Number result = getConverter().convert("-0.8%", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegativeSpaceBeforePercentSignDouble() {
         Number result = getConverter().convert("-0.8 %", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseNegativeWithoutPercentSignDouble() {
         Number result = getConverter().convert("-0.8", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParenthesesDouble() {
         Number result = getConverter().convert("(0.8%)", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParenthesesSpaceBeforePercentSignDouble() {
         Number result = getConverter().convert("(0.8 %)", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void parseParenthesesWithoutPercentSignDouble() {
         Number result = getConverter().convert("(0.8)", Double.class, errors());
-        Assert.assertEquals(result,
-                            -0.008);
+        Assertions.assertEquals(result,
+                                -0.008);
     }
 }

@@ -1,15 +1,13 @@
 package net.sourceforge.stripes.action;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.mock.MockHttpServletRequest;
 import net.sourceforge.stripes.mock.MockHttpServletResponse;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 public class RedirectResolutionTest extends FilterEnabledTestBase {
 
@@ -20,44 +18,69 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
         return request;
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testPermanantRedirect() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org", false).setPermanent(true);
+        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+                                                               false).setPermanent(true);
         MockHttpServletResponse response = new MockHttpServletResponse();
-        resolution.execute(buildMockServletRequest(), response);
+        resolution.execute(buildMockServletRequest(),
+                           response);
 
-        Assert.assertEquals(response.getStatus(), HttpServletResponse.SC_MOVED_PERMANENTLY);
-        Assert.assertEquals(response.getHeaderMap().get("Location").iterator().next(), "http://www.stripesframework.org");
+        Assertions.assertEquals(response.getStatus(),
+                                HttpServletResponse.SC_MOVED_PERMANENTLY);
+        Assertions.assertEquals(response.getHeaderMap()
+                                        .get("Location")
+                                        .iterator()
+                                        .next(),
+                                "http://www.stripesframework.org");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testTemporaryRedirect() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org", false);
+        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+                                                               false);
         MockHttpServletResponse response = new MockHttpServletResponse();
-        resolution.execute(buildMockServletRequest(), response);
+        resolution.execute(buildMockServletRequest(),
+                           response);
 
-        Assert.assertEquals(response.getStatus(), HttpServletResponse.SC_MOVED_TEMPORARILY);
-        Assert.assertEquals(response.getRedirectUrl(), "http://www.stripesframework.org");
+        Assertions.assertEquals(response.getStatus(),
+                                HttpServletResponse.SC_MOVED_TEMPORARILY);
+        Assertions.assertEquals(response.getRedirectUrl(),
+                                "http://www.stripesframework.org");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testPermanantRedirectWithParameters() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org", false).setPermanent(true).addParameter("test", "test");
+        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+                                                               false).setPermanent(true)
+                .addParameter("test",
+                              "test");
         MockHttpServletResponse response = new MockHttpServletResponse();
-        resolution.execute(buildMockServletRequest(), response);
+        resolution.execute(buildMockServletRequest(),
+                           response);
 
-        Assert.assertEquals(response.getStatus(), HttpServletResponse.SC_MOVED_PERMANENTLY);
-        Assert.assertEquals(response.getHeaderMap().get("Location").iterator().next(), "http://www.stripesframework.org?test=test");
+        Assertions.assertEquals(response.getStatus(),
+                                HttpServletResponse.SC_MOVED_PERMANENTLY);
+        Assertions.assertEquals(response.getHeaderMap()
+                                        .get("Location")
+                                        .iterator()
+                                        .next(),
+                                "http://www.stripesframework.org?test=test");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testTemporaryRedirectWithParameters() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org", false).addParameter("test", "test");
+        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+                                                               false).addParameter("test",
+                                                                                   "test");
         MockHttpServletResponse response = new MockHttpServletResponse();
-        resolution.execute(buildMockServletRequest(), response);
+        resolution.execute(buildMockServletRequest(),
+                           response);
 
-        Assert.assertEquals(response.getStatus(), HttpServletResponse.SC_MOVED_TEMPORARILY);
-        Assert.assertEquals(response.getRedirectUrl(), "http://www.stripesframework.org?test=test");
+        Assertions.assertEquals(response.getStatus(),
+                                HttpServletResponse.SC_MOVED_TEMPORARILY);
+        Assertions.assertEquals(response.getRedirectUrl(),
+                                "http://www.stripesframework.org?test=test");
     }
 
 }

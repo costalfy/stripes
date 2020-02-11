@@ -19,8 +19,8 @@ import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.validation.*;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.net.HttpURLConnection;
 import java.util.*;
@@ -116,122 +116,172 @@ public class RestActionBeanTest extends FilterEnabledTestBase implements ActionB
         this.context = context;
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testGetAttemptOnPostMethod() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("GET");
         trip.execute("onlySupportsPost");
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_BAD_METHOD);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_BAD_METHOD);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testPostAttemptOnPostMethod() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("POST");
         trip.execute("onlySupportsPost");
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_OK);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_OK);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testSuccessfulGet() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("GET");
         trip.execute();
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_OK);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_OK);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testFailedPost() throws Exception {
         // Since no event is specified, this should default to the post() method and attempt
         // to execute it.  Since one doesn't exist, it should throw a 404.
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("POST");
         trip.execute();
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_NOT_FOUND);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_NOT_FOUND);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testMissingRequiredParameterOnHead() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("HEAD");
         trip.execute();
-        Assert.assertTrue(trip.getValidationErrors().hasFieldErrors() && trip.getValidationErrors().size() == 1);
+        Assertions.assertTrue(trip.getValidationErrors()
+                                      .hasFieldErrors() && trip.getValidationErrors()
+                                                                   .size() == 1);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testFailedCustomValidationOnHead() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.setParameter("id", "SOME_ID");
         trip.getRequest().setMethod("HEAD");
         trip.execute();
-        Assert.assertTrue(!trip.getValidationErrors().hasFieldErrors() && trip.getValidationErrors().size() == 1);
+        Assertions.assertTrue(!trip.getValidationErrors()
+                .hasFieldErrors() && trip.getValidationErrors()
+                                             .size() == 1);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testCustomHTTPVerb() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("customHttpVerb");
         trip.execute();
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_OK);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_OK);
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testJsonResolutionWithPropertyExclusion() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
         trip.getRequest().setMethod("jsonResolutionWithExclusion");
         trip.execute();
-        Assert.assertFalse(trip.getResponse().getOutputString().toUpperCase().contains("FIRSTNAME"));
+        Assertions.assertFalse(trip.getResponse()
+                                       .getOutputString()
+                                       .toUpperCase()
+                                       .contains("FIRSTNAME"));
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testJsonBindingFromRequestBody() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), "/test/1");
-        trip.getRequest().addHeader("Content-Type", "application/json");
-        trip.getRequest().setMethod("POST");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               "/test/1");
+        trip.getRequest()
+                .addHeader("Content-Type",
+                           "application/json");
+        trip.getRequest()
+                .setMethod("POST");
         String json = "{ \"person\" : { \"firstName\":\"Jane\", \"lastName\":\"Johnson\", \"favoriteFoods\" : [\"Snickers\",\"Scotch\",\"Pizza\"], \"children\" : [{ \"firstName\": \"Jackie\"},{\"firstName\":\"Janie\"}]}}";
-        trip.getRequest().setRequestBody(json);
+        trip.getRequest()
+                .setRequestBody(json);
         trip.execute("boundPersonEvent");
         RestActionBeanTest bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getPerson().getId(), "1");
-        Assert.assertEquals(bean.getPerson().getFirstName(), "Jane");
-        Assert.assertEquals(bean.getPerson().getLastName(), "Johnson");
-        Assert.assertEquals(bean.getPerson().getChildren().size(), 2);
-        List< String> favoriteFoods = new ArrayList<>();
+        Assertions.assertEquals(bean.getPerson()
+                                        .getId(),
+                                "1");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getFirstName(),
+                                "Jane");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getLastName(),
+                                "Johnson");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getChildren()
+                                        .size(),
+                                2);
+        List<String> favoriteFoods = new ArrayList<>();
         favoriteFoods.add("Snickers");
         favoriteFoods.add("Scotch");
         favoriteFoods.add("Pizza");
-        Assert.assertEquals(bean.getPerson().getFavoriteFoods(), favoriteFoods);
+        Assertions.assertEquals(bean.getPerson()
+                                        .getFavoriteFoods(),
+                                favoriteFoods);
 
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testThereIsNoJsonBindingWithoutRequestBody() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), "/test/1");
-        trip.getRequest().addHeader("Content-Type", "application/json");
-        trip.getRequest().setMethod("POST");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               "/test/1");
+        trip.getRequest()
+                .addHeader("Content-Type",
+                           "application/json");
+        trip.getRequest()
+                .setMethod("POST");
         String emptyBody = "";
-        trip.getRequest().setRequestBody(emptyBody);
+        trip.getRequest()
+                .setRequestBody(emptyBody);
         trip.execute("boundPersonEvent");
         RestActionBeanTest bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getPerson().getId(), "1");
-        Assert.assertEquals(bean.getPerson().getFirstName(), "John");
-        Assert.assertEquals(bean.getPerson().getLastName(), "Doe");
-        Assert.assertEquals(bean.getPerson().getChildren().size(), 0);
-        Assert.assertEquals(bean.getPerson().getFavoriteFoods().size(), 0);
+        Assertions.assertEquals(bean.getPerson()
+                                        .getId(),
+                                "1");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getFirstName(),
+                                "John");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getLastName(),
+                                "Doe");
+        Assertions.assertEquals(bean.getPerson()
+                                        .getChildren()
+                                        .size(),
+                                0);
+        Assertions.assertEquals(bean.getPerson()
+                                        .getFavoriteFoods()
+                                        .size(),
+                                0);
 
         logTripResponse(trip);
     }
 
-    @Test(groups = "fast")
+    @Test
     /**
      * This tests to make sure that a JSON request that is bound to an event has
      * its validation handled properly. In this case, the person.id is a
@@ -244,7 +294,8 @@ public class RestActionBeanTest extends FilterEnabledTestBase implements ActionB
         String json = "{ \"person\" : { \"firstName\":\"Jane\", \"lastName\":\"Johnson\", \"favoriteFoods\" : [\"Snickers\",\"Scotch\",\"Pizza\"], \"children\" : [{ \"firstName\": \"Jackie\"},{\"firstName\":\"Janie\"}]}}";
         trip.getRequest().setRequestBody(json);
         trip.execute("boundPersonEvent");
-        Assert.assertTrue(trip.getValidationErrors().hasFieldErrors());
+        Assertions.assertTrue(trip.getValidationErrors()
+                                      .hasFieldErrors());
 
         logTripResponse(trip);
     }

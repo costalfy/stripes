@@ -1,17 +1,18 @@
 package net.sourceforge.stripes.controller;
 
 import net.sourceforge.stripes.action.*;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * TestNG based unit test of the {@link BeforeAfterMethodInterceptor} class.
+ * Tests of the {@link BeforeAfterMethodInterceptor} class.
  *
  * @author Jeppe Cramon
  */
 public class BeforeAfterMethodInterceptorTests {
 
-    @Test(groups = "fast")
+    @Test
+
     public void testInterceptAtLifeCycleStage_ActionBeanResolution() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -19,28 +20,46 @@ public class BeforeAfterMethodInterceptorTests {
         context.setLifecycleStage(LifecycleStage.ActionBeanResolution);
 
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                0);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testInterceptAtLifeCycleStage_BindingAndValidation() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -48,28 +67,46 @@ public class BeforeAfterMethodInterceptorTests {
         context.setLifecycleStage(LifecycleStage.BindingAndValidation);
 
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                0);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testInterceptAtLifeCycleStage_CustomValidation() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -77,28 +114,46 @@ public class BeforeAfterMethodInterceptorTests {
         context.setLifecycleStage(LifecycleStage.CustomValidation);
 
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 1);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                0);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testInterceptAtLifeCycleStage_EventHandling() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -106,29 +161,48 @@ public class BeforeAfterMethodInterceptorTests {
         context.setLifecycleStage(LifecycleStage.EventHandling);
 
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 1);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturn(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 2);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 1);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturn(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                1);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testInterceptAtLifeCycleStage_HandlerResolution() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -136,28 +210,45 @@ public class BeforeAfterMethodInterceptorTests {
         context.setLifecycleStage(LifecycleStage.HandlerResolution);
 
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 1);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 1);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 0);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                1);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                0);
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testIntercept_withEventSpecifier() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         BeforeAfterMethodInterceptor interceptor = new BeforeAfterMethodInterceptor();
@@ -165,34 +256,55 @@ public class BeforeAfterMethodInterceptorTests {
         context.setActionBean(actionBean);
         context.setActionBeanContext(new ActionBeanContext());
 
-        context.getActionBeanContext().setEventName("edit");
+        context.getActionBeanContext()
+                .setEventName("edit");
         context.setLifecycleStage(LifecycleStage.EventHandling); // default
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        context.getActionBeanContext().setEventName("save");
+        context.getActionBeanContext()
+                .setEventName("save");
         context.setLifecycleStage(LifecycleStage.EventHandling); // default
-        Assert.assertNotNull(interceptor.intercept(context));
+        Assertions.assertNotNull(interceptor.intercept(context));
 
-        Assert.assertEquals(actionBean.getHasCalledAfterDefaultStage(), 2);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturn(), 2);
-        Assert.assertEquals(actionBean.getHasCalledBeforeDefaultStage(), 2);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturn(), 2);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(), 4);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterOnSingleEvent(), 2);
-        Assert.assertEquals(actionBean.getHasCalledProtectedAfterMethod(), 2);
-        Assert.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(), 2);
+        Assertions.assertEquals(actionBean.getHasCalledAfterDefaultStage(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturn(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeDefaultStage(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturn(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterDefaultStage(),
+                                4);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterOnSingleEvent(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedAfterMethod(),
+                                2);
+        Assertions.assertEquals(actionBean.getHasCalledProtectedBeforeMethod(),
+                                2);
 
-        Assert.assertEquals(actionBean.getHasCalledAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeTwoStages(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(), 0);
-        Assert.assertEquals(actionBean.getHasCalledDummyMethod(), 0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledAfterWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeTwoStages(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterSpecificStage(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeAfterWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledBeforeWithReturnAndParameter(),
+                                0);
+        Assertions.assertEquals(actionBean.getHasCalledDummyMethod(),
+                                0);
     }
 
     /**

@@ -1,7 +1,9 @@
 package net.sourceforge.stripes.util;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -14,70 +16,80 @@ import java.security.SecureRandom;
  */
 public class CryptoUtilTest {
 
-    @Test(groups = "fast")
+    @Test
+
     public void basicEncryptionTest() {
         String input = "A Basic String to Encrypt";
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
 
-        Assert.assertNotEquals(encrypted,
-                               input,
-                               "Encrypted string should be different!");
-        Assert.assertEquals(decrypted,
-                            input,
-                            "Decrypted string should match!");
+        Assertions.assertNotEquals(encrypted,
+                                   input,
+                                   "Encrypted string should be different!");
+        Assertions.assertEquals(decrypted,
+                                input,
+                                "Decrypted string should match!");
 
         input = "";
         for (int i = 0; i < 100; i++) {
             encrypted = CryptoUtil.encrypt(input);
             decrypted = CryptoUtil.decrypt(encrypted);
 
-            Assert.assertEquals(decrypted,
-                                input,
-                                "Decrypted string should match!");
+            Assertions.assertEquals(decrypted,
+                                    input,
+                                    "Decrypted string should match!");
             input += "x";
         }
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void encryptEmptyStringTest() {
         String input = "";
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
 
-        Assert.assertNotEquals(encrypted,
-                               input,
-                               "Encrypted string should be different!");
-        Assert.assertEquals(decrypted,
-                            input,
-                            "Decrypted string should match!");
+        Assertions.assertNotEquals(encrypted,
+                                   input,
+                                   "Encrypted string should be different!");
+        Assertions.assertEquals(decrypted,
+                                input,
+                                "Decrypted string should match!");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void encryptNullTest() {
         String input = null;
         String encrypted = CryptoUtil.encrypt(input);
         String decrypted = CryptoUtil.decrypt(encrypted);
 
-        Assert.assertEquals(decrypted, "", "Encrypting and then decrypting null should yield \"\"");
+        Assertions.assertEquals(decrypted,
+                                "",
+                                "Encrypting and then decrypting null should yield \"\"");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void decryptNullTest() {
         String input = null;
         String decrypted = CryptoUtil.decrypt(input);
 
-        Assert.assertNull(decrypted, "Decrypting null should give back null.");
+        Assertions.assertNull(decrypted,
+                              "Decrypting null should give back null.");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void decryptBogusInputTest() {
         String input = "_sipApTvfAXjncUGTRUf4OwZJBdz4Mbp2ZxqVyzkKio=";
         String decrypted = CryptoUtil.decrypt(input);
-        Assert.assertNull(decrypted, "Decrypting a bogus input should give back null.");
+        Assertions.assertNull(decrypted,
+                              "Decrypting a bogus input should give back null.");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void replacementKeyTest() throws Exception {
         SecretKey oldKey = CryptoUtil.getSecretKey(); // cache the old key
 
@@ -89,7 +101,8 @@ public class CryptoUtilTest {
             String output = CryptoUtil.encrypt(input);
             String result = CryptoUtil.decrypt(output);
 
-            Assert.assertEquals(input, result);
+            Assertions.assertEquals(input,
+                                    result);
         } finally {
             CryptoUtil.setSecretKey(oldKey);
         }
@@ -100,32 +113,43 @@ public class CryptoUtilTest {
      * modified ciphertext attack, which should always be rejected by hmac
      * verification.
      */
-    @Test(groups = "slow", enabled = false)
+    @Test
+    @Tag("slow")
+    @Disabled
     public void failOnWeakHash() {
         String input = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         String encrypted = CryptoUtil.encrypt(input);
         SecureRandom rnd = new SecureRandom();
         byte[] random = new byte[64];
         int options = Base64.URL_SAFE | Base64.DONT_BREAK_LINES;
-        byte[] choosen = Base64.decode(encrypted, options);
+        byte[] choosen = Base64.decode(encrypted,
+                                       options);
         for (int attempts = 0; attempts < Integer.MAX_VALUE; attempts++) {
             rnd.nextBytes(random);
-            System.arraycopy(random, 0, choosen, CryptoUtil.CIPHER_BLOCK_LENGTH, CryptoUtil.CIPHER_BLOCK_LENGTH);
-            String choosenciphertext = Base64.encodeBytes(choosen, options);
+            System.arraycopy(random,
+                             0,
+                             choosen,
+                             CryptoUtil.CIPHER_BLOCK_LENGTH,
+                             CryptoUtil.CIPHER_BLOCK_LENGTH);
+            String choosenciphertext = Base64.encodeBytes(choosen,
+                                                          options);
             String broken = CryptoUtil.decrypt(choosenciphertext);
-            Assert.assertNull(broken, "hash failed: " + choosenciphertext
-                    + " derived from " + encrypted);
+            Assertions.assertNull(broken,
+                                  "hash failed: " + choosenciphertext
+                                  + " derived from " + encrypted);
         }
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void failOnECB() {
         String input1 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         String encrypted1 = CryptoUtil.encrypt(input1);
         String encrypted2 = CryptoUtil.encrypt(input1);
         for (int i = 0; i < encrypted1.length() - 4; i++) {
-            Assert.assertFalse(
-                    encrypted2.contains(encrypted1.substring(i, i + 4)),
+            Assertions.assertFalse(
+                    encrypted2.contains(encrypted1.substring(i,
+                                                             i + 4)),
                     "Predictable ECB detected: " + encrypted1 + " " + encrypted2);
         }
     }

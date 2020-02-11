@@ -15,8 +15,8 @@
  */
 package net.sourceforge.stripes.util;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class HtmlUtilTest {
 
-    @Test(groups = "fast")
+    @Test
     public void testJoinAndSplit() {
         String[] input = {"foo", "bar", "foobar"};
         List<String> listInput = Arrays.asList(input);
@@ -36,29 +36,35 @@ public class HtmlUtilTest {
         String combined = HtmlUtil.combineValues(listInput);
         Collection<String> output = HtmlUtil.splitValues(combined);
 
-        Assert.assertEquals(output.size(), listInput.size(), "Different number of params.");
-        Assert.assertTrue(output.contains("foo"));
-        Assert.assertTrue(output.contains("bar"));
-        Assert.assertTrue(output.contains("foobar"));
+        Assertions.assertEquals(output.size(),
+                                listInput.size(),
+                                "Different number of params.");
+        Assertions.assertTrue(output.contains("foo"));
+        Assertions.assertTrue(output.contains("bar"));
+        Assertions.assertTrue(output.contains("foobar"));
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testJoinWithNoStrings() {
         String combined = HtmlUtil.combineValues(null);
-        Assert.assertEquals(combined, "");
+        Assertions.assertEquals(combined,
+                                "");
 
         combined = HtmlUtil.combineValues(new HashSet<>());
-        Assert.assertEquals(combined, "");
+        Assertions.assertEquals(combined,
+                                "");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testSplitWithNoValues() {
         Collection<String> values = HtmlUtil.splitValues(null);
-        Assert.assertNotNull(values);
-        Assert.assertEquals(values.size(), 0);
+        Assertions.assertNotNull(values);
+        Assertions.assertEquals(values.size(),
+                                0);
 
         values = HtmlUtil.splitValues("");
-        Assert.assertNotNull(values);
-        Assert.assertEquals(values.size(), 0);
+        Assertions.assertNotNull(values);
+        Assertions.assertEquals(values.size(),
+                                0);
     }
 }

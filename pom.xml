@@ -10,7 +10,7 @@
         <jstl.version>1.2</jstl.version>
         <taglibs-standard-impl.version>1.2.5</taglibs-standard-impl.version>
         <mail.version>1.4.7</mail.version>
-        <testng.version>7.1.0</testng.version>
+        <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <commons-logging.version>1.2</commons-logging.version>
         <log4j.version>2.13.0</log4j.version>
         <spring.version>1.2.6</spring.version>
@@ -131,9 +131,15 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit.jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

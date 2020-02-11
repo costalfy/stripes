@@ -2,8 +2,8 @@ package net.sourceforge.stripes.mock;
 
 import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.action.*;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -45,33 +45,40 @@ public class TestContext {
         mockRoundtrip.execute();
         ContextActionBean contextActionBean = mockRoundtrip.getActionBean(ContextActionBean.class);
         ActionBeanContext context = contextActionBean.getContext();
-        Assert.assertNotNull(context);
+        Assertions.assertNotNull(context);
         List<Message> messages = context.getMessages();
-        Assert.assertNotNull(messages);
+        Assertions.assertNotNull(messages);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test
     public void testMessagesWithMessages() throws Exception {
-        MockServletContext c = StripesTestFixture.createServletContext();
-        MockRoundtrip mockRoundtrip = new MockRoundtrip(c, ContextActionBean.class);
-        mockRoundtrip.execute("messages");
-        ContextActionBean contextActionBean = mockRoundtrip.getActionBean(ContextActionBean.class);
-        ActionBeanContext context = contextActionBean.getContext();
-        Assert.assertNotNull(context);
-        List<Message> messages = context.getMessages();
-        Assert.assertNotNull(messages);
+        Assertions.assertThrows(NullPointerException.class,
+                                () -> {
+                                    MockServletContext c = StripesTestFixture.createServletContext();
+                                    MockRoundtrip mockRoundtrip = new MockRoundtrip(c,
+                                                                                    ContextActionBean.class);
+                                    mockRoundtrip.execute("messages");
+                                    ContextActionBean contextActionBean = mockRoundtrip.getActionBean(ContextActionBean.class);
+                                    ActionBeanContext context = contextActionBean.getContext();
+                                    Assertions.assertNotNull(context);
+                                    List<Message> messages = context.getMessages();
+                                    Assertions.assertNotNull(messages);
+                                });
     }
 
     @Test
     public void testMessages() throws Exception {
         MockServletContext c = StripesTestFixture.createServletContext();
-        final MockRoundtrip mockRoundtrip = new MockRoundtrip(c, ContextActionBean.class);
+        final MockRoundtrip mockRoundtrip = new MockRoundtrip(c,
+                                                              ContextActionBean.class);
         mockRoundtrip.execute("messages");
         List<Message> messages = mockRoundtrip.getMessages();
-        Assert.assertNotNull(messages);
-        Assert.assertEquals(1, messages.size());
+        Assertions.assertNotNull(messages);
+        Assertions.assertEquals(1,
+                                messages.size());
         Message message = messages.get(0);
-        Assert.assertTrue(message instanceof SimpleMessage);
-        Assert.assertEquals(MESSAGE, ((SimpleMessage) message).getMessage());
+        Assertions.assertTrue(message instanceof SimpleMessage);
+        Assertions.assertEquals(MESSAGE,
+                                ((SimpleMessage) message).getMessage());
     }
 }

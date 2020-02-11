@@ -2,9 +2,9 @@ package net.sourceforge.stripes.mock;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.action.*;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
 
 /**
  * Submitted by Nathan Maves and Remi Vankeisbelck to test a specific failure in
@@ -43,17 +43,17 @@ public class TestMockRoundtrip2 extends FilterEnabledTestBase implements ActionB
 
     private final static Integer REF_ID = 2;
 
-    @Test(groups = "fast")
+    @Test
     public void testUsingBeanClass() throws Exception {
         executeTest(new MockRoundtrip(getMockServletContext(), getClass()));
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testUsingUrlWithEventSpecified() throws Exception {
         executeTest(new MockRoundtrip(getMockServletContext(), "/foo/" + REF_ID + "/bar"));
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testUsingUrlWithoutEventSpecified() throws Exception {
         executeTest(new MockRoundtrip(getMockServletContext(), "/foo/" + REF_ID));
     }
@@ -61,6 +61,8 @@ public class TestMockRoundtrip2 extends FilterEnabledTestBase implements ActionB
     private void executeTest(MockRoundtrip trip) throws Exception {
         trip.setParameter("id", REF_ID.toString());
         trip.execute();
-        assertEquals(trip.getActionBean(getClass()).getId(), REF_ID);
+        Assertions.assertEquals(trip.getActionBean(getClass())
+                                        .getId(),
+                                REF_ID);
     }
 }

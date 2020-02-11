@@ -1,8 +1,8 @@
 package net.sourceforge.stripes.util.bean;
 
 import net.sourceforge.stripes.FilterEnabledTestBase;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests a corner cases where a property's getter and/or setter method(s) are
@@ -69,17 +69,23 @@ public class GenericInterfaceImplTest extends FilterEnabledTestBase {
         }
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testInheritFromGenericInterface() {
         GenericImpl bean = new GenericImpl();
-        BeanUtil.setPropertyValue("prop.stringProperty", bean, "whee");
-        Assert.assertEquals(bean.getProp().getStringProperty(), "whee");
+        BeanUtil.setPropertyValue("prop.stringProperty",
+                                  bean,
+                                  "whee");
+        Assertions.assertEquals(bean.getProp()
+                                        .getStringProperty(),
+                                "whee");
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testInheritFromWriteOnlyGenericInterface() {
         WriteOnlyGenericImpl bean = new WriteOnlyGenericImpl();
-        Assert.assertEquals(BeanUtil.getPropertyType("prop", bean), WriteOnlyGenericImpl.class);
+        Assertions.assertEquals(BeanUtil.getPropertyType("prop",
+                                                         bean),
+                                WriteOnlyGenericImpl.class);
     }
 
 }

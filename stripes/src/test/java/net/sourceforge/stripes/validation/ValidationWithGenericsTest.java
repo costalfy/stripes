@@ -5,9 +5,9 @@ import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests some cases where generics have been known to mess up validation.
@@ -170,16 +170,17 @@ public class ValidationWithGenericsTest extends FilterEnabledTestBase {
      * Attempts to trigger validation errors on an ActionBean declared with a
      * type parameter. Validation was crippled by a bug in JDK6 and earlier.
      *
-     * @see http://www.stripesframework.org/jira/browse/STS-664
+     * @see //www.stripesframework.org/jira/browse/STS-664
      */
-    @Test(groups = "fast")
+    @Test
     public void testActionBeanWithTypeParameter() throws Exception {
         runValidationTests(OverrideGetterAndSetterActionBean.class);
         runValidationTests(OverrideGetterActionBean.class);
         runValidationTests(OverrideSetterActionBean.class);
     }
 
-    @Test(groups = "fast", enabled = false)
+    @Test
+    @Disabled
     public void testActionBeanWithTypeParameterFailsRandomlyOnJava8() throws Exception {
         runValidationTests(OverloadSetterActionBean.class);
         runValidationTests(ExtendOverloadSetterActionBean.class);
@@ -188,25 +189,37 @@ public class ValidationWithGenericsTest extends FilterEnabledTestBase {
 
     protected void runValidationTests(Class<? extends BaseActionBean<User>> type) throws Exception {
         // Trigger the validation errors
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), type);
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               type);
         trip.execute("login");
         ValidationErrors errors = trip.getValidationErrors();
-        Assert.assertNotNull(errors, "Expected validation errors but got none");
-        Assert.assertFalse(errors.isEmpty(), "Expected validation errors but got none");
-        Assert.assertEquals(errors.size(), 2, "Expected two validation errors but got " + errors.size());
+        Assertions.assertNotNull(errors,
+                                 "Expected validation errors but got none");
+        Assertions.assertFalse(errors.isEmpty(),
+                               "Expected validation errors but got none");
+        Assertions.assertEquals(errors.size(),
+                                2,
+                                "Expected two validation errors but got " + errors.size());
 
         // Now add the required parameters and make sure the validation errors don't happen
-        trip.addParameter("model.username", "Scooby");
-        trip.addParameter("model.password", "Shaggy");
+        trip.addParameter("model.username",
+                          "Scooby");
+        trip.addParameter("model.password",
+                          "Shaggy");
         trip.execute("login");
         errors = trip.getValidationErrors();
-        Assert.assertTrue(errors == null || errors.isEmpty(), "Got unexpected validation errors");
+        Assertions.assertTrue(errors == null || errors.isEmpty(),
+                              "Got unexpected validation errors");
 
         BaseActionBean<User> bean = trip.getActionBean(type);
-        Assert.assertNotNull(bean);
-        Assert.assertNotNull(bean.getModel());
-        Assert.assertEquals(bean.getModel().getUsername(), "Scooby");
-        Assert.assertEquals(bean.getModel().getPassword(), "Shaggy");
+        Assertions.assertNotNull(bean);
+        Assertions.assertNotNull(bean.getModel());
+        Assertions.assertEquals(bean.getModel()
+                                        .getUsername(),
+                                "Scooby");
+        Assertions.assertEquals(bean.getModel()
+                                        .getPassword(),
+                                "Shaggy");
     }
 
     public static void main(String[] args) throws Exception {

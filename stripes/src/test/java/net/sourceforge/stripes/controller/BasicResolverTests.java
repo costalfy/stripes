@@ -4,8 +4,8 @@ import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.mock.MockRoundtrip;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -57,59 +57,80 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     // Start of Test Methods
-    @Test(groups = "fast")
+    @Test
+
     public void testDefaultResolution() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
         trip.execute();
 
         BasicResolverTests bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getNumber(), 1);
+        Assertions.assertEquals(bean.getNumber(),
+                                1);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testNonDefaultResolution() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
         trip.execute("two");
 
         BasicResolverTests bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getNumber(), 2);
+        Assertions.assertEquals(bean.getNumber(),
+                                2);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testImageStyleResolution() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
         trip.execute("two.x");
 
         BasicResolverTests bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getNumber(), 2);
+        Assertions.assertEquals(bean.getNumber(),
+                                2);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testImageStyleResolution2() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
-        trip.addParameter("two.x", "381");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
+        trip.addParameter("two.x",
+                          "381");
         trip.execute();
 
         BasicResolverTests bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getNumber(), 2);
+        Assertions.assertEquals(bean.getNumber(),
+                                2);
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testEventNameParameterResolution() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
-        trip.addParameter(StripesConstants.URL_KEY_EVENT_NAME, "two");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
+        trip.addParameter(StripesConstants.URL_KEY_EVENT_NAME,
+                          "two");
         trip.execute();
 
         BasicResolverTests bean = trip.getActionBean(getClass());
-        Assert.assertEquals(bean.getNumber(), 2);
-        Assert.assertEquals(bean.getContext().getEventName(), "two");
+        Assertions.assertEquals(bean.getNumber(),
+                                2);
+        Assertions.assertEquals(bean.getContext()
+                                        .getEventName(),
+                                "two");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testOverrideHandlerMethodReturnsSubtype() throws SecurityException {
         NameBasedActionResolver resolver = new NameBasedActionResolver();
         Map<String, Method> classMappings = new HashMap<>();
-        resolver.processMethods(ExtendedBaseAction.class, classMappings);
+        resolver.processMethods(ExtendedBaseAction.class,
+                                classMappings);
     }
 
     public static class ExtendedBaseAction extends BasicResolverTests {

@@ -19,8 +19,8 @@ import net.sourceforge.stripes.FilterEnabledTestBase;
 import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.validation.*;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.HttpURLConnection;
@@ -122,13 +122,19 @@ public class RestWithCustomValidationErrorHandlerActionBeanTest extends FilterEn
         this.context = context;
     }
 
-    @Test(groups = "fast")
+    @Test
     public void testCustomValidationError() throws Exception {
-        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(), getClass());
-        trip.getRequest().setMethod("HEAD");
+        MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
+                                               getClass());
+        trip.getRequest()
+                .setMethod("HEAD");
         trip.execute("head");
-        Assert.assertEquals(trip.getResponse().getStatus(), HttpURLConnection.HTTP_BAD_REQUEST);
-        Assert.assertEquals(trip.getResponse().getErrorMessage(), "yay! custom error validation handler");
+        Assertions.assertEquals(trip.getResponse()
+                                        .getStatus(),
+                                HttpURLConnection.HTTP_BAD_REQUEST);
+        Assertions.assertEquals(trip.getResponse()
+                                        .getErrorMessage(),
+                                "yay! custom error validation handler");
         logTripResponse(trip);
     }
 

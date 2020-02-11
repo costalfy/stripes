@@ -1,7 +1,7 @@
 package net.sourceforge.stripes.validation;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,9 @@ public class DateTypeConverterTest {
         DateTypeConverter converter = new DateTypeConverter() {
             @Override
             protected String getResourceString(final String key) throws MissingResourceException {
-                throw new MissingResourceException("Bundle not available to unit tests.", "", key);
+                throw new MissingResourceException("Bundle not available to unit tests.",
+                                                   "",
+                                                   key);
             }
         };
 
@@ -30,158 +32,257 @@ public class DateTypeConverterTest {
         return converter;
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testBasicUsLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("1/31/07", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("1/31/07",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("Feb 28, 2006", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("Feb 28, 2006",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("March 1, 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("March 1, 2007",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testVariantUsLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("01/31/2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("01/31/2007",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("28 Feb 06", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("28 Feb 06",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("1 March 07", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("1 March 07",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testAlternateSeparatorsDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("01 31 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("01 31 2007",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("28-Feb-06", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("28-Feb-06",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("01-March-07", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("01-March-07",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testUkLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.UK);
-        Date date = converter.convert("31 01 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("31 01 2007",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("28/02/2006", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("28/02/2006",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("01 March 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("01 March 2007",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testWhackySeparators() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("01, 31, 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("01, 31, 2007",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("02--28.2006", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("02--28.2006",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("01//March,./  2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("01//March,./  2007",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testNonStandardFormats() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("Jan 31 2007", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/2007");
+        Date date = converter.convert("Jan 31 2007",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/2007");
 
-        date = converter.convert("February 28 2006", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/2006");
+        date = converter.convert("February 28 2006",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/2006");
 
-        date = converter.convert("2007-03-01", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/2007");
+        date = converter.convert("2007-03-01",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/2007");
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testPartialInputFormats() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
-        Date date = converter.convert("Jan 31", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "01/31/"
-                + Calendar.getInstance().get(Calendar.YEAR));
+        Date date = converter.convert("Jan 31",
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "01/31/"
+                                + Calendar.getInstance()
+                                        .get(Calendar.YEAR));
 
-        date = converter.convert("February 28", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "02/28/"
-                + Calendar.getInstance().get(Calendar.YEAR));
+        date = converter.convert("February 28",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "02/28/"
+                                + Calendar.getInstance()
+                                        .get(Calendar.YEAR));
 
-        date = converter.convert("03/01", Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), "03/01/"
-                + Calendar.getInstance().get(Calendar.YEAR));
+        date = converter.convert("03/01",
+                                 Date.class,
+                                 errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                "03/01/"
+                                + Calendar.getInstance()
+                                        .get(Calendar.YEAR));
     }
 
-    @Test(groups = "fast")
+    @Test
+
     public void testDateToStringFormat() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
         Date now = new Date();
 
-        Date date = converter.convert(now.toString(), Date.class, errors);
-        Assert.assertNotNull(date);
-        Assert.assertEquals(0, errors.size());
-        Assert.assertEquals(format.format(date), format.format(now));
+        Date date = converter.convert(now.toString(),
+                                      Date.class,
+                                      errors);
+        Assertions.assertNotNull(date);
+        Assertions.assertEquals(0,
+                                errors.size());
+        Assertions.assertEquals(format.format(date),
+                                format.format(now));
     }
 }

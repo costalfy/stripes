@@ -15,8 +15,8 @@
 package net.sourceforge.stripes.action;
 
 import net.sourceforge.stripes.mock.MockHttpServletResponse;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.mail.internet.ContentDisposition;
 import javax.mail.internet.ParseException;
@@ -48,26 +48,30 @@ public class TestStreamingResolution {
         MockHttpServletResponse response = new MockHttpServletResponse();
         resolution.applyHeaders(response);
         resolution.stream(response);
-        Assert.assertEquals(data, response.getOutputBytes());
+        Assertions.assertArrayEquals(data,
+                                     response.getOutputBytes());
 
         ContentDisposition disposition = getContentDisposition(response);
         if (attachment) {
             if (filename == null) {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNull(disposition.getParameter("filename"));
             } else {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNotNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNotNull(disposition.getParameter("filename"));
             }
         } else {
             if (filename == null) {
-                Assert.assertNull(disposition);
+                Assertions.assertNull(disposition);
             } else {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNotNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNotNull(disposition.getParameter("filename"));
             }
         }
     }
