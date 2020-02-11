@@ -17,7 +17,6 @@ import java.security.SecureRandom;
 public class CryptoUtilTest {
 
     @Test
-
     public void basicEncryptionTest() {
         String input = "A Basic String to Encrypt";
         String encrypted = CryptoUtil.encrypt(input);
@@ -43,7 +42,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void encryptEmptyStringTest() {
         String input = "";
         String encrypted = CryptoUtil.encrypt(input);
@@ -58,7 +56,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void encryptNullTest() {
         String input = null;
         String encrypted = CryptoUtil.encrypt(input);
@@ -70,7 +67,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void decryptNullTest() {
         String input = null;
         String decrypted = CryptoUtil.decrypt(input);
@@ -80,7 +76,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void decryptBogusInputTest() {
         String input = "_sipApTvfAXjncUGTRUf4OwZJBdz4Mbp2ZxqVyzkKio=";
         String decrypted = CryptoUtil.decrypt(input);
@@ -89,7 +84,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void replacementKeyTest() throws Exception {
         SecretKey oldKey = CryptoUtil.getSecretKey(); // cache the old key
 
@@ -141,7 +135,6 @@ public class CryptoUtilTest {
     }
 
     @Test
-
     public void failOnECB() {
         String input1 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         String encrypted1 = CryptoUtil.encrypt(input1);

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 public class BeforeAfterMethodInterceptorTests {
 
     @Test
-
     public void testInterceptAtLifeCycleStage_ActionBeanResolution() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -59,7 +58,6 @@ public class BeforeAfterMethodInterceptorTests {
     }
 
     @Test
-
     public void testInterceptAtLifeCycleStage_BindingAndValidation() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -106,7 +104,6 @@ public class BeforeAfterMethodInterceptorTests {
     }
 
     @Test
-
     public void testInterceptAtLifeCycleStage_CustomValidation() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -153,7 +150,6 @@ public class BeforeAfterMethodInterceptorTests {
     }
 
     @Test
-
     public void testInterceptAtLifeCycleStage_EventHandling() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();
@@ -202,7 +198,6 @@ public class BeforeAfterMethodInterceptorTests {
     }
 
     @Test
-
     public void testInterceptAtLifeCycleStage_HandlerResolution() throws Exception {
         ExecutionContext context = new TestExecutionContext();
         TestActionBean2 actionBean = new TestActionBean2();

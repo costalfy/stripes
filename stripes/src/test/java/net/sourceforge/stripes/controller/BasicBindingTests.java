@@ -29,7 +29,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void basicBinding() throws Exception {
         MockRoundtrip trip = getRoundtrip();
         trip.addParameter("singleString",
@@ -46,7 +45,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void bindSetsOfStrings() throws Exception {
         MockRoundtrip trip = getRoundtrip();
         trip.addParameter("setOfStrings",
@@ -69,7 +67,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void bindListOfLongs() throws Exception {
         MockRoundtrip trip = getRoundtrip();
         trip.addParameter("listOfLongs",
@@ -94,7 +91,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void bindNonGenericListOfLongs() throws Exception {
         MockRoundtrip trip = getRoundtrip();
         trip.addParameter("nakedListOfLongs",
@@ -340,7 +336,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void bindArrayOfEnums() throws Exception {
         // Should be able to set it just fine
         MockRoundtrip trip = getRoundtrip();
@@ -364,7 +359,6 @@ public class BasicBindingTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     public void testBindingToSubclassOfDeclaredType() throws Exception {
         MockRoundtrip trip = getRoundtrip();
         trip.addParameter("item.id",

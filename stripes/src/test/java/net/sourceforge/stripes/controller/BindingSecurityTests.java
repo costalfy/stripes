@@ -198,7 +198,6 @@ public class BindingSecurityTests extends FilterEnabledTestBase {
     private static final Log log = Log.getInstance(BindingSecurityTests.class);
 
     @Test
-
     public void bindingPolicyEnforcement() {
         try {
             evaluate(new NoAnnotation());
@@ -243,7 +242,6 @@ public class BindingSecurityTests extends FilterEnabledTestBase {
     }
 
     @Test
-
     @SuppressWarnings("unused")
     public void protectedClasses() {
         class TestBean implements ActionBean {

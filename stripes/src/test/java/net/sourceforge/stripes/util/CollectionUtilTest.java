@@ -13,49 +13,41 @@ import java.util.List;
 public class CollectionUtilTest {
 
     @Test
-
     public void testEmptyOnNullCollection() {
         Assertions.assertTrue(CollectionUtil.empty(null));
     }
 
     @Test
-
     public void testEmptyOnCollectionOfNulls() {
         Assertions.assertTrue(CollectionUtil.empty(new String[]{null, null, null}));
     }
 
     @Test
-
     public void testEmptyZeroLengthCollection() {
         Assertions.assertTrue(CollectionUtil.empty(new String[]{}));
     }
 
     @Test
-
     public void testEmptyOnCollectionOfEmptyStrings() {
         Assertions.assertTrue(CollectionUtil.empty(new String[]{"", null, ""}));
     }
 
     @Test
-
     public void testEmptyOnNonEmptyCollection1() {
         Assertions.assertFalse(CollectionUtil.empty(new String[]{"", null, "foo"}));
     }
 
     @Test
-
     public void testEmptyOnNonEmptyCollection2() {
         Assertions.assertFalse(CollectionUtil.empty(new String[]{"bar"}));
     }
 
     @Test
-
     public void testEmptyOnNonEmptyCollection3() {
         Assertions.assertFalse(CollectionUtil.empty(new String[]{"bar", "splat", "foo"}));
     }
 
     @Test
-
     public void testApplies() {
         Assertions.assertTrue(CollectionUtil.applies(null,
                                                      "foo"));
@@ -72,7 +64,6 @@ public class CollectionUtilTest {
     }
 
     @Test
-
     public void testAsList() {
         List<Object> list = CollectionUtil.asList(new String[]{"foo", "bar"});
         Assertions.assertEquals(list.get(0),

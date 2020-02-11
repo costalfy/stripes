@@ -58,7 +58,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
 
     // Start of Test Methods
     @Test
-
     public void testDefaultResolution() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
                                                getClass());
@@ -70,7 +69,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test
-
     public void testNonDefaultResolution() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
                                                getClass());
@@ -82,7 +80,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test
-
     public void testImageStyleResolution() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
                                                getClass());
@@ -94,7 +91,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test
-
     public void testImageStyleResolution2() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
                                                getClass());
@@ -108,7 +104,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test
-
     public void testEventNameParameterResolution() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(getMockServletContext(),
                                                getClass());
@@ -125,7 +120,6 @@ public class BasicResolverTests extends FilterEnabledTestBase implements ActionB
     }
 
     @Test
-
     public void testOverrideHandlerMethodReturnsSubtype() throws SecurityException {
         NameBasedActionResolver resolver = new NameBasedActionResolver();
         Map<String, Method> classMappings = new HashMap<>();

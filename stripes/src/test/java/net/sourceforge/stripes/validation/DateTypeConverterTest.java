@@ -33,7 +33,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testBasicUsLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -66,7 +65,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testVariantUsLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -99,7 +97,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testAlternateSeparatorsDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -132,7 +129,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testUkLocaleDates() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.UK);
@@ -165,7 +161,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testWhackySeparators() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -198,7 +193,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testNonStandardFormats() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -231,7 +225,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testPartialInputFormats() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);
@@ -270,7 +263,6 @@ public class DateTypeConverterTest {
     }
 
     @Test
-
     public void testDateToStringFormat() {
         Collection<ValidationError> errors = new ArrayList<>();
         DateTypeConverter converter = getConverter(Locale.US);

@@ -80,14 +80,12 @@ public class AnnotatedClassActionResolverTest {
     }
 
     @Test
-
     public void findByName() {
         Class<? extends ActionBean> actionBean = resolver.getActionBeanByName("SimpleActionBean");
         Assertions.assertNotNull(actionBean);
     }
 
     @Test
-
     public void multipleActionBeansWithSameSimpleName() {
         Class<? extends ActionBean> actionBean = resolver.getActionBeanByName("OverloadedActionBean");
         Assertions.assertNull(actionBean);
