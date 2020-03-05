@@ -126,7 +126,7 @@ public class UrlBindingParameter {
     /**
      * Ensure the default event name is set if the binding uses the $event
      * parameter. Can only be done safely after the event mappings have been
-     * processed. see http://www.stripesframework.org/jira/browse/STS-803
+     * processed. see https://stripesframework.atlassian.net/browse/STS-803
      */
     void initDefaultValueWithDefaultHandlerIfNeeded(ActionResolver actionResolver) {
         if (PARAMETER_NAME_EVENT.equals(name)) {

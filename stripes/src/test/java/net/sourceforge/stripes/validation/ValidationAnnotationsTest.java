@@ -51,7 +51,7 @@ public class ValidationAnnotationsTest extends FilterEnabledTestBase implements 
      * Tests that a required field that is also ignored, should be ignored and
      * should not produce a validation error.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-600
+     * @see //stripesframework.atlassian.net/browse/STS-600
      */
     @Test
     public void testValidateRequiredAndIgnored() throws Exception {
@@ -74,7 +74,7 @@ public class ValidationAnnotationsTest extends FilterEnabledTestBase implements 
     /**
      * Tests that a validation annotation works on a public field.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-604
+     * @see //stripesframework.atlassian.net/browse/STS-604
      */
     @Test
     public void testValidatePublicField() throws Exception {
@@ -104,7 +104,7 @@ public class ValidationAnnotationsTest extends FilterEnabledTestBase implements 
      * explicitly configured via {@code @Validate(converter)}, where the
      * auto-loaded type converter extends the stock type converter.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-610
+     * @see //stripesframework.atlassian.net/browse/STS-610
      */
     @Test
     @Tag("extensions")
@@ -142,7 +142,7 @@ public class ValidationAnnotationsTest extends FilterEnabledTestBase implements 
      * explicitly configured via {@code @Validate(converter)}, where the
      * auto-loaded type converter does not extend the stock type converter.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-610
+     * @see //stripesframework.atlassian.net/browse/STS-610
      */
     @SuppressWarnings("unchecked")
     @Test
@@ -181,7 +181,7 @@ public class ValidationAnnotationsTest extends FilterEnabledTestBase implements 
     /**
      * Tests that an empty string encrypted value is bound as null.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-521
+     * @see //stripesframework.atlassian.net/browse/STS-521
      */
     @Test
     public void testValidateEncryptedEmptyString() throws Exception {

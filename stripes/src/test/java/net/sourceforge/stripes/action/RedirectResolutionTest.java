@@ -20,7 +20,7 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
 
     @Test
     public void testPermanantRedirect() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+        RedirectResolution resolution = new RedirectResolution("https://github.com/StripesFramework/stripes",
                                                                false).setPermanent(true);
         MockHttpServletResponse response = new MockHttpServletResponse();
         resolution.execute(buildMockServletRequest(),
@@ -32,12 +32,12 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
                                         .get("Location")
                                         .iterator()
                                         .next(),
-                                "http://www.stripesframework.org");
+                                "https://github.com/StripesFramework/stripes");
     }
 
     @Test
     public void testTemporaryRedirect() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+        RedirectResolution resolution = new RedirectResolution("https://github.com/StripesFramework/stripes",
                                                                false);
         MockHttpServletResponse response = new MockHttpServletResponse();
         resolution.execute(buildMockServletRequest(),
@@ -46,12 +46,12 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
         Assertions.assertEquals(response.getStatus(),
                                 HttpServletResponse.SC_MOVED_TEMPORARILY);
         Assertions.assertEquals(response.getRedirectUrl(),
-                                "http://www.stripesframework.org");
+                                "https://github.com/StripesFramework/stripes");
     }
 
     @Test
     public void testPermanantRedirectWithParameters() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+        RedirectResolution resolution = new RedirectResolution("https://github.com/StripesFramework/stripes",
                                                                false).setPermanent(true)
                 .addParameter("test",
                               "test");
@@ -65,12 +65,12 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
                                         .get("Location")
                                         .iterator()
                                         .next(),
-                                "http://www.stripesframework.org?test=test");
+                                "https://github.com/StripesFramework/stripes?test=test");
     }
 
     @Test
     public void testTemporaryRedirectWithParameters() throws Exception {
-        RedirectResolution resolution = new RedirectResolution("http://www.stripesframework.org",
+        RedirectResolution resolution = new RedirectResolution("https://github.com/StripesFramework/stripes",
                                                                false).addParameter("test",
                                                                                    "test");
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -80,7 +80,7 @@ public class RedirectResolutionTest extends FilterEnabledTestBase {
         Assertions.assertEquals(response.getStatus(),
                                 HttpServletResponse.SC_MOVED_TEMPORARILY);
         Assertions.assertEquals(response.getRedirectUrl(),
-                                "http://www.stripesframework.org?test=test");
+                                "https://github.com/StripesFramework/stripes?test=test");
     }
 
 }

@@ -514,7 +514,7 @@ public class DynamicMappingFilter implements Filter {
                 notFound = true;
             } else {
                 // special handling for WildFly,
-                // see http://www.stripesframework.org/jira/browse/STS-916
+                // see https://stripesframework.atlassian.net/browse/STS-916
                 if ("POST".equals(httpServletRequest.getMethod())
                         && errorCode == HttpServletResponse.SC_METHOD_NOT_ALLOWED) {
                     notFound = true;

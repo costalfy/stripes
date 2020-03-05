@@ -38,7 +38,7 @@ import java.util.Locale;
  * setter can be added to the subclass and used by the application, thus hiding
  * where the information is actually stored. This approach is documented in more
  * detail in the Stripes documentation on
- * <a href="http://stripesframework.org/display/stripes/State+Management">State
+ * <a href="https://stripesframework.atlassian.net/wiki/spaces/STRIPES/pages/492007/State+Management">State
  * Management</a>.</p>
  *
  * @author Tim Fennell

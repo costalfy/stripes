@@ -170,7 +170,7 @@ public class ValidationWithGenericsTest extends FilterEnabledTestBase {
      * Attempts to trigger validation errors on an ActionBean declared with a
      * type parameter. Validation was crippled by a bug in JDK6 and earlier.
      *
-     * @see //www.stripesframework.org/jira/browse/STS-664
+     * @see //stripesframework.atlassian.net/browse/STS-664
      */
     @Test
     public void testActionBeanWithTypeParameter() throws Exception {

@@ -8,7 +8,7 @@ Stripes is a Java web framework with the goal of making Servlet/JSP based web de
 
 For the last 10 years, Stripes has been used as the basis of applications of all types worldwide. We encourage you to download Stripes, browse the documentation, try the samples, and see why Stripes is considered among the best, lightweight Java web frameworks.
 
-Project Wiki and documentation : http://www.stripesframework.org
+Project Wiki and documentation : https://stripesframework.atlassian.net/wiki/spaces/STRIPES/overview
 
 JIRA (features/defects) : http://stripesframework.atlassian.net/
 

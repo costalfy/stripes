@@ -14,7 +14,7 @@
 
             <title>Bugzooky - ${title}</title>
             <link rel="stylesheet" type="text/css" href="${ctx}/bugzooky/bugzooky.css"/>
-            <script type="text/javascript" src="${ctx}/bugzooky/bugzooky.js"></script>
+
             <stripes:layout-component name="html-head"/>
             </head>
             <body>
@@ -57,6 +57,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+            <script type="text/javascript" src="${ctx}/bugzooky/bugzooky.js"></script>
             </body>
             </html>
         </stripes:layout-definition>

@@ -191,7 +191,7 @@ public class PropertyExpressionEvaluation {
      * bean property via a bracket expression. Such an expression could be used
      * to circumvent validations that use dot notation for the same property.
      * See
-     * <a href="http://www.stripesframework.org/jira/browse/STS-841">STS-841</a>
+     * <a href="https://stripesframework.atlassian.net/browse/STS-841">STS-841</a>
      * for more information.
      */
     protected void validateTypeInformation() {

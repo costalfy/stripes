@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * reproduces http://www.stripesframework.org/jira/browse/STS-651
+ * reproduces https://stripesframework.atlassian.net/browse/STS-651
  */
 public class InvalidDateKeyBreaksInvariant_STS_651 extends FilterEnabledTestBase {
 

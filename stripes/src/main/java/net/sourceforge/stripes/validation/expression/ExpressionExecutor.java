@@ -51,7 +51,7 @@ public interface ExpressionExecutor
     /**
      * The special name given to the field that the expression is annotated on.
      *
-     * @deprecated See http://www.stripesframework.org/jira/browse/STS-822 -
+     * @deprecated See https://stripesframework.atlassian.net/browse/STS-822 -
      * replaced by SELF
      */
     @Deprecated
@@ -62,7 +62,7 @@ public interface ExpressionExecutor
      * This constant is the keyword to be used to refer to the 'this' in EL
      * expressions, which is invalid in EL implementations.
      *
-     * http://www.stripesframework.org/jira/browse/STS-822
+     * https://stripesframework.atlassian.net/browse/STS-822
      */
     String SELF = "self";
 
