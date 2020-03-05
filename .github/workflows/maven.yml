@@ -35,9 +35,9 @@ jobs:
         name: tlddoc.zip
         path: docs
     - name: Zip apidocs documentation
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ./docs/apidocs.zip ./stripes/target/apidocs
+      uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r ./docs/apidocs.zip ./stripes/target/apidocs
     - name: Archive apidocs documentation
       uses: actions/upload-artifact@v1
       with:
