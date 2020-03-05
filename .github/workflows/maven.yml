@@ -15,12 +15,12 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B clean verify --file pom.xml
-    - name: Archive production artifacts
+    - name: Archive Stripes zip
       uses: actions/upload-artifact@v1
       with:
         name: stripes-2.0.0-SNAPSHOT.zip
         path: dist/target/stripes-2.0.0-SNAPSHOT.zip
-    - name: Archive code coverage results
+    - name: Archive Stripes bundle zip
       uses: actions/upload-artifact@v1
       with:
         name: stripes-2.0.0-SNAPSHOT-bundle.jar
@@ -28,7 +28,7 @@ jobs:
     - name: Zip tlddoc documentation
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./docs/tlddoc.zip ./stripes/target/site/tlddoc
+        args: zip -qq -r docs/tlddoc.zip stripes/target/site/tlddoc
     - name: Archive tlddoc documentation
       uses: actions/upload-artifact@v1
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: Zip apidocs documentation
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./docs/apidocs.zip ./stripes/target/apidocs
+        args: zip -qq -r docs/apidocs.zip stripes/target/apidocs
     - name: Archive apidocs documentation
       uses: actions/upload-artifact@v1
       with:
