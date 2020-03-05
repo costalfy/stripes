@@ -28,7 +28,7 @@ jobs:
     - name: Zip tlddoc documentation
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r docs/tlddoc.zip stripes/target/site/tlddoc
+        args: zip -qq -r /home/runner/work/stripes/stripes/docs/tlddoc.zip /home/runner/work/stripes/stripes/stripes/target/site/tlddoc
     - name: Archive tlddoc documentation
       uses: actions/upload-artifact@v1
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: Zip apidocs documentation
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r docs/apidocs.zip stripes/target/apidocs
+        args: zip -qq -r /home/runner/work/stripes/stripes/docs/apidocs.zip /home/runner/work/stripes/stripes/stripes/target/apidocs
     - name: Archive apidocs documentation
       uses: actions/upload-artifact@v1
       with:
