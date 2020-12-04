@@ -19,7 +19,7 @@
         <tld.target>${project.build.outputDirectory}/META-INF</tld.target>
         <tld.uri>/stripes.tld</tld.uri>
         <tld.dynuri>/stripes-dynattr.tld</tld.dynuri>
-        <jackson.version>2.10.3</jackson.version>
+        <jackson.version>2.10.5.1</jackson.version>
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
     </properties>
 
@@ -107,13 +107,13 @@
                         <configuration>
                             <target>
                                 <!-- make two copies of the taglib, one with and one without dynamic attributes -->
-                                <filter filtersfile="${tld.source}/common-descriptions.properties" />
-                                <filter token="dynattrs" value="false" />
-                                <copy file="${tld.source}/stripes.tld" todir="${tld.target}" filtering="true" />
+                                <filter filtersfile="${tld.source}/common-descriptions.properties"/>
+                                <filter token="dynattrs" value="false"/>
+                                <copy file="${tld.source}/stripes.tld" todir="${tld.target}" filtering="true"/>
 
-                                <filter token="dynattrs" value="true" />
-                                <copy file="${tld.source}/stripes.tld" tofile="${tld.target}/stripes-dynattr.tld" filtering="true" />
-                                <replace file="${tld.target}/stripes-dynattr.tld" token="${tld.uri}" value="${tld.dynuri}" />
+                                <filter token="dynattrs" value="true"/>
+                                <copy file="${tld.source}/stripes.tld" tofile="${tld.target}/stripes-dynattr.tld" filtering="true"/>
+                                <replace file="${tld.target}/stripes-dynattr.tld" token="${tld.uri}" value="${tld.dynuri}"/>
                             </target>
                         </configuration>
                         <goals>
