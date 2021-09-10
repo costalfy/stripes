@@ -201,7 +201,7 @@ public class FileBean {
         this.saved = this.file.renameTo(toFile);
 
         // If the rename didn't work, try copying the darn thing bit by bit
-        if (this.saved == false) {
+        if (!this.saved) {
             saveViaCopy(toFile);
         }
     }

@@ -9,5 +9,5 @@ public enum Status {
     New,
     Assigned,
     Resolved,
-    Closed;
+    Closed
 }

@@ -15,7 +15,6 @@ import net.sourceforge.stripes.validation.TypeConverter;
 
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.HandlesTypes;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,10 +54,9 @@ public class StripesContainerInitializer implements ServletContainerInitializer 
      *
      * @param c
      * @param ctx
-     * @throws ServletException
      */
-    public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-        LOADED_CLASSES = new HashSet<Class<?>>(c);
+    public void onStartup(Set<Class<?>> c, ServletContext ctx) {
+        LOADED_CLASSES = new HashSet<>(c);
         INSTANCE = this;
         log.info(LOADED_CLASSES.size() + " classes loaded.");
         if (log.getRealLog().isDebugEnabled()) {

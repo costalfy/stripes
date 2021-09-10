@@ -1,10 +1,6 @@
 package net.sourceforge.stripes.examples.bugzooky.biz;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Manager class that is used to access a "database" of people that is tracked in memory.
@@ -14,7 +10,7 @@ public class PersonManager {
     private static int idSequence = 0;
 
     /** Stores the list of people in the system. */
-    private static Map<Integer,Person> people = new TreeMap<Integer,Person>();
+    private static Map<Integer,Person> people = new TreeMap<>();
 
     static {
         Person person = new Person("scooby", "scooby", "Scooby", "Doo", "scooby@mystery.machine.tv");
@@ -54,7 +50,7 @@ public class PersonManager {
 
     /** Gets a list of all the people in the system. */
     public List<Person> getAllPeople() {
-        return Collections.unmodifiableList( new ArrayList<Person>(people.values()) );
+        return Collections.unmodifiableList(new ArrayList<>(people.values()) );
     }
 
     /** Updates the person if the ID matches an existing person, otherwise saves a new person. */

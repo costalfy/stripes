@@ -14,6 +14,16 @@
  */
 package net.sourceforge.stripes.exception;
 
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.config.Configuration;
+import net.sourceforge.stripes.controller.*;
+import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.util.ReflectUtil;
+import net.sourceforge.stripes.validation.LocalizableError;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -23,26 +33,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.FileBean;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.ValidationErrorReportResolution;
-import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.controller.DispatcherHelper;
-import net.sourceforge.stripes.controller.ExecutionContext;
-import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
-import net.sourceforge.stripes.controller.StripesConstants;
-import net.sourceforge.stripes.controller.StripesRequestWrapper;
-import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.ReflectUtil;
-import net.sourceforge.stripes.validation.LocalizableError;
 
 /**
  * <p>
@@ -91,7 +81,7 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 
     /* A cache of exception types handled mapped to proxy objects that can do the handling. */
     private Map<Class<? extends Throwable>, HandlerProxy> handlers
-            = new HashMap<Class<? extends Throwable>, HandlerProxy>();
+            = new HashMap<>();
 
     /**
      * Inner class that ties a class and method together an invokable object.
@@ -125,7 +115,7 @@ public class DefaultExceptionHandler implements ExceptionHandler {
         public void handle(Throwable t, HttpServletRequest req, HttpServletResponse res) throws Exception {
             try {
                 Object resolution = handlerMethod.invoke(this.handler, t, req, res);
-                if (resolution != null && resolution instanceof Resolution) {
+                if (resolution instanceof Resolution) {
                     ((Resolution) resolution).execute(req, res);
                 }
             } catch (InvocationTargetException e) {
@@ -228,10 +218,9 @@ public class DefaultExceptionHandler implements ExceptionHandler {
      * @param request The servlet request.
      * @param response The servlet response.
      * @return A {@link ValidationErrorReportResolution}
-     * @throws java.lang.Exception If an error occurs handling the exception
      */
     protected Resolution handle(SourcePageNotFoundException exception, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) {
         return new ValidationErrorReportResolution(exception.getActionBeanContext());
     }
 
@@ -298,8 +287,7 @@ public class DefaultExceptionHandler implements ExceptionHandler {
             // Create a new request wrapper, avoiding the pitfalls of multipart
             wrapper = new StripesRequestWrapper(request) {
                 @Override
-                protected void constructMultipartWrapper(HttpServletRequest request)
-                        throws StripesServletException {
+                protected void constructMultipartWrapper(HttpServletRequest request) {
                     setLocale(configuration.getLocalePicker().pickLocale(request));
                 }
             };
@@ -432,10 +420,9 @@ public class DefaultExceptionHandler implements ExceptionHandler {
      * it takes.
      *
      * @param handler the handler instance being configured
-     * @throws java.lang.Exception If an error occurs adding this handler.
      */
     @SuppressWarnings("unchecked")
-    protected void addHandler(Object handler) throws Exception {
+    protected void addHandler(Object handler) {
         Method[] methods = handler.getClass().getMethods();
         for (Method method : methods) {
             // Check the method Signature

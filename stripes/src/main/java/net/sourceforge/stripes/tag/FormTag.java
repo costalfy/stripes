@@ -16,17 +16,13 @@ package net.sourceforge.stripes.tag;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.Wizard;
+import net.sourceforge.stripes.controller.ActionResolver;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.controller.StripesFilter;
-import net.sourceforge.stripes.controller.ActionResolver;
 import net.sourceforge.stripes.exception.StripesJspException;
-import net.sourceforge.stripes.util.CryptoUtil;
-import net.sourceforge.stripes.util.HtmlUtil;
-import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.StringUtil;
-import net.sourceforge.stripes.util.UrlBuilder;
-import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.util.*;
 import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,11 +32,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -94,7 +86,7 @@ public class FormTag extends HtmlTagSupport implements BodyTag, TryCatchFinally,
      * A map of field name to field type for all fields registered with the
      * form.
      */
-    private Map<String, Class<?>> fieldsPresent = new HashMap<String, Class<?>>();
+    private Map<String, Class<?>> fieldsPresent = new HashMap<>();
 
     /**
      * Sets the action for the form. If the form action begins with a slash, and
@@ -374,17 +366,15 @@ public class FormTag extends HtmlTagSupport implements BodyTag, TryCatchFinally,
 
     /**
      * No-op method.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      * Just returns SKIP_BODY so that the body is included only once.
-     * @return 
-     * @throws javax.servlet.jsp.JspException
+     * @return
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -551,7 +541,7 @@ public class FormTag extends HtmlTagSupport implements BodyTag, TryCatchFinally,
      */
     protected String getFieldsPresentValue() {
         // Figure out what set of names to include
-        Set<String> namesToInclude = new HashSet<String>();
+        Set<String> namesToInclude = new HashSet<>();
 
         if (isWizard()) {
             namesToInclude.addAll(this.fieldsPresent.keySet());

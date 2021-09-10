@@ -54,7 +54,7 @@ public class AsyncResponseServlet3 extends AsyncResponse {
                 }
             }
 
-            public void onComplete(AsyncEvent event) throws IOException {
+            public void onComplete(AsyncEvent event) {
                 log.debug("Async context completed=", event.getAsyncContext());
                 notifyListenersComplete();
                 doComplete();
@@ -80,7 +80,7 @@ public class AsyncResponseServlet3 extends AsyncResponse {
             }
 
             // this one is not called because we register the listener after starting the async context...
-            public void onStartAsync(AsyncEvent event) throws IOException {
+            public void onStartAsync(AsyncEvent event) {
                 log.debug("Async context started=", event.getAsyncContext(),
                         "request=", event.getSuppliedRequest(),
                         "response=", event.getSuppliedResponse());

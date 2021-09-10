@@ -14,30 +14,17 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.controller.json.JsonContentTypeRequestWrapper;
 import net.sourceforge.stripes.controller.multipart.MultipartWrapper;
 import net.sourceforge.stripes.exception.StripesServletException;
 import net.sourceforge.stripes.exception.UrlBindingConflictException;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * HttpServletRequestWrapper that is used to make the file upload functionality
@@ -82,8 +69,7 @@ public class StripesRequestWrapper extends HttpServletRequestWrapper {
     public static StripesRequestWrapper findStripesWrapper(ServletRequest request) {
         // Loop through any request wrappers looking for the stripes one
         while (!(request instanceof StripesRequestWrapper)
-                && request != null
-                && request instanceof HttpServletRequestWrapper) {
+               && request instanceof HttpServletRequestWrapper) {
             request = ((HttpServletRequestWrapper) request).getRequest();
         }
 
@@ -277,7 +263,7 @@ public class StripesRequestWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public Enumeration<Locale> getLocales() {
-        List<Locale> list = new ArrayList<Locale>();
+        List<Locale> list = new ArrayList<>();
         list.add(this.locale);
         return Collections.enumeration(list);
     }
@@ -308,7 +294,7 @@ public class StripesRequestWrapper extends HttpServletRequestWrapper {
         if (this.contentTypeRequestWrapper != null && MultipartWrapper.class.isAssignableFrom(this.contentTypeRequestWrapper.getClass())) {
             return ((MultipartWrapper) this.contentTypeRequestWrapper).getFileParameterNames();
         } else {
-            return Collections.enumeration(Collections.<String>emptyList());
+            return Collections.enumeration(Collections.emptyList());
         }
     }
 
@@ -400,7 +386,7 @@ class MergedParameterMap implements Map<String, String[]> {
         Map<String, String[]> multipartParams = null;
         Enumeration<?> names = contentTypeRequestWrapper.getParameterNames();
         if (names != null && names.hasMoreElements()) {
-            multipartParams = new LinkedHashMap<String, String[]>();
+            multipartParams = new LinkedHashMap<>();
             while (names.hasMoreElements()) {
                 String name = (String) names.nextElement();
                 multipartParams.put(name, contentTypeRequestWrapper.getParameterValues(name));
@@ -428,7 +414,7 @@ class MergedParameterMap implements Map<String, String[]> {
     }
 
     public Set<Map.Entry<String, String[]>> entrySet() {
-        Set<Map.Entry<String, String[]>> entries = new LinkedHashSet<Map.Entry<String, String[]>>();
+        Set<Map.Entry<String, String[]>> entries = new LinkedHashSet<>();
         for (String key : keySet()) {
             entries.add(new Entry(key));
         }
@@ -448,7 +434,7 @@ class MergedParameterMap implements Map<String, String[]> {
     }
 
     public Set<String> keySet() {
-        Set<String> merged = new LinkedHashSet<String>();
+        Set<String> merged = new LinkedHashSet<>();
         merged.addAll(uriParams.keySet());
         merged.addAll(getParameterMap().keySet());
         return merged;
@@ -472,7 +458,7 @@ class MergedParameterMap implements Map<String, String[]> {
 
     public Collection<String[]> values() {
         Set<String> keys = keySet();
-        List<String[]> merged = new ArrayList<String[]>(keys.size());
+        List<String[]> merged = new ArrayList<>(keys.size());
         for (String key : keys) {
             merged.add(mergeParameters(getParameterMap().get(key), uriParams.get(key)));
         }
@@ -498,7 +484,7 @@ class MergedParameterMap implements Map<String, String[]> {
      */
     @SuppressWarnings("unchecked")
     Map<String, String[]> getParameterMap() {
-        return request == null ? Collections.<String, String[]>emptyMap() : request.getRequest().getParameterMap();
+        return request == null ? Collections.emptyMap() : request.getRequest().getParameterMap();
     }
 
     /**
@@ -507,11 +493,11 @@ class MergedParameterMap implements Map<String, String[]> {
      */
     void pushUriParameters(HttpServletRequestWrapper request) {
         if (this.uriParamStack == null) {
-            this.uriParamStack = new Stack<Map<String, String[]>>();
+            this.uriParamStack = new Stack<>();
         }
         Map<String, String[]> map = getUriParameters(request);
         this.uriParamStack.push(this.uriParams);
-        this.uriParams = mergeParameters(new LinkedHashMap<String, String[]>(this.uriParams), map);
+        this.uriParams = mergeParameters(new LinkedHashMap<>(this.uriParams), map);
     }
 
     /**
@@ -567,7 +553,7 @@ class MergedParameterMap implements Map<String, String[]> {
                     }
                     if (value != null) {
                         if (params == null) {
-                            params = new LinkedHashMap<String, String[]>();
+                            params = new LinkedHashMap<>();
                         }
                         String[] values = params.get(name);
                         if (values == null) {
@@ -593,7 +579,7 @@ class MergedParameterMap implements Map<String, String[]> {
     Map<String, String[]> mergeParameters(Map<String, String[]> target, Map<String, String[]> source) {
         // target must not be null and we must not modify source
         if (target == null) {
-            target = new LinkedHashMap<String, String[]>();
+            target = new LinkedHashMap<>();
         }
 
         // nothing to do if source is null or empty

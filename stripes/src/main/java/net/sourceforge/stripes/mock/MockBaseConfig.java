@@ -15,10 +15,10 @@
 package net.sourceforge.stripes.mock;
 
 import javax.servlet.ServletContext;
-import java.util.Map;
-import java.util.Enumeration;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Common parent class for both MockServletConfig and MockFilterConfig since
@@ -30,7 +30,7 @@ import java.util.HashMap;
 public class MockBaseConfig {
 
     private ServletContext servletContext;
-    private Map<String, String> initParameters = new HashMap<String, String>();
+    private Map<String, String> initParameters = new HashMap<>();
 
     /**
      * Sets the ServletContext that will be returned by getServletContext().

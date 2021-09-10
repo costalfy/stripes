@@ -119,7 +119,7 @@ public abstract class StripesTagSupport implements Tag {
      * @param attributes
      */
     public void pushPageContextAttributes(Map<String, Object> attributes) {
-        this.previousAttributeValues = new HashMap<String, Object>();
+        this.previousAttributeValues = new HashMap<>();
 
         for (Map.Entry<String, Object> entry : attributes.entrySet()) {
             String name = entry.getKey();
@@ -195,7 +195,7 @@ public abstract class StripesTagSupport implements Tag {
         Stack<StripesTagSupport> stack = (Stack<StripesTagSupport>) getPageContext().getRequest().getAttribute(StripesConstants.REQ_ATTR_TAG_STACK);
 
         if (stack == null) {
-            stack = new Stack<StripesTagSupport>();
+            stack = new Stack<>();
             getPageContext().getRequest().setAttribute(StripesConstants.REQ_ATTR_TAG_STACK, stack);
         }
 

@@ -16,31 +16,24 @@ package net.sourceforge.stripes.validation.expression;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.controller.ParameterName;
-import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.controller.StripesConstants;
-import net.sourceforge.stripes.validation.ValidationMetadata;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationError;
-import net.sourceforge.stripes.validation.ScopedLocalizableError;
+import net.sourceforge.stripes.controller.StripesFilter;
+import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.bean.BeanUtil;
-import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.validation.ScopedLocalizableError;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMetadata;
 
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspApplicationContext;
+import javax.el.*;
 import javax.servlet.ServletContext;
-import javax.el.ExpressionFactory;
-import javax.el.ValueExpression;
-import javax.el.ELContext;
-import javax.el.ELResolver;
-import javax.el.PropertyNotWritableException;
-import javax.el.FunctionMapper;
-import javax.el.VariableMapper;
-import javax.el.ELException;
-import java.util.List;
-import java.util.Iterator;
+import javax.servlet.jsp.JspApplicationContext;
+import javax.servlet.jsp.JspFactory;
 import java.beans.FeatureDescriptor;
 import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * An implementation of {@link ExpressionExecutor} that uses the new EL API
@@ -185,8 +178,6 @@ public class Jsp21ExpressionExecutor implements ExpressionExecutor {
      */
     protected static class StripesELContext extends ELContext {
 
-        @SuppressWarnings("unused")
-        private ActionBean bean;
         private StripesELResolver resolver;
         private VariableMapper vmapper;
         private static final FunctionMapper fmapper = new FunctionMapper() {
@@ -203,7 +194,6 @@ public class Jsp21ExpressionExecutor implements ExpressionExecutor {
          * @param bean the ActionBean to resolve properties against
          */
         public StripesELContext(ActionBean bean) {
-            this.bean = bean;
             this.resolver = new StripesELResolver(bean);
 
             this.vmapper = new VariableMapper() {

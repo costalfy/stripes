@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Stripes core. Produces the stripes.jar needed in users webapps. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.sourceforge.stripes</groupId>
         <artifactId>stripes-parent</artifactId>
-        <version>1.7.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>stripes</artifactId>
     <packaging>jar</packaging>
@@ -19,8 +20,6 @@
         <tld.target>${project.build.outputDirectory}/META-INF</tld.target>
         <tld.uri>/stripes.tld</tld.uri>
         <tld.dynuri>/stripes-dynattr.tld</tld.dynuri>
-        <jackson.version>2.11.2</jackson.version>
-        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
     </properties>
 
     <dependencies>
@@ -30,31 +29,37 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
+            <artifactId>javax.el-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>servlets.com</groupId>
-            <artifactId>cos</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -62,7 +67,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -112,8 +121,10 @@
                                 <copy file="${tld.source}/stripes.tld" todir="${tld.target}" filtering="true"/>
 
                                 <filter token="dynattrs" value="true"/>
-                                <copy file="${tld.source}/stripes.tld" tofile="${tld.target}/stripes-dynattr.tld" filtering="true"/>
-                                <replace file="${tld.target}/stripes-dynattr.tld" token="${tld.uri}" value="${tld.dynuri}"/>
+                                <copy file="${tld.source}/stripes.tld" tofile="${tld.target}/stripes-dynattr.tld"
+                                      filtering="true"/>
+                                <replace file="${tld.target}/stripes-dynattr.tld" token="${tld.uri}"
+                                         value="${tld.dynuri}"/>
                             </target>
                         </configuration>
                         <goals>
@@ -155,7 +166,6 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <additionalparam>${javadoc.opts}</additionalparam>
                             <groups>
                                 <group>
                                     <title>Core API</title>
@@ -207,9 +217,24 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

@@ -1,12 +1,9 @@
-<%@ page import="net.sourceforge.stripes.examples.bugzooky.biz.Status"%>
-<%@ page import="net.sourceforge.stripes.examples.bugzooky.RegisterActionBean" %>
+<%@ page import="net.sourceforge.stripes.examples.bugzooky.RegisterActionBean"%>
 <%@ include file="/bugzooky/taglibs.jsp"%>
 
 <stripes:layout-render name="/bugzooky/layout/standard.jsp" title="Register">
 	<stripes:layout-component name="contents">
-
 		<stripes:errors globalErrorsOnly="true" />
-
 		<stripes:form beanclass="<%=RegisterActionBean.class%>" focus="">
 			<p>Please provide the following information:</p>
 

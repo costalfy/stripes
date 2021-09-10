@@ -15,11 +15,11 @@
 package net.sourceforge.stripes.tag;
 
 import net.sourceforge.stripes.exception.StripesJspException;
+import net.sourceforge.stripes.localization.LocalizationUtility;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
 import java.io.IOException;
-import net.sourceforge.stripes.localization.LocalizationUtility;
 
 /**
  * <p>
@@ -89,18 +89,16 @@ public class InputLabelTag extends InputTagSupport implements BodyTag {
      * Does nothing.
      *
      * @return EVAL_BODY_BUFFERED in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
         /**
          * Do Nothing
          */
@@ -110,9 +108,8 @@ public class InputLabelTag extends InputTagSupport implements BodyTag {
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -161,10 +158,9 @@ public class InputLabelTag extends InputTagSupport implements BodyTag {
 
     /**
      * Overridden to do nothing, since a label isn't really a form field.
-     * @throws net.sourceforge.stripes.exception.StripesJspException
      */
     @Override
-    protected void registerWithParentForm() throws StripesJspException {
+    protected void registerWithParentForm() {
     }
 
     /**

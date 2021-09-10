@@ -25,34 +25,13 @@ import net.sourceforge.stripes.util.CollectionUtil;
 import net.sourceforge.stripes.util.CryptoUtil;
 import net.sourceforge.stripes.util.HtmlUtil;
 import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.bean.BeanUtil;
-import net.sourceforge.stripes.util.bean.ExpressionException;
-import net.sourceforge.stripes.util.bean.NoSuchPropertyException;
-import net.sourceforge.stripes.util.bean.PropertyExpression;
-import net.sourceforge.stripes.util.bean.PropertyExpressionEvaluation;
-import net.sourceforge.stripes.validation.ScopedLocalizableError;
-import net.sourceforge.stripes.validation.TypeConverter;
-import net.sourceforge.stripes.validation.TypeConverterFactory;
-import net.sourceforge.stripes.validation.ValidationError;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMetadata;
+import net.sourceforge.stripes.util.bean.*;
+import net.sourceforge.stripes.validation.*;
 import net.sourceforge.stripes.validation.expression.ExpressionValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * <p>
@@ -87,10 +66,9 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
      * validations as properties are bound to the bean.
      *
      * @param configuration - Configuration object to use for initialization.
-     * @throws Exception If an error occurs during initialization
      */
     @Override
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -139,7 +117,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
 
         // Converted values for all fields are accumulated in this map to make post-conversion
         // validation go a little easier
-        Map<ParameterName, List<Object>> allConvertedFields = new TreeMap<ParameterName, List<Object>>();
+        Map<ParameterName, List<Object>> allConvertedFields = new TreeMap<>();
 
         // First we bind all the regular parameters
         for (Map.Entry<ParameterName, String[]> entry : parameters.entrySet()) {
@@ -186,7 +164,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
                     String[] values = entry.getValue();
 
                     // Do Validation and type conversion
-                    List<ValidationError> errors = new ArrayList<ValidationError>();
+                    List<ValidationError> errors = new ArrayList<>();
 
                     // If the property should be ignored, skip to the next property
                     if (validationInfo != null && validationInfo.ignore()) {
@@ -378,12 +356,11 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
      * @param valueOrValues a List containing one or more values
      * @param targetType the declared type of the property on the ActionBean
      * @param scalarType Class of scalar type to use
-     * @throws Exception if the property cannot be bound for any reason
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected void bindNonNullValue(ActionBean bean,
             PropertyExpressionEvaluation propertyEvaluation, List<Object> valueOrValues,
-            Class targetType, Class scalarType) throws Exception {
+            Class targetType, Class scalarType) {
         Class valueType = valueOrValues.iterator().next().getClass();
 
         // If the target type is an array, set it as one, otherwise set as scalar
@@ -443,7 +420,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
         Map<String, String[]> requestParameters = bean.getContext().getRequest().getParameterMap();
         Map<String, ValidationMetadata> validations = StripesFilter.getConfiguration()
                 .getValidationMetadataProvider().getValidationMetadata(bean.getClass());
-        SortedMap<ParameterName, String[]> parameters = new TreeMap<ParameterName, String[]>();
+        SortedMap<ParameterName, String[]> parameters = new TreeMap<>();
 
         for (Map.Entry<String, String[]> entry : requestParameters.entrySet()) {
             ParameterName paramName = new ParameterName(entry.getKey().trim());
@@ -463,9 +440,8 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
      * @param propertyName the name of the property to be bound (simple or
      * complex)
      * @param propertyValue the value of the target property
-     * @throws Exception thrown if the property cannot be bound for any reason
      */
-    public void bind(ActionBean bean, String propertyName, Object propertyValue) throws Exception {
+    public void bind(ActionBean bean, String propertyName, Object propertyValue) {
         BeanUtil.setPropertyValue(propertyName, bean, propertyValue);
     }
 
@@ -486,7 +462,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
 
         // Assemble a set of names that we know have indexed parameters, so we won't check
         // for required-ness the regular way
-        Set<String> indexedParams = new HashSet<String>();
+        Set<String> indexedParams = new HashSet<>();
         for (ParameterName name : parameters.keySet()) {
             if (name.isIndexed()) {
                 indexedParams.add(name.getStrippedName());
@@ -536,7 +512,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
         // Now the easy work is done, figure out which rows of indexed props had values submitted
         // and what to flag up as failing required field validation
         if (indexedParams.size() > 0) {
-            Map<String, Row> rows = new HashMap<String, Row>();
+            Map<String, Row> rows = new HashMap<>();
 
             for (Map.Entry<ParameterName, String[]> entry : parameters.entrySet()) {
                 ParameterName name = entry.getKey();
@@ -794,7 +770,7 @@ public class DefaultActionBeanPropertyBinder implements ActionBeanPropertyBinder
             ValidationMetadata validationInfo, List<ValidationError> errors)
             throws Exception {
 
-        List<Object> returns = new ArrayList<Object>();
+        List<Object> returns = new ArrayList<>();
         Class returnType;
 
         // Dig up the type converter.  This gets a bit tricky because we need to handle

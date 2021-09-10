@@ -14,13 +14,7 @@
  */
 package net.sourceforge.stripes.util;
 
-import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Utility class that makes it easy to construct Collection literals, and also
@@ -120,7 +114,7 @@ public class Literal {
      * @return 
      */
     public static <T> List<T> list(T... elements) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         Collections.addAll(list, elements);
         return list;
     }
@@ -132,7 +126,7 @@ public class Literal {
      * @return 
      */
     public static <T> Set<T> set(T... elements) {
-        Set<T> set = new HashSet<T>();
+        Set<T> set = new HashSet<>();
         Collections.addAll(set, elements);
         return set;
     }
@@ -144,7 +138,7 @@ public class Literal {
      * @return 
      */
     public static <T extends Comparable<?>> SortedSet<T> sortedSet(T... elements) {
-        SortedSet<T> set = new TreeSet<T>();
+        SortedSet<T> set = new TreeSet<>();
         Collections.addAll(set, elements);
         return set;
     }

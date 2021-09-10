@@ -14,25 +14,14 @@
  */
 package net.sourceforge.stripes.mock;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.servlet.Filter;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.Message;
-import net.sourceforge.stripes.controller.ActionResolver;
-import net.sourceforge.stripes.controller.AnnotatedClassActionResolver;
-import net.sourceforge.stripes.controller.StripesConstants;
-import net.sourceforge.stripes.controller.StripesFilter;
-import net.sourceforge.stripes.controller.UrlBindingFactory;
+import net.sourceforge.stripes.controller.*;
 import net.sourceforge.stripes.util.CryptoUtil;
 import net.sourceforge.stripes.validation.ValidationErrors;
+
+import javax.servlet.Filter;
+import java.util.*;
 
 /**
  * <p>
@@ -146,7 +135,7 @@ public class MockRoundtrip {
             if (qmark < actionBeanUrl.length()) {
                 String query = actionBeanUrl.substring(qmark + 1);
                 if (query != null && query.length() > 0) {
-                    parameters = new TreeMap<String, List<String>>();
+                    parameters = new TreeMap<>();
                     for (String kv : query.split("&")) {
                         String[] parts = kv.split("=");
                         String key, value;
@@ -163,7 +152,7 @@ public class MockRoundtrip {
                         if (key != null) {
                             List<String> values = parameters.get(key);
                             if (values == null) {
-                                values = new ArrayList<String>();
+                                values = new ArrayList<>();
                             }
                             values.add(value);
                             parameters.put(key, values);
@@ -441,9 +430,9 @@ public class MockRoundtrip {
      * Find and return the {@link UrlBindingFactory} for the given context.
      */
     private static UrlBindingFactory getUrlBindingFactory(MockServletContext context) {
-        ActionResolver resolver = getActionResolver(context);
+        AnnotatedClassActionResolver resolver = getActionResolver(context);
         if (resolver instanceof AnnotatedClassActionResolver) {
-            return ((AnnotatedClassActionResolver) resolver).getUrlBindingFactory();
+            return resolver.getUrlBindingFactory();
         }
 
         return null;

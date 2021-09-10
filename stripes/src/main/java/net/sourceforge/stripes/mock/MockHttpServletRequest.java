@@ -14,26 +14,11 @@
  */
 package net.sourceforge.stripes.mock;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.io.*;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * <p>
@@ -63,17 +48,17 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     private String authType;
     private Cookie[] cookies;
-    private Map<String, Object> headers = new HashMap<String, Object>();
-    private Map<String, Object> attributes = new HashMap<String, Object>();
-    private Map<String, String[]> parameters = new HashMap<String, String[]>();
+    private Map<String, Object> headers = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>();
+    private Map<String, String[]> parameters = new HashMap<>();
     private String method = "POST";
     private HttpSession session;
     private String characterEncoding = "UTF-8";
-    private List<Locale> locales = new ArrayList<Locale>();
+    private List<Locale> locales = new ArrayList<>();
     private Principal userPrincipal;
-    private Set<String> roles = new HashSet<String>();
+    private Set<String> roles = new HashSet<>();
     private String forwardUrl;
-    private List<String> includedUrls = new ArrayList<String>();
+    private List<String> includedUrls = new ArrayList<>();
     private byte[] requestBody = new byte[0];
 
     // All the bits of the URL
@@ -175,7 +160,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
      */
     public Enumeration<String> getHeaders(String name) {
         String header = getHeader(name);
-        Collection<String> values = new ArrayList<String>();
+        Collection<String> values = new ArrayList<>();
         if (header != null) {
             values.add(header);
         }
@@ -473,10 +458,9 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     /**
      * Always returns null.
-     * @return 
-     * @throws java.io.IOException
+     * @return
      */
-    public ServletInputStream getInputStream() throws IOException {
+    public ServletInputStream getInputStream() {
         return new ServletInputStream() {
 
             ByteArrayInputStream wrappedStream = new ByteArrayInputStream(requestBody);
@@ -486,7 +470,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
             }
 
             @Override
-            public int read() throws IOException {
+            public int read() {
                 return wrappedStream.read();
             }
 
@@ -797,10 +781,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
      *
      * @param response
      * @return
-     * @throws IOException
-     * @throws ServletException
      */
-    public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+    public boolean authenticate(HttpServletResponse response) {
         return false;
     }
 
@@ -808,27 +790,23 @@ public class MockHttpServletRequest implements HttpServletRequest {
      *
      * @param username
      * @param password
-     * @throws ServletException
      */
-    public void login(String username, String password) throws ServletException {
+    public void login(String username, String password) {
 
     }
 
     /**
      *
-     * @throws ServletException
      */
-    public void logout() throws ServletException {
+    public void logout() {
 
     }
 
     /**
      *
      * @return
-     * @throws IOException
-     * @throws ServletException
      */
-    public Collection<Part> getParts() throws IOException, ServletException {
+    public Collection<Part> getParts() {
         return null;
     }
 
@@ -836,10 +814,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
      *
      * @param name
      * @return
-     * @throws IOException
-     * @throws ServletException
      */
-    public Part getPart(String name) throws IOException, ServletException {
+    public Part getPart(String name) {
         return null;
     }
 
@@ -848,10 +824,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
      * @param <T>
      * @param handlerClass
      * @return
-     * @throws IOException
-     * @throws ServletException
      */
-    public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+    public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) {
         return null;
     }
 

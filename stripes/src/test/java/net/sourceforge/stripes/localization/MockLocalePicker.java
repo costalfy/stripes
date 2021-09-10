@@ -14,11 +14,10 @@
  */
 package net.sourceforge.stripes.localization;
 
-import java.util.Locale;
+import net.sourceforge.stripes.config.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
-
-import net.sourceforge.stripes.config.Configuration;
+import java.util.Locale;
 
 /**
  * Simple locale picker that just uses the locale of the passed
@@ -36,6 +35,6 @@ public class MockLocalePicker implements LocalePicker {
         return "UTF-8";
     }
 
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
     }
 }

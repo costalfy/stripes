@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Stripes Framework.
+ * Copyright 2020 Stripes Framework.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,13 @@ package net.sourceforge.stripes.controller.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.stripes.controller.ContentTypeRequestWrapper;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * This class is responsible for extracting parameters from the body of requests
@@ -39,7 +35,7 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
 
     private static final Log log = Log.getInstance(JsonContentTypeRequestWrapper.class);
 
-    private Map< String, Set<String>> parameters = new HashMap< String, Set<String>>();
+    private Map< String, Set<String>> parameters = new HashMap<>();
 
     public void build(HttpServletRequest request) throws IOException {
 
@@ -80,16 +76,16 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
                 processNode(childNode, currentPath);
             }
         } else {
-            String name = parent;
-            Set<String> parameterValues = parameters.get(name);
+            Set<String> parameterValues = parameters.get(parent);
             if (parameterValues == null) {
-                parameterValues = new HashSet<String>();
+                parameterValues = new HashSet<>();
             }
             parameterValues.add(node.asText());
 
-            log.debug("Adding parameter (name=", name, ",value=", node.asText(), ")");
+            log.debug("Adding parameter (name=",
+                      parent, ",value=", node.asText(), ")");
 
-            parameters.put(name, parameterValues);
+            parameters.put(parent, parameterValues);
         }
     }
 
@@ -130,7 +126,7 @@ public class JsonContentTypeRequestWrapper implements ContentTypeRequestWrapper 
         Set<String> values = parameters.get(name);
 
         if (values != null) {
-            returnValues = values.toArray(new String[values.size()]);
+            returnValues = values.toArray(new String[0]);
         }
 
         log.debug("Returning parameter value (", returnValues, ") for name (", name, ") to a caller.");

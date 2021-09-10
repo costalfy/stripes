@@ -14,18 +14,16 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.UUID;
+import net.sourceforge.stripes.mock.MockHttpServletResponse;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.mail.internet.ContentDisposition;
 import javax.mail.internet.ParseException;
-
-import net.sourceforge.stripes.mock.MockHttpServletResponse;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.UUID;
 
 public class TestStreamingResolution {
 
@@ -38,7 +36,7 @@ public class TestStreamingResolution {
     }
 
     private void doTestContentDisposition(boolean attachment, String filename) throws Exception {
-        byte[] data = UUID.randomUUID().toString().getBytes(Charset.forName("UTF-8"));
+        byte[] data = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
         ByteArrayInputStream is = new ByteArrayInputStream(data);
 
         StreamingResolution resolution = new StreamingResolution("application/octet-stream", is);
@@ -50,26 +48,30 @@ public class TestStreamingResolution {
         MockHttpServletResponse response = new MockHttpServletResponse();
         resolution.applyHeaders(response);
         resolution.stream(response);
-        Assert.assertEquals(data, response.getOutputBytes());
+        Assertions.assertArrayEquals(data,
+                                     response.getOutputBytes());
 
         ContentDisposition disposition = getContentDisposition(response);
         if (attachment) {
             if (filename == null) {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNull(disposition.getParameter("filename"));
             } else {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNotNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNotNull(disposition.getParameter("filename"));
             }
         } else {
             if (filename == null) {
-                Assert.assertNull(disposition);
+                Assertions.assertNull(disposition);
             } else {
-                Assert.assertNotNull(disposition);
-                Assert.assertEquals("attachment", disposition.getDisposition());
-                Assert.assertNotNull(disposition.getParameter("filename"));
+                Assertions.assertNotNull(disposition);
+                Assertions.assertEquals("attachment",
+                                        disposition.getDisposition());
+                Assertions.assertNotNull(disposition.getParameter("filename"));
             }
         }
     }

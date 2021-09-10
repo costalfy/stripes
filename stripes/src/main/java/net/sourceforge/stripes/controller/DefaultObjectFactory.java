@@ -14,30 +14,17 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.config.TargetTypes;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.ReflectUtil;
 import net.sourceforge.stripes.util.TypeHandlerCache;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * <p>
@@ -98,7 +85,7 @@ public class DefaultObjectFactory implements ObjectFactory {
      * class that implements the interface and will, by default, be instantiated
      * when an instance of the interface is needed.
      */
-    protected final Map<Class<?>, Class<?>> interfaceImplementations = new HashMap<Class<?>, Class<?>>();
+    protected final Map<Class<?>, Class<?>> interfaceImplementations = new HashMap<>();
 
     {
         interfaceImplementations.put(Collection.class, ArrayList.class);
@@ -115,10 +102,9 @@ public class DefaultObjectFactory implements ObjectFactory {
 
     /**
      * Sets the configuration object associated with this object factory.
-     * 
-     * @throws java.lang.Exception If something goes wrong initializing this object factory.
+     *
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -145,11 +131,11 @@ public class DefaultObjectFactory implements ObjectFactory {
     public synchronized void addPostProcessor(ObjectPostProcessor postProcessor) {
         // The cache will be null by default to indicate that there are no post-processors
         if (postProcessors == null) {
-            postProcessors = new TypeHandlerCache<List<ObjectPostProcessor>>();
+            postProcessors = new TypeHandlerCache<>();
         }
 
         // Determine target types from type arguments
-        List<Class<?>> targetTypes = new ArrayList<Class<?>>();
+        List<Class<?>> targetTypes = new ArrayList<>();
         Type[] typeArguments = ReflectUtil.getActualTypeArguments(postProcessor.getClass(),
                 ObjectPostProcessor.class);
         if ((typeArguments != null) && (typeArguments.length == 1)
@@ -177,7 +163,7 @@ public class DefaultObjectFactory implements ObjectFactory {
         for (Class<?> targetType : targetTypes) {
             List<ObjectPostProcessor> list = postProcessors.getHandler(targetType);
             if (list == null) {
-                list = new ArrayList<ObjectPostProcessor>();
+                list = new ArrayList<>();
                 postProcessors.add(targetType, list);
             }
             log.debug("Adding post-processor of type ", postProcessor.getClass().getName(),
@@ -220,11 +206,8 @@ public class DefaultObjectFactory implements ObjectFactory {
      * @return an instance of the interface type supplied
      * @throws InstantiationException if no implementation type has been
      * configured
-     * @throws IllegalAccessException if thrown by the JVM during class
-     * instantiation
      */
-    public <T> T newInterfaceInstance(Class<T> interfaceType) throws InstantiationException,
-            IllegalAccessException {
+    public <T> T newInterfaceInstance(Class<T> interfaceType) throws InstantiationException {
         Class impl = getImplementingClass(interfaceType);
         if (impl == null) {
             throw new InstantiationException(
@@ -328,7 +311,8 @@ public class DefaultObjectFactory implements ObjectFactory {
      */
     public <T> DefaultConstructorWrapper<T> constructor(Class<T> clazz, Class<?>... parameterTypes) {
         try {
-            return new DefaultConstructorWrapper<T>(this, clazz.getConstructor(parameterTypes));
+            return new DefaultConstructorWrapper<>(this,
+                                                   clazz.getConstructor(parameterTypes));
         } catch (SecurityException e) {
             throw new StripesRuntimeException("Could not instantiate " + clazz, e);
         } catch (NoSuchMethodException e) {

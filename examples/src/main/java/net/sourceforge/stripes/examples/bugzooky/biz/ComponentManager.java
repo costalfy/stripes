@@ -1,10 +1,6 @@
 package net.sourceforge.stripes.examples.bugzooky.biz;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Maintains a list of components in an in memory "database".
@@ -16,7 +12,7 @@ public class ComponentManager {
     private static int idSequence = 0;
 
     /** Storage for all known components. */
-    private static Map<Integer,Component> components = new TreeMap<Integer,Component>();
+    private static Map<Integer,Component> components = new TreeMap<>();
 
     static {
         Component component = new Component("Component 0");
@@ -42,7 +38,7 @@ public class ComponentManager {
 
     /** Returns a sorted list of all components in the system. */
     public List<Component> getAllComponents() {
-        return Collections.unmodifiableList( new ArrayList<Component>(components.values()) );
+        return Collections.unmodifiableList(new ArrayList<>(components.values()) );
     }
 
     /** Updates an existing component if the ID matches, or saves a new one otherwise. */

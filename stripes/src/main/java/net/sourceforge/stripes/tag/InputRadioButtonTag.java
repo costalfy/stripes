@@ -92,27 +92,24 @@ public class InputRadioButtonTag extends InputTagSupport implements BodyTag {
      * Sets the input tag type to "radio".
      *
      * @return EVAL_BODY_BUFFERED in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -152,7 +149,7 @@ public class InputRadioButtonTag extends InputTagSupport implements BodyTag {
 
         getAttributes().put("value", format(this.value));
 
-        writeSingletonTag(getPageContext().getOut(), "input");
+        writeSingletonTag(getPageContext().getOut());
 
         // Restore the state of the tag to before we mucked with it
         getAttributes().remove("checked");

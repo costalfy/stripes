@@ -14,9 +14,9 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Collection;
-import java.text.NumberFormat;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 /**
@@ -87,15 +87,15 @@ public class PercentageTypeConverter extends NumberTypeConverterSupport
         {
             if ( targetType.equals( Float.class ) || targetType.equals( Float.TYPE ) )
             {
-                number = new Float( number.floatValue() );
+                number = number.floatValue();
             }
             else if ( targetType.equals( Double.class ) || targetType.equals( Double.TYPE ) )
             {
-                number = new Double( number.doubleValue() );
+                number = number.doubleValue();
             }
             else if ( targetType.equals( BigDecimal.class ) )
             {
-                number = new BigDecimal( number.doubleValue() );
+                number = BigDecimal.valueOf(number.doubleValue());
             }
             else
             {

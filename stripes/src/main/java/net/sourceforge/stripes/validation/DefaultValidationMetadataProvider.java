@@ -14,27 +14,20 @@
  */
 package net.sourceforge.stripes.validation;
 
+import net.sourceforge.stripes.config.Configuration;
+import net.sourceforge.stripes.controller.ParameterName;
+import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.util.ReflectUtil;
+
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.controller.ParameterName;
-import net.sourceforge.stripes.exception.StripesRuntimeException;
-import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.ReflectUtil;
 
 /**
  * An implementation of {@link ValidationMetadataProvider} that scans classes
@@ -55,12 +48,12 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
     /**
      * Map class -> field -> validation meta data
      */
-    private final Map<Class<?>, Map<String, ValidationMetadata>> cache = new ConcurrentHashMap<Class<?>, Map<String, ValidationMetadata>>();
+    private final Map<Class<?>, Map<String, ValidationMetadata>> cache = new ConcurrentHashMap<>();
 
     /**
      * Currently does nothing except store a reference to {@code configuration}.
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -104,7 +97,7 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
      * annotations
      */
     protected Map<String, ValidationMetadata> loadForClass(Class<?> beanType) {
-        Map<String, ValidationMetadata> meta = new HashMap<String, ValidationMetadata>();
+        Map<String, ValidationMetadata> meta = new HashMap<>();
 
         @SuppressWarnings("unchecked")
         Map<String, AnnotationInfo> annotationInfoMap
@@ -120,7 +113,8 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
 
             // add to allow list if @Validate present
             if (simple != null) {
-                if (simple.field() == null || "".equals(simple.field())) {
+                simple.field();
+                if ("".equals(simple.field())) {
                     meta.put(propertyName, new ValidationMetadata(propertyName, simple));
                 } else {
                     log.warn("Field name present in @Validate but should be omitted: ",
@@ -132,19 +126,17 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
             // add all sub-properties referenced in @ValidateNestedProperties
             if (nested != null) {
                 Validate[] validates = nested.value();
-                if (validates != null) {
-                    for (Validate validate : validates) {
-                        if (validate.field() != null && !"".equals(validate.field())) {
-                            String fullName = propertyName + '.' + validate.field();
-                            if (meta.containsKey(fullName)) {
-                                log.warn("More than one nested @Validate with same field name: "
-                                        + validate.field() + " on property " + propertyName);
-                            }
-                            meta.put(fullName, new ValidationMetadata(fullName, validate));
-                        } else {
-                            log.warn("Field name missing from nested @Validate: ", clazz,
-                                    ", property ", propertyName);
+                for (Validate validate : validates) {
+                    if (validate.field() != null && !"".equals(validate.field())) {
+                        String fullName = propertyName + '.' + validate.field();
+                        if (meta.containsKey(fullName)) {
+                            log.warn("More than one nested @Validate with same field name: "
+                                    + validate.field() + " on property " + propertyName);
                         }
+                        meta.put(fullName, new ValidationMetadata(fullName, validate));
+                    } else {
+                        log.warn("Field name missing from nested @Validate: ", clazz,
+                                ", property ", propertyName);
                     }
                 }
             }
@@ -167,12 +159,12 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
      */
     protected Map<String, AnnotationInfo> getAnnotationInfoMap(Class<?> beanType,
             Class<? extends Annotation>... annotationClasses) {
-        Map<String, AnnotationInfo> annotationInfoMap = new HashMap<String, AnnotationInfo>();
+        Map<String, AnnotationInfo> annotationInfoMap = new HashMap<>();
 
-        Set<String> seen = new HashSet<String>();
+        Set<String> seen = new HashSet<>();
         try {
             for (Class<?> clazz = beanType; clazz != null; clazz = clazz.getSuperclass()) {
-                List<PropertyDescriptor> pds = new ArrayList<PropertyDescriptor>(
+                List<PropertyDescriptor> pds = new ArrayList<>(
                         Arrays.asList(ReflectUtil.getPropertyDescriptors(clazz)));
 
                 // Also look at public fields
@@ -242,11 +234,11 @@ public class DefaultValidationMetadataProvider implements ValidationMetadataProv
         AnnotationInfo annotationInfo = new AnnotationInfo(clazz);
 
         Map<PropertyWrapper, Map<Class<? extends Annotation>, Annotation>> map
-                = new HashMap<PropertyWrapper, Map<Class<? extends Annotation>, Annotation>>();
+                = new HashMap<>();
 
         for (PropertyWrapper property : propertyWrappers) {
             Map<Class<? extends Annotation>, Annotation> annotationMap
-                    = new HashMap<Class<? extends Annotation>, Annotation>();
+                    = new HashMap<>();
 
             for (Class<? extends Annotation> annotationClass : annotationClasses) {
                 Annotation annotation = findAnnotation(clazz, property, annotationClass);

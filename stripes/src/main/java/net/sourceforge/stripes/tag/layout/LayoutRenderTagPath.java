@@ -14,13 +14,10 @@
  */
 package net.sourceforge.stripes.tag.layout;
 
+import javax.servlet.jsp.PageContext;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.servlet.jsp.PageContext;
-
-import net.sourceforge.stripes.exception.StripesJspException;
 
 /**
  * Uniquely identifies a {@link LayoutRenderTag} within a page. Within a single
@@ -60,7 +57,7 @@ public class LayoutRenderTagPath {
 
         for (LayoutTag parent = tag.getLayoutParent(); parent instanceof LayoutComponentTag;) {
             if (path == null) {
-                path = new LinkedList<String>();
+                path = new LinkedList<>();
             }
 
             path.addFirst(((LayoutComponentTag) parent).getName());
@@ -113,12 +110,12 @@ public class LayoutRenderTagPath {
      * current component.
      *
      * @param tag The tag to check to see if it is part of this path.
-     * @return 
-     * @throws net.sourceforge.stripes.exception.StripesJspException 
+     * @return
      */
-    public boolean isPathComponent(LayoutComponentTag tag) throws StripesJspException {
+    public boolean isPathComponent(LayoutComponentTag tag) {
         List<String> path = getComponentPath();
-        return path == null ? false : isPathComponent(tag, path.iterator());
+        return path != null && isPathComponent(tag,
+                                               path.iterator());
     }
 
     /**

@@ -16,12 +16,12 @@ package net.sourceforge.stripes.format;
 
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Locale;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -59,7 +59,7 @@ public class DateFormatter implements Formatter<Date> {
     /**
      * Maintains a map of named formats that can be used instead of patterns.
      */
-    protected static final Map<String, Integer> namedPatterns = new HashMap<String, Integer>();
+    protected static final Map<String, Integer> namedPatterns = new HashMap<>();
 
     static {
         namedPatterns.put("short", DateFormat.SHORT);
@@ -147,17 +147,23 @@ public class DateFormatter implements Formatter<Date> {
         // Now figure out how to construct our date format for our locale
         if (namedPatterns.containsKey(lcFormatString)) {
 
-            if (lcFormatType.equals("date")) {
-                format = DateFormat.getDateInstance(namedPatterns.get(lcFormatString), locale);
-            } else if (lcFormatType.equals("datetime")) {
-                format = DateFormat.getDateTimeInstance(namedPatterns.get(lcFormatString),
-                        namedPatterns.get(lcFormatString),
-                        locale);
-            } else if (lcFormatType.equals("time")) {
-                format = DateFormat.getTimeInstance(namedPatterns.get(lcFormatString), locale);
-            } else {
-                throw new StripesRuntimeException("Invalid formatType for Date: " + formatType
-                        + ". Allowed types are 'date', 'time' and 'datetime'.");
+            switch (lcFormatType) {
+                case "date":
+                    format = DateFormat.getDateInstance(namedPatterns.get(lcFormatString),
+                                                        locale);
+                    break;
+                case "datetime":
+                    format = DateFormat.getDateTimeInstance(namedPatterns.get(lcFormatString),
+                                                            namedPatterns.get(lcFormatString),
+                                                            locale);
+                    break;
+                case "time":
+                    format = DateFormat.getTimeInstance(namedPatterns.get(lcFormatString),
+                                                        locale);
+                    break;
+                default:
+                    throw new StripesRuntimeException("Invalid formatType for Date: " + formatType
+                                                      + ". Allowed types are 'date', 'time' and 'datetime'.");
             }
         } else {
             format = new SimpleDateFormat(formatPattern, locale);

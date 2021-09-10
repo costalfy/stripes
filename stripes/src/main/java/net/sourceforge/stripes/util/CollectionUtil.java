@@ -15,8 +15,8 @@
 package net.sourceforge.stripes.util;
 
 import java.lang.reflect.Array;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Utility methods for working with Collections and Arrays.
@@ -42,11 +42,11 @@ public class CollectionUtil {
             return false;
         }
 
-        for (int i = 0; i < arr.length; ++i) {
-            if (item == null && arr[i] == null) {
+        for (Object o : arr) {
+            if (item == null && o == null) {
                 return true;
             }
-            if (item != null && item.equals(arr[i])) {
+            if (item != null && item.equals(o)) {
                 return true;
             }
         }
@@ -96,7 +96,7 @@ public class CollectionUtil {
      * @return true if the array indicates the event is applicable, false
      * otherwise
      */
-    public static boolean applies(String events[], String event) {
+    public static boolean applies(String[] events, String event) {
         if (events == null || events.length == 0) {
             return true;
         }
@@ -162,7 +162,7 @@ public class CollectionUtil {
             throw new IllegalArgumentException("Parameter to asObjectArray must be a non-null array.");
         } else {
             int length = Array.getLength(in);
-            LinkedList<Object> list = new LinkedList<Object>();
+            LinkedList<Object> list = new LinkedList<>();
             for (int i = 0; i < length; ++i) {
                 list.add(i, Array.get(in, i));
             }
@@ -186,7 +186,7 @@ public class CollectionUtil {
         if (in instanceof List<?>) {
             return (List<T>) in;
         } else {
-            LinkedList<T> list = new LinkedList<T>();
+            LinkedList<T> list = new LinkedList<>();
             for (T item : in) {
                 list.add(item);
             }

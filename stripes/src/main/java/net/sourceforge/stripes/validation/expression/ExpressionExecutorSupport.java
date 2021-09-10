@@ -15,20 +15,20 @@
 package net.sourceforge.stripes.validation.expression;
 
 import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.util.bean.BeanUtil;
-import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.controller.ParameterName;
 import net.sourceforge.stripes.controller.StripesConstants;
-import net.sourceforge.stripes.validation.ValidationMetadata;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationError;
-import net.sourceforge.stripes.validation.ScopedLocalizableError;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.util.bean.BeanUtil;
+import net.sourceforge.stripes.validation.ScopedLocalizableError;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMetadata;
 
-import javax.servlet.jsp.el.VariableResolver;
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.el.Expression;
 import javax.servlet.jsp.el.ExpressionEvaluator;
+import javax.servlet.jsp.el.VariableResolver;
 import java.util.List;
 
 /**
@@ -79,9 +79,8 @@ public abstract class ExpressionExecutorSupport implements ExpressionExecutor {
          *
          * @param property the name of the variable/property being looked for
          * @return the property value or null
-         * @throws javax.servlet.jsp.el.ELException
          */
-        public Object resolveVariable(String property) throws ELException {
+        public Object resolveVariable(String property) {
             if (isSelfKeyword(bean, property)) {
                 return this.currentValue;
             } else if (StripesConstants.REQ_ATTR_ACTION_BEAN.equals(property)) {

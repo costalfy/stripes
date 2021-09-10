@@ -16,22 +16,17 @@ package net.sourceforge.stripes.controller.multipart;
 
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.FileUploadBase;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -57,8 +52,8 @@ public class CommonsMultipartWrapper implements MultipartWrapper {
         FileUploadException.class.getName();
     }
 
-    private Map<String, FileItem> files = new HashMap<String, FileItem>();
-    private Map<String, String[]> parameters = new HashMap<String, String[]>();
+    private Map<String, FileItem> files = new HashMap<>();
+    private Map<String, String[]> parameters = new HashMap<>();
     private String charset;
 
     public void build(HttpServletRequest request) {
@@ -90,16 +85,13 @@ public class CommonsMultipartWrapper implements MultipartWrapper {
             ServletFileUpload upload = new ServletFileUpload(factory);
             upload.setSizeMax(maxPostSize);
             List<FileItem> items = upload.parseRequest(request);
-            Map<String, List<String>> params = new HashMap<String, List<String>>();
+            Map<String, List<String>> params = new HashMap<>();
 
             for (FileItem item : items) {
                 // If it's a form field, add the string value to the list
                 if (item.isFormField()) {
-                    List<String> values = params.get(item.getFieldName());
-                    if (values == null) {
-                        values = new ArrayList<String>();
-                        params.put(item.getFieldName(), values);
-                    }
+                    List<String> values = params.computeIfAbsent(item.getFieldName(),
+                                                                 k -> new ArrayList<>());
                     values.add(charset == null ? item.getString() : item.getString(charset));
                 } // Else store the file param
                 else {
@@ -110,7 +102,7 @@ public class CommonsMultipartWrapper implements MultipartWrapper {
             // Now convert them down into the usual map of String->String[]
             for (Map.Entry<String, List<String>> entry : params.entrySet()) {
                 List<String> values = entry.getValue();
-                this.parameters.put(entry.getKey(), values.toArray(new String[values.size()]));
+                this.parameters.put(entry.getKey(), values.toArray(new String[0]));
             }
         } catch (FileUploadBase.SizeLimitExceededException slee) {
             throw new FileUploadLimitExceededException(maxPostSize, slee.getActualSize());
@@ -214,7 +206,7 @@ public class CommonsMultipartWrapper implements MultipartWrapper {
                 }
 
                 @Override
-                public void delete() throws IOException {
+                public void delete() {
                     item.delete();
                 }
             };

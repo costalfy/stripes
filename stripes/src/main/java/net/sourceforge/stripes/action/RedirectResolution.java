@@ -19,11 +19,9 @@ import net.sourceforge.stripes.controller.FlashScope;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.util.Log;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -164,7 +162,7 @@ public class RedirectResolution extends OnwardResolution<RedirectResolution> {
      */
     public RedirectResolution flash(ActionBean bean) {
         if (this.beans == null) {
-            this.beans = new HashSet<ActionBean>();
+            this.beans = new HashSet<>();
         }
 
         this.beans.add(bean);
@@ -176,14 +174,12 @@ public class RedirectResolution extends OnwardResolution<RedirectResolution> {
      *
      * @param request HTTP servlet request
      * @param response HTTP servlet response
-     * @throws ServletException thrown when the Servlet container encounters an
-     * error
      * @throws IOException thrown when the Servlet container encounters an error
      */
     @SuppressWarnings("unchecked")
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         if (permanent) {
             response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
@@ -194,7 +190,7 @@ public class RedirectResolution extends OnwardResolution<RedirectResolution> {
                 }
 
                 @Override
-                public void sendRedirect(String location) throws IOException {
+                public void sendRedirect(String location) {
                     setHeader("Location", location);
                 }
 

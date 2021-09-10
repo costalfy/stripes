@@ -14,14 +14,14 @@
  */
 package net.sourceforge.stripes.util;
 
+import net.sourceforge.stripes.controller.ObjectPostProcessor;
+import net.sourceforge.stripes.format.Formatter;
+import net.sourceforge.stripes.validation.TypeConverter;
+
 import java.lang.annotation.Annotation;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import net.sourceforge.stripes.controller.ObjectPostProcessor;
-import net.sourceforge.stripes.format.Formatter;
-import net.sourceforge.stripes.validation.TypeConverter;
 
 /**
  * <p>
@@ -59,19 +59,19 @@ public class TypeHandlerCache<T> {
     /**
      * A direct map of target types to handlers.
      */
-    private Map<Class<?>, T> handlers = new ConcurrentHashMap<Class<?>, T>();
+    private Map<Class<?>, T> handlers = new ConcurrentHashMap<>();
 
     /**
      * Cache of indirect type handler results, determined by examining a target
      * type's implemented interfaces and superclasses.
      */
-    private Map<Class<?>, T> indirectCache = new ConcurrentHashMap<Class<?>, T>();
+    private Map<Class<?>, T> indirectCache = new ConcurrentHashMap<>();
 
     /**
      * Cache of classes that have been searched, yet no handler (besides the
      * default one) could be found for them.
      */
-    private Set<Class<?>> negativeCache = new ConcurrentHashSet<Class<?>>();
+    private Set<Class<?>> negativeCache = new ConcurrentHashSet<>();
 
     private T defaultHandler;
     private boolean searchHierarchy = true, searchAnnotations = true;

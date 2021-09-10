@@ -55,9 +55,8 @@ public class DefaultTagErrorRendererFactory implements TagErrorRendererFactory {
      * and attempts to find the Class object for it. If one isn't provided then
      * the default class is used. If the configured class cannot be found an
      * exception will be thrown and the factory is deemed invalid.
-     * @throws java.lang.Exception
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         setConfiguration(configuration);
 
         this.rendererClass = configuration.getBootstrapPropertyResolver().

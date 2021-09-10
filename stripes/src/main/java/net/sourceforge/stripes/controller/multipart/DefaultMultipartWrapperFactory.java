@@ -14,22 +14,21 @@
  */
 package net.sourceforge.stripes.controller.multipart;
 
-import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
 import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.controller.FileUploadLimitExceededException;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.File;
-import java.util.regex.Pattern;
+import java.io.IOException;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
  * Default implementation of a factory for MultipartWrappers. Looks up a class
  * name in Configuration under the key specified by {@link #WRAPPER_CLASS_NAME}.
- * If no class name is configured, defaults to the {@link CosMultipartWrapper}.
  * An additional configuration parameter is supported to specify the maximum
  * post size allowable.</p>
  *
@@ -81,11 +80,9 @@ public class DefaultMultipartWrapperFactory implements MultipartWrapperFactory {
      * if they are not going to be in a valid state after initialization.
      *
      * @param config the Configuration object being used by Stripes
-     * @throws Exception should be thrown if the component cannot be configured
-     * well enough to use.
      */
     @SuppressWarnings("unchecked")
-    public void init(Configuration config) throws Exception {
+    public void init(Configuration config) {
         this.configuration = config;
 
         // Determine which class we're using
@@ -146,12 +143,16 @@ public class DefaultMultipartWrapperFactory implements MultipartWrapperFactory {
                 String suffix = matcher.group(2).toLowerCase();
                 long number = Long.parseLong(digits);
 
-                if ("k".equals(suffix)) {
-                    number = number * 1024;
-                } else if ("m".equals(suffix)) {
-                    number = number * 1024 * 1024;
-                } else if ("g".equals(suffix)) {
-                    number = number * 1024 * 1024 * 1024;
+                switch (suffix) {
+                    case "k":
+                        number = number * 1024;
+                        break;
+                    case "m":
+                        number = number * 1024 * 1024;
+                        break;
+                    case "g":
+                        number = number * 1024 * 1024 * 1024;
+                        break;
                 }
 
                 this.maxPostSizeInBytes = number;

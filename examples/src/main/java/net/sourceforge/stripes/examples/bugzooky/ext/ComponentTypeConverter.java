@@ -14,14 +14,14 @@
  */
 package net.sourceforge.stripes.examples.bugzooky.ext;
 
-import java.util.Collection;
-import java.util.Locale;
-
 import net.sourceforge.stripes.examples.bugzooky.biz.Component;
 import net.sourceforge.stripes.examples.bugzooky.biz.ComponentManager;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.TypeConverter;
 import net.sourceforge.stripes.validation.ValidationError;
+
+import java.util.Collection;
+import java.util.Locale;
 
 /**
  * A {@link TypeConverter} that parses its input string to an integer and queries the
@@ -46,7 +46,7 @@ public class ComponentTypeConverter implements TypeConverter<Component> {
         Component component = null;
 
         try {
-            int id = Integer.valueOf(input);
+            int id = Integer.parseInt(input);
             ComponentManager componentManager = new ComponentManager();
             component = componentManager.getComponent(id);
         }

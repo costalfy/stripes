@@ -189,17 +189,14 @@ public class DispatcherServlet extends HttpServlet {
                     async = true;
                     final PageContext pc = pageContext;
                     final AsyncResponse asyncResponse = (AsyncResponse) resolution;
-                    asyncResponse.setCleanupCallback(new Runnable() {
-                        @Override
-                        public void run() {
-                            log.debug("Cleaning up AsyncResponse ", asyncResponse);
-                            if (pc != null) {
-                                JspFactory.getDefaultFactory().releasePageContext(pc);
-                                DispatcherHelper.setPageContext(null);
-                            }
-                            requestComplete(ctx);
-                            restoreActionBean(request);
+                    asyncResponse.setCleanupCallback(() -> {
+                        log.debug("Cleaning up AsyncResponse ", asyncResponse);
+                        if (pc != null) {
+                            JspFactory.getDefaultFactory().releasePageContext(pc);
+                            DispatcherHelper.setPageContext(null);
                         }
+                        requestComplete(ctx);
+                        restoreActionBean(request);
                     });
                 }
                 executeResolution(ctx, resolution);
@@ -238,12 +235,7 @@ public class DispatcherServlet extends HttpServlet {
     private Resolution requestInit(ExecutionContext ctx) throws Exception {
         ctx.setLifecycleStage(LifecycleStage.RequestInit);
         ctx.setInterceptors(StripesFilter.getConfiguration().getInterceptors(LifecycleStage.RequestInit));
-        return ctx.wrap(new Interceptor() {
-            @Override
-            public Resolution intercept(ExecutionContext context) throws Exception {
-                return null;
-            }
-        });
+        return ctx.wrap(context -> null);
     }
 
     /**
@@ -256,12 +248,7 @@ public class DispatcherServlet extends HttpServlet {
         ctx.setLifecycleStage(LifecycleStage.RequestComplete);
         ctx.setInterceptors(StripesFilter.getConfiguration().getInterceptors(LifecycleStage.RequestComplete));
         try {
-            Resolution resolution = ctx.wrap(new Interceptor() {
-                @Override
-                public Resolution intercept(ExecutionContext context) throws Exception {
-                    return null;
-                }
-            });
+            Resolution resolution = ctx.wrap(context -> null);
             if (resolution != null) {
                 log.warn("Resolutions returned from interceptors for ", ctx.getLifecycleStage(),
                         " are ignored because it is too late to execute them.");
@@ -402,7 +389,7 @@ public class DispatcherServlet extends HttpServlet {
     protected Stack<ActionBean> getActionBeanStack(HttpServletRequest request, boolean create) {
         Stack<ActionBean> stack = (Stack<ActionBean>) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN_STACK);
         if (stack == null && create) {
-            stack = new Stack<ActionBean>();
+            stack = new Stack<>();
             request.setAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN_STACK, stack);
         }
 

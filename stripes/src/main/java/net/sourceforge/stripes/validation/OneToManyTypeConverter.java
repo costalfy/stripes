@@ -104,9 +104,9 @@ public class OneToManyTypeConverter implements TypeConverter<Object> {
      * if any ValidationErrors occur.
      */
     @SuppressWarnings("unchecked")
-    public Collection<? extends Object> convert(String input,
-            Class<? extends Object> targetType,
-            Collection<ValidationError> errors) {
+    public Collection<?> convert(String input,
+                                 Class<?> targetType,
+                                 Collection<ValidationError> errors) {
 
         TypeConverter converter = getSingleItemTypeConverter(targetType);
         String[] splits = input.split(getSplitRegex());
@@ -131,7 +131,7 @@ public class OneToManyTypeConverter implements TypeConverter<Object> {
      */
     @SuppressWarnings("unchecked")
     public Collection getCollectionInstance() {
-        return new LinkedList<Object>();
+        return new LinkedList<>();
     }
 
     /**

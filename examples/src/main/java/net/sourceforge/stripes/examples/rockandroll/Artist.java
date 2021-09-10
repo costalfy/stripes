@@ -25,7 +25,7 @@ public class Artist {
 
     private Long id;
     private String name;
-    private List< Song> songs = new ArrayList<Song>();
+    private List< Song> songs = new ArrayList<>();
 
     /**
      * Constructs an Artist with the passed ID and name.

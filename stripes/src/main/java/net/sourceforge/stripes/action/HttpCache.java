@@ -14,12 +14,7 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * <p>
@@ -55,7 +50,7 @@ public @interface HttpCache {
     /**
      * Default value for {@link #expires()}.
      */
-    public static final int DEFAULT_EXPIRES = Integer.MIN_VALUE;
+    int DEFAULT_EXPIRES = Integer.MIN_VALUE;
 
     /**
      * Indicates whether the response should be cached by the client.

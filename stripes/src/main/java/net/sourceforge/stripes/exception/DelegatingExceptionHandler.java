@@ -131,7 +131,7 @@ public class DelegatingExceptionHandler extends DefaultExceptionHandler {
             List<Class<? extends AutoExceptionHandler>> classes = bootstrap
                     .getClassPropertyList(AutoExceptionHandler.class);
             if (!classes.isEmpty()) {
-                return new HashSet<Class<? extends AutoExceptionHandler>>(classes);
+                return new HashSet<>(classes);
             } else {
                 // Autodiscovery found nothing so resort to looking at the ActionBean packages
                 log.info("Autodiscovery found no implementations of AutoExceptionHandler. Using ",
@@ -142,7 +142,7 @@ public class DelegatingExceptionHandler extends DefaultExceptionHandler {
         }
 
         if (packages != null && packages.length > 0) {
-            ResolverUtil<AutoExceptionHandler> resolver = new ResolverUtil<AutoExceptionHandler>();
+            ResolverUtil<AutoExceptionHandler> resolver = new ResolverUtil<>();
             resolver.findImplementations(AutoExceptionHandler.class, packages);
             return resolver.getClasses();
         } else {

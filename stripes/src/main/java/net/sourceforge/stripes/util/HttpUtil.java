@@ -14,9 +14,9 @@
  */
 package net.sourceforge.stripes.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.stripes.controller.StripesConstants;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides helper methods for working with HTTP requests and responses.
@@ -49,7 +49,7 @@ public class HttpUtil {
         // Check to see if the request is processing an include, and pull the path
         // information from the appropriate source.
         // only request attributes need decoding, not servletPath and pathInfo
-        // see http://www.stripesframework.org/jira/browse/STS-899
+        // see https://stripesframework.atlassian.net/browse/STS-899
         servletPath = urlDecodeNullSafe((String) request.getAttribute(StripesConstants.REQ_ATTR_INCLUDE_PATH));
         if (servletPath != null) {
             pathInfo = urlDecodeNullSafe((String) request.getAttribute(StripesConstants.REQ_ATTR_INCLUDE_PATH_INFO));

@@ -52,8 +52,8 @@ public class HtmlUtil {
         // turns out that it's not strictly necessary since Stripes uses double-quotes
         // around all form fields, and stupid IE6 will render &apos; verbatim instead
         // of as a single quote.
-        for (int i = 0; i < characters.length; ++i) {
-            switch (characters[i]) {
+        for (char character : characters) {
+            switch (character) {
                 case '<':
                     builder.append("&lt;");
                     break;
@@ -67,7 +67,7 @@ public class HtmlUtil {
                     builder.append("&amp;");
                     break;
                 default:
-                    builder.append(characters[i]);
+                    builder.append(character);
             }
         }
 

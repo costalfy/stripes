@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Stripes Framework.
+ * Copyright 2020 Stripes Framework.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  */
 package net.sourceforge.stripes.action;
 
+import net.sourceforge.stripes.util.Log;
+
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import net.sourceforge.stripes.util.Log;
 
 /**
  * This abstract class should be implemented by "builders" which take Java
@@ -42,12 +43,12 @@ public abstract class ObjectOutputBuilder< T extends ObjectOutputBuilder> {
     /**
      * Holds the set of classes representing the primitive types in Java.
      */
-    static final Set<Class<?>> simpleTypes = new HashSet<Class<?>>();
+    static final Set<Class<?>> simpleTypes = new HashSet<>();
 
     /**
      * Holds the set of types that will be skipped over by default.
      */
-    static final Set<Class<?>> ignoredTypes = new HashSet<Class<?>>();
+    static final Set<Class<?>> ignoredTypes = new HashSet<>();
 
     static {
         simpleTypes.add(Byte.TYPE);
@@ -95,8 +96,8 @@ public abstract class ObjectOutputBuilder< T extends ObjectOutputBuilder> {
      */
     public ObjectOutputBuilder(Object root, Object... objectsToExclude) {
         this.rootObject = root;
-        this.excludeClasses = new HashSet<Class<?>>();
-        this.excludeProperties = new HashSet<String>();
+        this.excludeClasses = new HashSet<>();
+        this.excludeProperties = new HashSet<>();
 
         for (Object object : objectsToExclude) {
             if (object instanceof Class<?>) {

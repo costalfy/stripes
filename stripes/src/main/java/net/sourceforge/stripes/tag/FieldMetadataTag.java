@@ -1,19 +1,5 @@
 package net.sourceforge.stripes.tag;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.BodyTag;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.ajax.JavaScriptBuilder;
 import net.sourceforge.stripes.controller.ParameterName;
@@ -25,6 +11,12 @@ import net.sourceforge.stripes.util.bean.PropertyExpression;
 import net.sourceforge.stripes.util.bean.PropertyExpressionEvaluation;
 import net.sourceforge.stripes.validation.ValidationMetadata;
 import net.sourceforge.stripes.validation.ValidationMetadataProvider;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTag;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * <p>
@@ -133,7 +125,7 @@ public class FieldMetadataTag extends HtmlTagSupport implements BodyTag {
 
         StringBuilder sb = new StringBuilder("{\r\n\t\t");
 
-        Set<String> fields = new HashSet<String>();
+        Set<String> fields = new HashSet<>();
 
         if (form != null) {
             for (String field : form.getRegisteredFields()) {
@@ -277,22 +269,20 @@ public class FieldMetadataTag extends HtmlTagSupport implements BodyTag {
 
     /**
      *
-     * @throws JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      *
      * @return
-     * @throws JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         getPageContext().setAttribute(getVar(), new Var(getMetadata()));
         return EVAL_BODY_BUFFERED;
     }

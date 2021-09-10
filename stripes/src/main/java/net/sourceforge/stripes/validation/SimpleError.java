@@ -14,12 +14,13 @@
  */
 package net.sourceforge.stripes.validation;
 
-import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.localization.LocalizationUtility;
 import net.sourceforge.stripes.util.Log;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>
@@ -225,14 +226,12 @@ public class SimpleError extends SimpleMessage implements ValidationError {
 
         final SimpleError that = (SimpleError) o;
 
-        if (actionPath != null ? !actionPath.equals(that.actionPath) : that.actionPath != null) {
+        if (!Objects.equals(actionPath,
+                            that.actionPath)) {
             return false;
         }
-        if (fieldNameKey != null ? !fieldNameKey.equals(that.fieldNameKey) : that.fieldNameKey != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(fieldNameKey,
+                              that.fieldNameKey);
     }
 
     /**

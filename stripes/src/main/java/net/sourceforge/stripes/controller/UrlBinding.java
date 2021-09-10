@@ -14,11 +14,11 @@
  */
 package net.sourceforge.stripes.controller;
 
+import net.sourceforge.stripes.action.ActionBean;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.stripes.action.ActionBean;
 
 /**
  * Represents a URL binding as declared by a
@@ -70,7 +70,7 @@ public class UrlBinding {
 
         if (components != null && !components.isEmpty()) {
             this.components = Collections.unmodifiableList(components);
-            this.parameters = new ArrayList<UrlBindingParameter>(components.size());
+            this.parameters = new ArrayList<>(components.size());
 
             for (Object component : components) {
                 if (component instanceof UrlBindingParameter) {
@@ -184,7 +184,7 @@ public class UrlBinding {
     /**
      * Ensure the default event name is set if the binding uses the $event
      * parameter. Can only be done safely after the event mappings have been
-     * processed. see http://www.stripesframework.org/jira/browse/STS-803
+     * processed. see https://stripesframework.atlassian.net/browse/STS-803
      *
      * @param actionResolver The action resolver to use with this binding.
      */

@@ -14,22 +14,6 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.StrictBinding;
@@ -40,6 +24,16 @@ import net.sourceforge.stripes.util.bean.NodeEvaluation;
 import net.sourceforge.stripes.util.bean.PropertyExpressionEvaluation;
 import net.sourceforge.stripes.validation.ValidationMetadata;
 import net.sourceforge.stripes.validation.ValidationMetadataProvider;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Manages the policies observed by {@link DefaultActionBeanPropertyBinder} when
@@ -55,7 +49,7 @@ public class BindingPolicyManager {
      * List of classes that, for security reasons, are not allowed as a
      * {@link NodeEvaluation} value type.
      */
-    private static final List<Class<?>> ILLEGAL_NODE_VALUE_TYPES = Arrays.<Class<?>>asList(
+    private static final List<Class<?>> ILLEGAL_NODE_VALUE_TYPES = Arrays.asList(
             ActionBeanContext.class,
             Class.class,
             ClassLoader.class,
@@ -81,7 +75,7 @@ public class BindingPolicyManager {
     /**
      * Cached instances
      */
-    private static final Map<Class<?>, BindingPolicyManager> instances = new ConcurrentHashMap<Class<?>, BindingPolicyManager>();
+    private static final Map<Class<?>, BindingPolicyManager> instances = new ConcurrentHashMap<>();
 
     /**
      * Get the policy manager for the given class. Instances are cached and
@@ -187,7 +181,7 @@ public class BindingPolicyManager {
          * if path appears on neither or both lists ( i.e. !(allow ^ deny) ) and default policy is
          * to deny access, then fail
          */
-        if (defaultPolicy == Policy.DENY && !(allow ^ deny)) {
+        if (defaultPolicy == Policy.DENY && allow == deny) {
             return false;
         }
 
@@ -195,12 +189,9 @@ public class BindingPolicyManager {
          * regardless of default policy, if it's in the deny list but not in the allow list, then
          * fail
          */
-        if (!allow && deny) {
-            return false;
-        }
+        return allow || !deny;
 
         // any other conditions pass the test
-        return true;
     }
 
     /**
@@ -265,7 +256,7 @@ public class BindingPolicyManager {
     protected String[] getValidatedProperties(Class<?> beanClass) {
         Set<String> properties = StripesFilter.getConfiguration().getValidationMetadataProvider()
                 .getValidationMetadata(beanClass).keySet();
-        return new ArrayList<String>(properties).toArray(new String[properties.size()]);
+        return new ArrayList<>(properties).toArray(new String[properties.size()]);
     }
 
     /**
@@ -299,15 +290,13 @@ public class BindingPolicyManager {
         }
 
         // things are much easier if we convert to a single list
-        List<String> globs = new ArrayList<String>();
+        List<String> globs = new ArrayList<>();
         for (String glob : globArray) {
             String[] subs = glob.split("(\\s*,\\s*)+");
-            for (String sub : subs) {
-                globs.add(sub);
-            }
+            globs.addAll(Arrays.asList(subs));
         }
 
-        List<String> subs = new ArrayList<String>();
+        List<String> subs = new ArrayList<>();
         StringBuilder buf = new StringBuilder();
         for (String glob : globs) {
             buf.setLength(0);

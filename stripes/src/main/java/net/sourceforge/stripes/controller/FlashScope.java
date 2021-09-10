@@ -23,12 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Proxy;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -184,12 +179,8 @@ public class FlashScope extends HashMap<String, Object> {
         // Clean up any old-age flash scopes
         Map<Integer, FlashScope> scopes = getContainer(request, false);
         if (scopes != null && !scopes.isEmpty()) {
-            Iterator<FlashScope> iterator = scopes.values().iterator();
-            while (iterator.hasNext()) {
-                if (iterator.next().isExpired()) {
-                    iterator.remove();
-                }
-            }
+            scopes.values()
+                    .removeIf(FlashScope::isExpired);
         }
 
         // Replace the request and response objects for the request cycle that is ending
@@ -447,7 +438,7 @@ public class FlashScope extends HashMap<String, Object> {
 
                         // if still not there, then create and save it
                         if (scopes == null) {
-                            scopes = new ConcurrentHashMap<Integer, FlashScope>();
+                            scopes = new ConcurrentHashMap<>();
                             session.setAttribute(StripesConstants.REQ_ATTR_FLASH_SCOPE_LOCATION, scopes);
                         }
                     }

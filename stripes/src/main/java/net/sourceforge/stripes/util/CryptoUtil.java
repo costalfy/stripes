@@ -14,21 +14,15 @@
  */
 package net.sourceforge.stripes.util;
 
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-
 import net.sourceforge.stripes.config.Configuration;
 import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
+
+import javax.crypto.*;
+import javax.crypto.spec.DESedeKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 /**
  * <p>
@@ -148,7 +142,8 @@ public class CryptoUtil {
             /*
         	 * Encrypt-then-Mac (EtM) pattern, first encrypt plaintext 
              */
-            Cipher cipher = getCipher(key, Cipher.ENCRYPT_MODE, iv, 0, CIPHER_BLOCK_LENGTH);
+            Cipher cipher = getCipher(key, Cipher.ENCRYPT_MODE, iv
+            );
             cipher.doFinal(inbytes, 0, inbytes.length, output, CIPHER_BLOCK_LENGTH);
 
             /*
@@ -260,7 +255,7 @@ public class CryptoUtil {
 
         boolean validCiphertext;
         try {
-            validCiphertext = hmacEquals(key, bytes, bytes.length - CIPHER_HMAC_LENGTH, mac, 0);
+            validCiphertext = hmacEquals(key, bytes, bytes.length - CIPHER_HMAC_LENGTH, mac);
         } catch (Exception e1) {
             log.warn("Unexpected error validating hmac of: ", input);
             return null;
@@ -277,7 +272,8 @@ public class CryptoUtil {
 		 * 
          */
         // Then fetch a cipher and decrypt the bytes
-        Cipher cipher = getCipher(key, Cipher.DECRYPT_MODE, bytes, 0, CIPHER_BLOCK_LENGTH);
+        Cipher cipher = getCipher(key, Cipher.DECRYPT_MODE, bytes
+        );
         byte[] output;
         try {
             output = cipher.doFinal(bytes, CIPHER_BLOCK_LENGTH, bytes.length - CIPHER_HMAC_LENGTH - CIPHER_BLOCK_LENGTH);
@@ -301,17 +297,18 @@ public class CryptoUtil {
      * @param mac1 the array which contains the hmac
      * @param mac1pos the position of the hmac in mac1 array.
      * @param mac2 the array which contains the hmac
-     * @param mac2pos the position of the hmac in mac2 array.
      * @return true if hmacs are equal, otherwise false
      * @see double hmac as per
      * https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2011/february/double-hmac-verification/
      */
     private static boolean hmacEquals(SecretKey key, byte[] mac1, int mac1pos,
-            byte[] mac2, int mac2pos) throws Exception {
+                                      byte[] mac2) throws Exception {
         hmac(key, mac1, mac1pos, CIPHER_HMAC_LENGTH, mac1, mac1pos);
-        hmac(key, mac2, mac2pos, CIPHER_HMAC_LENGTH, mac2, mac2pos);
+        hmac(key, mac2,
+             0, CIPHER_HMAC_LENGTH, mac2,
+             0);
         for (int i = 0; i < CIPHER_HMAC_LENGTH; i++) {
-            if (mac1[mac1pos + i] != mac2[mac2pos + i]) {
+            if (mac1[mac1pos + i] != mac2[0 + i]) {
                 return false;
             }
         }
@@ -324,17 +321,17 @@ public class CryptoUtil {
      * @param key the crypto key
      * @param mode Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE
      * @param iv the initialization vector
-     * @param ivpos the start position of the initialization vector, typically 0
-     * @param ivlength the length of the initialization vector
      * @return the cipher object
      * @see Cipher#ENCRYPT_MODE
      * @see Cipher#DECRYPT_MODE
      */
-    protected static Cipher getCipher(SecretKey key, int mode, byte[] iv, int ivpos, int ivlength) {
+    protected static Cipher getCipher(SecretKey key, int mode, byte[] iv) {
         try {
             // Then build a cipher for the correct mode
             Cipher cipher = Cipher.getInstance(key.getAlgorithm() + CIPHER_MODE_MODIFIER);
-            IvParameterSpec ivps = new IvParameterSpec(iv, ivpos, ivlength);
+            IvParameterSpec ivps = new IvParameterSpec(iv,
+                                                       0,
+                                                       CryptoUtil.CIPHER_BLOCK_LENGTH);
             cipher.init(mode, key, ivps);
             return cipher;
         } catch (Exception e) {

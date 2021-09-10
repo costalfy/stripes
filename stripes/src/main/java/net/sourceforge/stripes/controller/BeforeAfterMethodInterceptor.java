@@ -14,25 +14,16 @@
  */
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.After;
-import net.sourceforge.stripes.action.Before;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.util.CollectionUtil;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.ReflectUtil;
-import net.sourceforge.stripes.util.CollectionUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Collection;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -85,7 +76,7 @@ public class BeforeAfterMethodInterceptor implements Interceptor {
      * Cache of the FilterMethods for the different ActionBean classes
      */
     private Map<Class<? extends ActionBean>, FilterMethods> filterMethodsCache
-            = new ConcurrentHashMap<Class<? extends ActionBean>, FilterMethods>();
+            = new ConcurrentHashMap<>();
 
     /**
      * Does the main work of the interceptor as described in the class level
@@ -193,7 +184,7 @@ public class BeforeAfterMethodInterceptor implements Interceptor {
         }
 
         // If we got a return value and it is a resolution, return it
-        if (retval != null && retval instanceof Resolution) {
+        if (retval instanceof Resolution) {
             return (Resolution) retval;
         } else {
             return null;
@@ -274,13 +265,13 @@ public class BeforeAfterMethodInterceptor implements Interceptor {
          * Map of Before methods, keyed by the LifecycleStage that they should
          * be invoked before.
          */
-        private Map<LifecycleStage, List<Method>> beforeMethods = new HashMap<LifecycleStage, List<Method>>();
+        private Map<LifecycleStage, List<Method>> beforeMethods = new HashMap<>();
 
         /**
          * Map of After methods, keyed by the LifecycleStage that they should be
          * invoked after.
          */
-        private Map<LifecycleStage, List<Method>> afterMethods = new HashMap<LifecycleStage, List<Method>>();
+        private Map<LifecycleStage, List<Method>> afterMethods = new HashMap<>();
 
         /**
          * Adds a method to be executed before the supplied LifecycleStages.
@@ -326,11 +317,8 @@ public class BeforeAfterMethodInterceptor implements Interceptor {
          */
         private void addFilterMethod(Map<LifecycleStage, List<Method>> methodMap,
                 LifecycleStage stage, Method method) {
-            List<Method> methods = methodMap.get(stage);
-            if (methods == null) {
-                methods = new ArrayList<Method>();
-                methodMap.put(stage, methods);
-            }
+            List<Method> methods = methodMap.computeIfAbsent(stage,
+                                                             k -> new ArrayList<>());
             methods.add(method);
         }
 

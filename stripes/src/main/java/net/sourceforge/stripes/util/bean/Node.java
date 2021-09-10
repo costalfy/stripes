@@ -51,7 +51,7 @@ public class Node {
      * specific bean.
      * @return 
      */
-    public Class<? extends Object> getExpresssionNodeType() {
+    public Class<?> getExpresssionNodeType() {
         return typedValue.getClass();
     }
 

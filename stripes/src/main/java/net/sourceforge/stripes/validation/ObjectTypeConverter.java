@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Locale;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * A dummy type converter that targets the Object type by simply returning the
@@ -35,7 +35,7 @@ public class ObjectTypeConverter implements TypeConverter<Object> {
     /**
      * Simple returns the input String un-modified in any way.
      */
-    public Object convert(String input, Class<? extends Object> targetType, Collection<ValidationError> errors) {
+    public Object convert(String input, Class<?> targetType, Collection<ValidationError> errors) {
         return input;
     }
 }

@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.controller;
 
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Encapsulates the name of a parameter in the HttpServletRequest. Detects
@@ -108,7 +108,8 @@ public class ParameterName implements Comparable<ParameterName> {
      * +1 if the parameter passed in sorts first.
      */
     public int compareTo(ParameterName that) {
-        int result = Integer.valueOf(this.name.length()).compareTo(that.name.length());
+        int result = Integer.compare(this.name.length(),
+                                     that.name.length());
         if (result == 0) {
             result = this.name.compareTo(that.name);
         }

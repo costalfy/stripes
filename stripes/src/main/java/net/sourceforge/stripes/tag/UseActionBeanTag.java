@@ -18,13 +18,7 @@ import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.controller.ActionResolver;
-import net.sourceforge.stripes.controller.DispatcherHelper;
-import net.sourceforge.stripes.controller.ExecutionContext;
-import net.sourceforge.stripes.controller.Interceptor;
-import net.sourceforge.stripes.controller.LifecycleStage;
-import net.sourceforge.stripes.controller.StripesFilter;
-import net.sourceforge.stripes.controller.DispatcherServlet;
+import net.sourceforge.stripes.controller.*;
 import net.sourceforge.stripes.exception.StripesJspException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,15 +119,11 @@ public class UseActionBeanTag extends StripesTagSupport
 
                 // Run action bean resolution
                 ctx.setInterceptors( config.getInterceptors( LifecycleStage.ActionBeanResolution ) );
-                resolution = ctx.wrap( new Interceptor()
-                {
-                    public Resolution intercept( ExecutionContext ec ) throws Exception
-                    {
-                        ActionBean bean = resolver.getActionBean( ec.getActionBeanContext(), binding );
-                        ec.setActionBean( bean );
-                        return null;
-                    }
-                } );
+                resolution = ctx.wrap(ec -> {
+                    ActionBean bean = resolver.getActionBean( ec.getActionBeanContext(), binding );
+                    ec.setActionBean( bean );
+                    return null;
+                });
             }
             else
             {
@@ -146,15 +136,11 @@ public class UseActionBeanTag extends StripesTagSupport
             {
                 ctx.setLifecycleStage( LifecycleStage.HandlerResolution );
                 ctx.setInterceptors( config.getInterceptors( LifecycleStage.HandlerResolution ) );
-                resolution = ctx.wrap( new Interceptor()
-                {
-                    public Resolution intercept( ExecutionContext ec ) throws Exception
-                    {
-                        ec.setHandler( resolver.getHandler( ec.getActionBean().getClass(), event ) );
-                        ec.getActionBeanContext().setEventName( event );
-                        return null;
-                    }
-                } );
+                resolution = ctx.wrap(ec -> {
+                    ec.setHandler( resolver.getHandler( ec.getActionBean().getClass(), event ) );
+                    ec.getActionBeanContext().setEventName( event );
+                    return null;
+                });
             }
 
             // Make the PageContext available during the validation stage so that we
@@ -164,17 +150,17 @@ public class UseActionBeanTag extends StripesTagSupport
                 DispatcherHelper.setPageContext( getPageContext() );
 
                 // Bind applicable request parameters to the ActionBean
-                if ( resolution == null && ( beanNotPresent || this.validate == true ) )
+                if ( resolution == null && (beanNotPresent || this.validate) )
                 {
                     resolution = DispatcherHelper.doBindingAndValidation( ctx, this.validate );
                 }
 
                 // Run custom validations if we're validating
-                if ( resolution == null && this.validate == true )
+                if ( resolution == null && this.validate)
                 {
                     String temp = config.getBootstrapPropertyResolver().getProperty(
                             DispatcherServlet.RUN_CUSTOM_VALIDATION_WHEN_ERRORS );
-                    boolean validateWhenErrors = temp != null && Boolean.valueOf( temp );
+                    boolean validateWhenErrors = Boolean.parseBoolean(temp);
 
                     resolution = DispatcherHelper.doCustomValidation( ctx, validateWhenErrors );
                 }
@@ -185,7 +171,7 @@ public class UseActionBeanTag extends StripesTagSupport
             }
 
             // Fill in any validation errors if they exist
-            if ( resolution == null && this.validate == true )
+            if ( resolution == null && this.validate)
             {
                 resolution = DispatcherHelper.handleValidationErrors( ctx );
             }

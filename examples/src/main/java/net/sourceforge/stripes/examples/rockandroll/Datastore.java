@@ -23,8 +23,8 @@ import java.util.Map;
  */
 public class Datastore {
 
-    public static final Map< Long, Artist> ARTISTS = new HashMap<Long, Artist>();
-    public static final Map< Long, Song> SONGS = new HashMap<Long, Song>();
+    public static final Map< Long, Artist> ARTISTS = new HashMap<>();
+    public static final Map< Long, Song> SONGS = new HashMap<>();
 
     /**
      * Populate the Datastore with some initial artists and songs.

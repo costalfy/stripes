@@ -17,6 +17,7 @@ package net.sourceforge.stripes.action;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>
@@ -161,14 +162,12 @@ public class SimpleMessage implements Message {
 
         final SimpleMessage that = (SimpleMessage) o;
 
-        if (message != null ? !message.equals(that.message) : that.message != null) {
+        if (!Objects.equals(message,
+                            that.message)) {
             return false;
         }
-        if (!Arrays.equals(replacementParameters, that.replacementParameters)) {
-            return false;
-        }
-
-        return true;
+        return Arrays.equals(replacementParameters,
+                             that.replacementParameters);
     }
 
     /**

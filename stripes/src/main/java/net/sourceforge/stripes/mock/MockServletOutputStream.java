@@ -16,7 +16,6 @@ package net.sourceforge.stripes.mock;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
-import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -33,10 +32,9 @@ public class MockServletOutputStream extends ServletOutputStream {
 
     /**
      * Pass through method calls ByteArrayOutputStream.write(int b).
-     * @throws java.io.IOException
      */
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         out.write(b);
     }
 

@@ -32,7 +32,7 @@ public abstract class AsyncResponse implements Resolution {
     private final ActionBean bean;
     private final Method handler;
 
-    private final List<AsyncListener> listeners = new ArrayList<AsyncListener>();
+    private final List<AsyncListener> listeners = new ArrayList<>();
 
     // store static reference to impl constructor
     // in order to avoid useless lookups

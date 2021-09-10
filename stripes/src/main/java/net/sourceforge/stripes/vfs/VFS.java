@@ -14,6 +14,10 @@
  */
 package net.sourceforge.stripes.vfs;
 
+import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
+import net.sourceforge.stripes.util.ReflectUtil;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,10 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.stripes.exception.StripesRuntimeException;
-import net.sourceforge.stripes.util.Log;
-import net.sourceforge.stripes.util.ReflectUtil;
 
 /**
  * Provides a very simple API for accessing resources within an application
@@ -46,7 +46,7 @@ public abstract class VFS {
      * The list to which implementations are added by
      * {@link #addImplClass(Class)}.
      */
-    public static final List<Class<? extends VFS>> USER_IMPLEMENTATIONS = new ArrayList<Class<? extends VFS>>();
+    public static final List<Class<? extends VFS>> USER_IMPLEMENTATIONS = new ArrayList<>();
 
     /**
      * Singleton instance.
@@ -65,7 +65,7 @@ public abstract class VFS {
         }
 
         // Try the user implementations first, then the built-ins
-        List<Class<? extends VFS>> impls = new ArrayList<Class<? extends VFS>>();
+        List<Class<? extends VFS>> impls = new ArrayList<>();
         impls.addAll(USER_IMPLEMENTATIONS);
         impls.addAll(Arrays.asList((Class<? extends VFS>[]) IMPLEMENTATIONS));
 
@@ -216,7 +216,7 @@ public abstract class VFS {
      * @throws IOException If I/O errors occur
      */
     public List<String> list(String path) throws IOException {
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         for (URL url : getResources(path)) {
             names.addAll(list(url, path));
         }

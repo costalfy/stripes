@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.validation;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -357,7 +357,7 @@ public class ValidationMetadata {
                 }
             }
 
-            this.on = new HashSet<String>();
+            this.on = new HashSet<>();
             this.onIsPositive = !(on[0].charAt(0) == '!');
             for (String s : on) {
                 if (this.onIsPositive) {

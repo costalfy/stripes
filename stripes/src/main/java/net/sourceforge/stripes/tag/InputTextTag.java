@@ -14,13 +14,13 @@
  */
 package net.sourceforge.stripes.tag;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.BodyTag;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationMetadata;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * <p>
@@ -110,27 +110,24 @@ public class InputTextTag extends InputTagSupport implements BodyTag {
      * Sets type input tags type to "text".
      *
      * @return EVAL_BODY_BUFFERED in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
     }
 
     /**
      * Does nothing.
      *
      * @return SKIP_BODY in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 
@@ -153,7 +150,7 @@ public class InputTextTag extends InputTagSupport implements BodyTag {
         }
 
         set("maxlength", getEffectiveMaxlength());
-        writeSingletonTag(getPageContext().getOut(), "input");
+        writeSingletonTag(getPageContext().getOut());
 
         // Restore the original state before we mucked with it
         getAttributes().remove("value");

@@ -1,9 +1,9 @@
 package net.sourceforge.stripes.extensions;
 
-import java.util.Collection;
-
 import net.sourceforge.stripes.validation.IntegerTypeConverter;
 import net.sourceforge.stripes.validation.ValidationError;
+
+import java.util.Collection;
 
 /**
  * Converts the input string to an Integer and doubles the value. This type
@@ -19,7 +19,7 @@ public class MyIntegerTypeConverter extends IntegerTypeConverter {
         Integer result = super.convert(input, targetType, errors);
 
         if (result != null) {
-            result = new Integer(result.intValue() * 2);
+            result = result * 2;
         }
         return result;
     }

@@ -12,7 +12,7 @@ import net.sourceforge.stripes.examples.bugzooky.ext.Public;
 @Public
 @UrlBinding( "/bugzooky/Logout.action" )
 public class LogoutActionBean extends BugzookyActionBean {
-    public Resolution logout() throws Exception {
+    public Resolution logout() {
         getContext().logout();
         return new ForwardResolution("/bugzooky/Exit.jsp");
     }

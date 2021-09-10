@@ -16,10 +16,9 @@
  */
 package net.sourceforge.stripes.tag;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-
 import net.sourceforge.stripes.controller.StripesFilter;
+
+import javax.servlet.jsp.PageContext;
 
 /**
  * <p>
@@ -99,12 +98,12 @@ public class PageOptionsTag extends StripesTagSupport {
     private String htmlMode = REQ_ATTR_HTML_MODE;
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         return SKIP_BODY;
     }
 
     @Override
-    public int doEndTag() throws JspException {
+    public int doEndTag() {
         // This is an intentional use of identity instead of equality
         if (this.htmlMode != REQ_ATTR_HTML_MODE) {
             pageContext.getRequest().setAttribute(REQ_ATTR_HTML_MODE, this.htmlMode);

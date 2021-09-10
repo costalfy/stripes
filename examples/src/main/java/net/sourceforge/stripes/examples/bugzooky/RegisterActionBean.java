@@ -1,21 +1,10 @@
 package net.sourceforge.stripes.examples.bugzooky;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontBind;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.action.Wizard;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.examples.bugzooky.biz.Person;
 import net.sourceforge.stripes.examples.bugzooky.biz.PersonManager;
 import net.sourceforge.stripes.examples.bugzooky.ext.Public;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.*;
 
 /**
  * ActionBean that handles the registration of new users.
@@ -71,7 +60,7 @@ public class RegisterActionBean extends BugzookyActionBean {
         return new ForwardResolution("/bugzooky/Register.jsp");
     }
 
-    public Resolution gotoStep2() throws Exception {
+    public Resolution gotoStep2() {
         return new ForwardResolution("/bugzooky/Register2.jsp");
     }
 

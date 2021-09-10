@@ -14,14 +14,13 @@
  */
 package net.sourceforge.stripes.tag;
 
-import java.io.IOException;
-
-import javax.servlet.jsp.JspException;
-
 import net.sourceforge.stripes.controller.StripesFilter;
 import net.sourceforge.stripes.format.Formatter;
 import net.sourceforge.stripes.format.FormatterFactory;
 import net.sourceforge.stripes.util.Log;
+
+import javax.servlet.jsp.JspException;
+import java.io.IOException;
 
 /**
  * This tag accepts an object and formats it using an appropriate
@@ -151,8 +150,7 @@ public class FormatTag extends VarTagSupport
     }
 
     @Override
-    public int doStartTag() throws JspException
-    {
+    public int doStartTag() {
         return SKIP_BODY;
     }
 

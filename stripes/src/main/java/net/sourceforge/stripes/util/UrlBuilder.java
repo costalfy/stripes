@@ -14,28 +14,18 @@
  */
 package net.sourceforge.stripes.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.config.Configuration;
-import net.sourceforge.stripes.controller.ActionResolver;
-import net.sourceforge.stripes.controller.AnnotatedClassActionResolver;
-import net.sourceforge.stripes.controller.StripesFilter;
-import net.sourceforge.stripes.controller.UrlBinding;
-import net.sourceforge.stripes.controller.UrlBindingParameter;
+import net.sourceforge.stripes.controller.*;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.exception.UrlBindingConflictException;
 import net.sourceforge.stripes.format.Formatter;
 import net.sourceforge.stripes.format.FormatterFactory;
 import net.sourceforge.stripes.validation.ValidationMetadata;
 import net.sourceforge.stripes.validation.ValidationMetadataProvider;
+
+import java.util.*;
 
 /**
  * <p>
@@ -84,7 +74,7 @@ public class UrlBuilder {
     private Locale locale;
     private String parameterSeparator;
     private Parameter event;
-    private List<Parameter> parameters = new ArrayList<Parameter>();
+    private List<Parameter> parameters = new ArrayList<>();
     private String url;
 
     /**
@@ -249,8 +239,8 @@ public class UrlBuilder {
      * @param parameters a non-null Map as described above
      * @return 
      */
-    public UrlBuilder addParameters(Map<? extends Object, ? extends Object> parameters) {
-        for (Map.Entry<? extends Object, ? extends Object> parameter : parameters.entrySet()) {
+    public UrlBuilder addParameters(Map<?, ?> parameters) {
+        for (Map.Entry<?, ?> parameter : parameters.entrySet()) {
             String name = parameter.getKey().toString();
             Object valueOrValues = parameter.getValue();
 
@@ -259,7 +249,8 @@ public class UrlBuilder {
             } else if (valueOrValues.getClass().isArray()) {
                 addParameter(name, CollectionUtil.asObjectArray(valueOrValues));
             } else if (valueOrValues instanceof Collection<?>) {
-                addParameter(name, (Collection<?>) valueOrValues);
+                addParameter(name,
+                             valueOrValues);
             } else {
                 addParameter(name, valueOrValues);
             }
@@ -403,7 +394,7 @@ public class UrlBuilder {
      */
     protected String build() {
         // special handling for event parameter
-        List<Parameter> parameters = new ArrayList<Parameter>(this.parameters.size() + 1);
+        List<Parameter> parameters = new ArrayList<>(this.parameters.size() + 1);
         if (this.event != null) {
             parameters.add(this.event);
         }
@@ -495,7 +486,7 @@ public class UrlBuilder {
         Map<String, ValidationMetadata> validations = getValidationMetadata();
 
         // map the declared URI parameter names to values
-        Map<String, Parameter> map = new HashMap<String, Parameter>();
+        Map<String, Parameter> map = new HashMap<>();
         for (Parameter p : parameters) {
             if (!map.containsKey(p.name)) {
                 map.put(p.name, p);

@@ -51,7 +51,7 @@ public class FloatTypeConverter extends NumberTypeConverterSupport implements Ty
                 errors.add(new ScopedLocalizableError("converter.float", "outOfRange",
                         MIN_VALUE, MAX_VALUE));
             } else {
-                retval = new Float(number.floatValue());
+                retval = number.floatValue();
             }
         }
 

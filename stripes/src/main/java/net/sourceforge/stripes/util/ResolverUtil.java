@@ -14,13 +14,13 @@
  */
 package net.sourceforge.stripes.util;
 
+import net.sourceforge.stripes.vfs.VFS;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import net.sourceforge.stripes.vfs.VFS;
 
 /**
  * <p>
@@ -72,7 +72,7 @@ public class ResolverUtil<T> {
      * A simple interface that specifies how to test classes to determine if
      * they are to be included in the results produced by the ResolverUtil.
      */
-    public static interface Test {
+    public interface Test {
 
         /**
          * Will be called repeatedly with candidate classes. Must return True if
@@ -152,7 +152,7 @@ public class ResolverUtil<T> {
     /**
      * The set of matches being accumulated.
      */
-    private Set<Class<? extends T>> matches = new HashSet<Class<? extends T>>();
+    private Set<Class<? extends T>> matches = new HashSet<>();
 
     /**
      * The ClassLoader to use when looking for classes. If null then the

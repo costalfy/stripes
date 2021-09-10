@@ -16,19 +16,18 @@ package net.sourceforge.stripes.tag;
 
 import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.localization.LocalizationUtility;
+import net.sourceforge.stripes.util.CollectionUtil;
+import net.sourceforge.stripes.util.StringUtil;
+import net.sourceforge.stripes.util.bean.BeanComparator;
 import net.sourceforge.stripes.util.bean.BeanUtil;
 import net.sourceforge.stripes.util.bean.ExpressionException;
-import net.sourceforge.stripes.util.bean.BeanComparator;
-import net.sourceforge.stripes.util.StringUtil;
-import net.sourceforge.stripes.util.CollectionUtil;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import java.util.Collection;
-import java.util.Locale;
-import java.util.Collections;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * <p>
@@ -118,17 +117,17 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
      */
     private final HtmlTagSupport optgroupSupport = new HtmlTagSupport() {
         @Override
-        public int doStartTag() throws JspException {
+        public int doStartTag() {
             return 0;
         }
 
         @Override
-        public int doEndTag() throws JspException {
+        public int doEndTag() {
             return 0;
         }
     };
 
-    private Collection<? extends Object> collection;
+    private Collection<?> collection;
     private String value;
     private String label;
     private String sort;
@@ -174,7 +173,7 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
      * Internal list of entries that is assembled from the items in the
      * collection.
      */
-    private List<Entry> entries = new LinkedList<Entry>();
+    private List<Entry> entries = new LinkedList<>();
 
     /**
      * <p>
@@ -298,7 +297,7 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
      * @return
      */
     protected boolean isAttemptToLocalizeLabels() {
-        return (localizeLabels == null) || (localizeLabels != null && localizeLabels.booleanValue());
+        return (localizeLabels == null) || (localizeLabels != null && localizeLabels);
     }
 
     /**
@@ -351,7 +350,7 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
             boolean attemptToLocalizeLabels = isAttemptToLocalizeLabels();
 
             for (Object item : this.collection) {
-                Class<? extends Object> clazz = item.getClass();
+                Class<?> clazz = item.getClass();
 
                 // Lookup the bean properties for the label, value and group
                 Object label = (labelProperty == null) ? item : BeanUtil.getPropertyValue(labelProperty, item);
@@ -404,7 +403,7 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
     @Override
     public int doEndTag() throws JspException {
         // Determine if we're going to be sorting the collection
-        List<Entry> sortedEntries = new LinkedList<Entry>(this.entries);
+        List<Entry> sortedEntries = new LinkedList<>(this.entries);
         if (this.sort != null) {
             String[] props = StringUtil.standardSplit(this.sort);
             for (int i = 0; i < props.length; ++i) {
@@ -413,8 +412,9 @@ public class InputOptionsCollectionTag extends HtmlTagSupport {
                 }
             }
 
-            Collections.sort(sortedEntries,
-                    new BeanComparator(getPageContext().getRequest().getLocale(), props));
+            sortedEntries.sort(new BeanComparator(getPageContext().getRequest()
+                                                          .getLocale(),
+                                                  props));
         }
 
         InputOptionTag tag = new InputOptionTag();

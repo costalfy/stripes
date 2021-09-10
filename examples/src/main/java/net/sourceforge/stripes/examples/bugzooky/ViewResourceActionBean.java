@@ -1,18 +1,5 @@
 package net.sourceforge.stripes.examples.bugzooky;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.util.HtmlUtil;
@@ -20,6 +7,15 @@ import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
+
+import javax.servlet.ServletContext;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * ActionBean that is used to display source files from the bugzooky web application to the user.
@@ -57,21 +53,19 @@ public class ViewResourceActionBean extends BugzookyActionBean {
                                   .getServletContext().getResourceAsStream(this.resource);
         final BufferedReader reader = new BufferedReader( new InputStreamReader(stream) );
 
-        return new Resolution() {
-            public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-                PrintWriter writer = response.getWriter();
-                writer.write("<html><head><title>");
-                writer.write(resource);
-                writer.write("</title></head><body><pre>");
+        return (request, response) -> {
+            PrintWriter writer = response.getWriter();
+            writer.write("<html><head><title>");
+            writer.write(resource);
+            writer.write("</title></head><body><pre>");
 
-                String line;
-                while ( (line = reader.readLine()) != null ) {
-                    writer.write(HtmlUtil.encode(line));
-                    writer.write("\n");
-                }
-
-                writer.write("</pre></body></html>");
+            String line;
+            while ( (line = reader.readLine()) != null ) {
+                writer.write(HtmlUtil.encode(line));
+                writer.write("\n");
             }
+
+            writer.write("</pre></body></html>");
         };
     }
 
@@ -82,18 +76,12 @@ public class ViewResourceActionBean extends BugzookyActionBean {
     @SuppressWarnings("unchecked")
     public Collection getAvailableResources() {
         ServletContext ctx = getContext().getRequest().getSession().getServletContext();
-        SortedSet<String> resources = new TreeSet<String>();
+        SortedSet<String> resources = new TreeSet<>();
         resources.addAll( ctx.getResourcePaths("/bugzooky/"));
         resources.addAll( ctx.getResourcePaths("/bugzooky/layout/"));
         resources.addAll( ctx.getResourcePaths("/WEB-INF/src/"));
 
-        Iterator<String> iterator = resources.iterator();
-        while (iterator.hasNext()) {
-            String file = iterator.next();
-            if (!file.endsWith(".jsp") && !file.endsWith(".java")) {
-                iterator.remove();
-            }
-        }
+        resources.removeIf(file -> !file.endsWith(".jsp") && !file.endsWith(".java"));
 
         return resources;
     }

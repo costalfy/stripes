@@ -11,5 +11,5 @@ public enum Priority {
     High,
     Medium,
     Low,
-    Trivial;
+    Trivial
 }

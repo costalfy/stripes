@@ -14,26 +14,17 @@
  */
 package net.sourceforge.stripes.action;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringReader;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.stripes.controller.AsyncResponse;
 import net.sourceforge.stripes.exception.StripesRuntimeException;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.Range;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -365,14 +356,16 @@ public class StreamingResolution implements Resolution {
      */
     protected List<Range<Long>> parseRangeHeader(String value) {
         Iterator<Range<Long>> i;
-        String byteRangesSpecifier[], bytesUnit, byteRangeSet[];
+        String[] byteRangesSpecifier;
+        String bytesUnit;
+        String[] byteRangeSet;
         List<Range<Long>> res;
         long lastEnd = -1;
 
         if (value == null) {
             return null;
         }
-        res = new ArrayList<Range<Long>>();
+        res = new ArrayList<>();
         // Parse prelude
         byteRangesSpecifier = value.split("=");
         if (byteRangesSpecifier.length != 2) {
@@ -416,7 +409,8 @@ public class StreamingResolution implements Resolution {
             if (lastBytePos >= length) {
                 return null;
             }
-            res.add(new Range<Long>(firstBytePos, lastBytePos));
+            res.add(new Range<>(firstBytePos,
+                                lastBytePos));
         }
         // Sort byte ranges
         Collections.sort(res);

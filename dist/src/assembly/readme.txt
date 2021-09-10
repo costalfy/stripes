@@ -58,7 +58,6 @@ Contents
       for deployment)
         -> lib/stripes.jar
         -> lib/commons-logging.jar
-        -> lib/cos.jar
 
    -> Copy 'lib/StripesResources.properties' into /WEB-INF/classes or in to another
       directory ensuring that your build system puts it into the web app classpath
@@ -123,15 +122,6 @@ Contents
       the example application at: examples/src/commons-logging.properties
       Commons Logging is licensed under the Apache License Version 2.0, a copy
       of which is included in lib/commons-logging.license
-      
-   -> COS or com.oreilly.servlets by Jason Hunter (http://servlets.com/cos/)
-      COS provides one of only a couple of good implementations to handle HTTP
-      multipart uploads.  And it's the only one to do it without requiring a
-      whole host of other dependent libraries (shame on you commons upload!).
-      COS, distributed with Stripes, is licensed under a specific license agreed
-      upon between the authors of COS and Stripes, that is less restrictive than
-      the standard license.  Please read the license carefully.  It can be
-      found at lib/cos.license
       
 5. Feedback
    --------

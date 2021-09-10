@@ -14,10 +14,10 @@
  */
 package net.sourceforge.stripes.util.bean;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -50,7 +50,7 @@ public class PropertyExpression {
     /**
      * A static cache of parse expressions.
      */
-    private static Map<String, PropertyExpression> expressions = new ConcurrentHashMap<String, PropertyExpression>();
+    private static Map<String, PropertyExpression> expressions = new ConcurrentHashMap<>();
 
     /**
      * The original property string, or 'source' of the expression.

@@ -43,27 +43,24 @@ public class UrlTag extends LinkTagSupport implements BodyTag {
      * Does nothing.
      *
      * @return {@link #EVAL_BODY_BUFFERED} in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         return EVAL_BODY_BUFFERED;
     }
 
     /**
      * Does nothing.
-     * @throws javax.servlet.jsp.JspException
      */
-    public void doInitBody() throws JspException {
+    public void doInitBody() {
         /* Do Nothing. */ }
 
     /**
      * Does nothing.
      *
      * @return {@link #SKIP_BODY} in all cases.
-     * @throws javax.servlet.jsp.JspException
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
         return SKIP_BODY;
     }
 

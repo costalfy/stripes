@@ -14,16 +14,16 @@
  */
 package net.sourceforge.stripes.tag;
 
+import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.util.CryptoUtil;
 import net.sourceforge.stripes.util.Log;
 import net.sourceforge.stripes.util.UrlBuilder;
-import net.sourceforge.stripes.controller.StripesConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract support class for generating links. Used by both the LinkTag (which
@@ -43,7 +43,7 @@ public abstract class LinkTagSupport extends HtmlTagSupport implements Parameter
      */
     private static final String VALUE_NOT_SET = "VALUE_NOT_SET";
 
-    private Map<String, Object> parameters = new HashMap<String, Object>();
+    private Map<String, Object> parameters = new HashMap<>();
     private String event = VALUE_NOT_SET;
     private Object beanclass;
     private String url;

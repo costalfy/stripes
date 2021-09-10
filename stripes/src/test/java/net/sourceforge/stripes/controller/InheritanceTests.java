@@ -1,22 +1,16 @@
 package net.sourceforge.stripes.controller;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.StripesTestFixture;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.HandlesEvent;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.mock.MockRoundtrip;
 import net.sourceforge.stripes.mock.MockServletContext;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.mock.MockRoundtrip;
-import net.sourceforge.stripes.StripesTestFixture;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.testng.Assert;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests that when one ActionBean extends another that the results are
@@ -44,15 +38,15 @@ public class InheritanceTests extends SuperclassActionBean {
         return new RedirectResolution("/child.jsp");
     }
 
-    private MockServletContext ctx;
+    static MockServletContext ctx;
 
-    @BeforeClass
-    public void setupServletContext() {
+    @BeforeAll
+    static void setupServletContext() {
         ctx = StripesTestFixture.createServletContext();
     }
 
-    @AfterClass
-    public void closeServletContext() {
+    @AfterAll
+    static void closeServletContext() {
         ctx.close();
     }
 
@@ -60,17 +54,19 @@ public class InheritanceTests extends SuperclassActionBean {
      * When we invoke the action without an event it should get routed to the
      * default handler in this class, not the one in the super class!
      */
-    @Test(groups = "fast")
+    @Test
     public void invokeDefault() throws Exception {
         MockRoundtrip trip = new MockRoundtrip(ctx,
                 InheritanceTests.class);
         trip.execute();
-        Assert.assertEquals(trip.getDestination(), "/child.jsp", "Wrong default handler called!");
+        Assertions.assertEquals(trip.getDestination(),
+                                "/child.jsp",
+                                "Wrong default handler called!");
     }
 
     // Overridden getter methods that simply allow additional validations to be added
     @Override
-    @Validate(required = false) // override validation on the Field
+    @Validate() // override validation on the Field
     public String getOne() {
         return super.getOne();
     }
@@ -91,21 +87,35 @@ public class InheritanceTests extends SuperclassActionBean {
      * Check that the validations from the superclass are active, except where
      * overridden by this class.
      */
-    @Test(groups = "fast")
+    @Test
     public void testInheritedValidations() throws Exception {
         MockServletContext ctx = StripesTestFixture.createServletContext();
         try {
-            MockRoundtrip trip = new MockRoundtrip(ctx, InheritanceTests.class);
-            trip.addParameter("two", "not25chars");
-            trip.addParameter("three", "3");
-            trip.addParameter("four", "onetwothree");
+            MockRoundtrip trip = new MockRoundtrip(ctx,
+                                                   InheritanceTests.class);
+            trip.addParameter("two",
+                              "not25chars");
+            trip.addParameter("three",
+                              "3");
+            trip.addParameter("four",
+                              "onetwothree");
             trip.execute("/Validate.action");
 
             ValidationErrors errors = trip.getValidationErrors();
-            Assert.assertNull(errors.get("one"), "Field one should not have errors.");
-            Assert.assertEquals(errors.get("two").size(), 1, "Field two should not have 1 error.");
-            Assert.assertEquals(errors.get("three").size(), 1, "Field three should not have errors.");
-            Assert.assertEquals(errors.get("four").size(), 1, "Field one should not have errors.");
+            Assertions.assertNull(errors.get("one"),
+                                  "Field one should not have errors.");
+            Assertions.assertEquals(errors.get("two")
+                                            .size(),
+                                    1,
+                                    "Field two should not have 1 error.");
+            Assertions.assertEquals(errors.get("three")
+                                            .size(),
+                                    1,
+                                    "Field three should not have errors.");
+            Assertions.assertEquals(errors.get("four")
+                                            .size(),
+                                    1,
+                                    "Field one should not have errors.");
         } finally {
             ctx.close();
         }

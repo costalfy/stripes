@@ -14,11 +14,8 @@
  */
 package net.sourceforge.stripes.tag;
 
-import java.util.Map;
-
 import javax.servlet.jsp.JspException;
-
-import net.sourceforge.stripes.tag.InputOptionsCollectionTag;
+import java.util.Map;
 
 /**
  * <p>
@@ -36,7 +33,7 @@ import net.sourceforge.stripes.tag.InputOptionsCollectionTag;
  */
 public class InputOptionsMapTag extends InputOptionsCollectionTag {
 
-    private Map<? extends Object, ? extends Object> map;
+    private Map<?, ?> map;
 
     /**
      * <p>
@@ -44,7 +41,7 @@ public class InputOptionsMapTag extends InputOptionsCollectionTag {
      *
      * @return the {@link java.util.Map} passed in via setMap().
      */
-    public Map<? extends Object, ? extends Object> getMap() {
+    public Map<?, ?> getMap() {
         return map;
     }
 
@@ -56,7 +53,7 @@ public class InputOptionsMapTag extends InputOptionsCollectionTag {
      *
      * @param map a Map
      */
-    public void setMap(Map<? extends Object, ? extends Object> map) {
+    public void setMap(Map<?, ?> map) {
         this.map = map;
 
         setCollection(map.entrySet());
@@ -78,8 +75,7 @@ public class InputOptionsMapTag extends InputOptionsCollectionTag {
      */
     @Override
     public int doEndTag() throws JspException {
-        int result = super.doEndTag();
 
-        return result;
+        return super.doEndTag();
     }
 }

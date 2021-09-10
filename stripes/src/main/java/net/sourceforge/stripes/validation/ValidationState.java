@@ -40,7 +40,7 @@ public enum ValidationState {
      * applied when errors exist should be made by consulting the system level
      * default. Stripes' default for the system level value is equivalent to
      * NO_ERRORS, but can be configured. See the Stripes
-     * <a href="http://stripesframework.org/display/stripes/Configuration+Reference#ConfigurationReference-ValidationProperties">Configuration
+     * <a href="https://stripesframework.atlassian.net/wiki/spaces/STRIPES/pages/492126/Configuration+Reference#ConfigurationReference-ValidationProperties">Configuration
      * Reference</a>
      * for details.
      */

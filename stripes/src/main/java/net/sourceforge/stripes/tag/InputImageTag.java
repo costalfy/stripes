@@ -14,8 +14,8 @@
  */
 package net.sourceforge.stripes.tag;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * <p>
@@ -60,10 +60,9 @@ public class InputImageTag extends InputTagSupport {
      * Does nothing.
      *
      * @return SKIP_BODY in all cases
-     * @throws javax.servlet.jsp.JspException
      */
     @Override
-    public int doStartInputTag() throws JspException {
+    public int doStartInputTag() {
         return SKIP_BODY;
     }
 
@@ -97,7 +96,7 @@ public class InputImageTag extends InputTagSupport {
             setSrc(ctx + src);
         }
 
-        writeSingletonTag(getPageContext().getOut(), "input");
+        writeSingletonTag(getPageContext().getOut());
         return EVAL_PAGE;
     }
 

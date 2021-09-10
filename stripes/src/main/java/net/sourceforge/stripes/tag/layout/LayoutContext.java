@@ -14,6 +14,15 @@
  */
 package net.sourceforge.stripes.tag.layout;
 
+import net.sourceforge.stripes.exception.StripesRuntimeException;
+import net.sourceforge.stripes.util.Log;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -24,16 +33,6 @@ import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.jsp.PageContext;
-
-import net.sourceforge.stripes.exception.StripesRuntimeException;
-import net.sourceforge.stripes.util.Log;
 
 /**
  * Used to move contextual information about a layout rendering between a
@@ -145,8 +144,8 @@ public class LayoutContext {
     private LayoutContext previous, next;
     private LayoutRenderTag renderTag;
     private LayoutWriter out;
-    private Map<String, LayoutComponentRenderer> components = new HashMap<String, LayoutComponentRenderer>();
-    private Map<String, Object> parameters = new HashMap<String, Object>();
+    private Map<String, LayoutComponentRenderer> components = new HashMap<>();
+    private Map<String, Object> parameters = new HashMap<>();
     private String renderPage, component;
     private LayoutRenderTagPath componentPath;
     private boolean componentRenderPhase, rendered;
@@ -433,12 +432,12 @@ public class LayoutContext {
             }
 
             @Override
-            public ServletOutputStream getOutputStream() throws IOException {
+            public ServletOutputStream getOutputStream() {
                 return os;
             }
 
             @Override
-            public PrintWriter getWriter() throws IOException {
+            public PrintWriter getWriter() {
                 return writer;
             }
         };

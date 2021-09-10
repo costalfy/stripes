@@ -48,7 +48,7 @@ public class HtmlTagSupportBeanInfo extends SimpleBeanInfo {
     @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            List<PropertyDescriptor> descriptors = new ArrayList<PropertyDescriptor>();
+            List<PropertyDescriptor> descriptors = new ArrayList<>();
 
             // Add the tricky one first
             Method getter = HtmlTagSupport.class.getMethod("getCssClass");

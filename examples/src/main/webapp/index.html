@@ -1,93 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-    <head>
-        <title>Stripes Examples</title>
-        <style type="text/css">
-            body {
-                font-family: arial, sans-serif;
-                font-size: 10pt;
-            }
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            h1 {
-                font-size: xx-large;
-                color: #555555;
-                font-weight: bold;
-                font-style: italic;
-                margin: 0px;
-                padding: 2px 0px 0px 2px;
-            }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-            h2 {
-                font-size: x-large;
-                color: #555555;
-                font-weight: bold;
-                font-style: italic;
-                margin: 0px;
-                padding: 2px 0px 0px 2px;
-            }
+    <title>Stripes Examples</title>
 
-            img {
-                vertical-align: sub;
-            }
-
-            a {
-                color: #004da4;
-            }
-        </style>
-    </head>
-    <body style="width: 650px;">
-        <h1><img src="logo.png" alt="Stripes" /> Examples</h1>
-
-        <div class="pageContent">
-            <p>Stripes currently ships with these great examples that run from a single WAR file:</p>
-
-            <ul>
-                <li>A simple <a href="quickstart/index.jsp">quickstart</a> example (a simple calculator)</li>
-                <li>A simple <a href="ajax/index.jsp">ajax version</a> of the quickstart example using regular ActionBeans and Javascript prototype.js</li>
-                <li>A more involved, but still standalone example application, a bug tracker called <a href="bugzooky/BugList.action">Bugzooky</a>.</li>
-                <li><big>(NEW!)</big> A simple <a href="quickstart/index_rest.jsp">ajax version</a> of the quickstart example using jQuery and RestActionBean!</li>
-                <li><big>(NEW!)</big> A Single-Page Application (SPA) using HTML, EmberJS and RestActionBeans. <a href="rockandroll/index.html">Rock and Roll</a>!</li>
-                <li><big>(NEW!)</big> A Single-Page Application (SPA) using HTML, jQuery and RestActionBeans.  (Uses JSON request bodies instead of request parameters) <a href="todolist/index.html">To-Do List</a>!</li>
-                <li><big>(BETA!)</big> A <a href="async">non-blocking Action Bean</a> (Servlet3) sample</li>
-            </ul>
-
-            <p>For those of you too young or too old or who did not grow up with western cartoons as a kid,
-            <a href="http://www.internationalhero.co.uk/g/godzooky.htm">Godzooky</a>
-            (alternative spelling: Godzookie) was the diminutive offspring of Godzilla in the
-            1970/80s Godzilla cartoons by Hanna Barbara.  The name from the example application comes
-            from the fact that it is a example bug tracking application, and is massively smaller than
-            Bugzilla.</p>
-            
-            <p>The single-page application (Rock and Roll) is a reference application created
-                by Balint Erdi.  The front-end is pure HTML, EmberJS and Handlebars.  The back-end
-                is nothing but Stripes RestActionBeans.  There is a great blog post "how-to" for the 
-                front-end Rock and Roll application <a href="http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app">here</a>.
-                The Github source code for the Rock and Roll application is <a href="https://github.com/balinterdi/rock-and-roll/releases/tag/episode-7">here</a>.
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-5"><img src="logo.png" alt="Stripes"/> Examples</h1>
+            <p class="lead">Stripes currently ships with these great examples that run from a single WAR file:</p>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item">A simple <a href="quickstart/index.jsp">quickstart</a> example (a simple
+                    calculator)
+                </li>
+                <li class="list-group-item">A simple <a href="ajax/index.jsp">ajax version</a> of the quickstart example
+                    using
+                    regular ActionBeans
+                    and
+                    Javascript prototype.js
+                </li>
+                <li class="list-group-item">A more involved, but still standalone example application, a bug tracker
+                    called <a
+                            href="bugzooky/BugList.action">Bugzooky</a>.
+                </li>
+                <li class="list-group-item"><span class="badge badge-secondary">New</span> A simple <a
+                        href="quickstart/index_rest.jsp">ajax version</a> of the quickstart
+                    example
+                    using jQuery and RestActionBean!
+                </li>
+                <li class="list-group-item"><span class="badge badge-secondary">New</span> A Single-Page Application
+                    (SPA) using
+                    HTML, EmberJS and RestActionBeans. <a
+                            href="rockandroll/index.html">Rock and Roll</a>!
+                </li>
+                <li class="list-group-item"><span class="badge badge-secondary">New</span> A Single-Page Application
+                    (SPA) using
+                    HTML, jQuery and RestActionBeans. (Uses JSON
+                    request
+                    bodies instead of request parameters) <a href="todolist/index.html">To-Do List</a>!
+                </li>
+                <li class="list-group-item"><span class="badge badge-secondary">New</span> A <a href="async">non-blocking
+                    Action
+                    Bean</a> (Servlet3) sample
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>For those of you too young or too old or who did not grow up with western cartoons as a kid,
+                <a href="http://www.internationalhero.co.uk/g/godzooky.htm">Godzooky</a>
+                (alternative spelling: Godzookie) was the diminutive offspring of Godzilla in the
+                1970/80s Godzilla cartoons by Hanna Barbara. The name from the example application comes
+                from the fact that it is a example bug tracking application, and is massively smaller than
+                Bugzilla.</p>
 
-        <hr style="height: 1px;"/>
+            <p>The single-page application (Rock and Roll) is a reference application created
+                by Balint Erdi. The front-end is pure HTML, EmberJS and Handlebars. The back-end
+                is nothing but Stripes RestActionBeans. There is a great blog post "how-to" for the
+                front-end Rock and Roll application <a
+                        href="http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app">here</a>.
+                The Github source code for the Rock and Roll application is <a
+                        href="https://github.com/balinterdi/rock-and-roll/releases/tag/episode-7">here</a>.
+        </div>
+    </div>
 
-        <h2>Stripes Online Resources</h2>
+    <hr/>
 
-        <div>
+    <h2>Stripes Online Resources</h2>
+
+    <div class="row">
+        <div class="col-sm">
             <p>More information about Stripes is available online. The following documentation is
-            available to help you learn and develop with Stripes:</p>
+                available to help you learn and develop with Stripes:</p>
 
             <ul>
-                <li>The Stripes <a href="http://www.stripesframework.org">documentation website</a> includes
-                    lots of reference and How-To documentation.</li>
-                <li>The <a href="https://stripesframework.ci.cloudbees.com/job/Stripes%201.6.0/javadoc">Stripes API documentation</a>
-                    (JavaDoc)</li>
-                <li>The <a href="https://stripesframework.ci.cloudbees.com/job/Stripes%201.6.0/ws/stripes/target/site/tlddoc/index.html">Stripes Tag Library documentation</a>
-                    (TLDDoc)</li>
+                <li class="list-group-item">The Stripes <a href="https://github.com/StripesFramework/stripes">documentation
+                    website</a> includes
+                    lots of reference and How-To documentation.
+                </li>
+                <li class="list-group-item">The <a
+                        href="https://stripesframework.ci.cloudbees.com/job/Stripes%201.6.0/javadoc">Stripes API
+                    documentation</a>
+                    (JavaDoc)
+                </li>
+                <li class="list-group-item">The <a href="https://stripesframework.atlassian.net/browse/STS">Stripes
+                    issue
+                    tracker</a>
+                    (JIRA)
+                </li>
+                <li class="list-group-item">The <a
+                        href="https://stripesframework.ci.cloudbees.com/job/Stripes%201.6.0/ws/stripes/target/site/tlddoc/index.html">Stripes
+                    Tag Library documentation</a>
+                    (TLDDoc)
+                </li>
             </ul>
 
             <p>If you are developing an application using Stripes you are strongly encouraged to
-            join the <a href="http://lists.sourceforge.net/lists/listinfo/stripes-users">Stripes Users'</a>
-            mailing list for support. In addition, confirmed bugs (preferably with test cases) can be
-            reported using Stripes' JIRA
-            <a href="https://stripesframework.atlassian.net">bug tracking system</a>.</p>
+                join the <a href="http://lists.sourceforge.net/lists/listinfo/stripes-users">Stripes Users'</a>
+                mailing list for support. In addition, confirmed bugs (preferably with test cases) can be
+                reported using Stripes' JIRA
+                <a href="https://stripesframework.atlassian.net">bug tracking system</a>.</p>
         </div>
-
-    </body>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
 </html>

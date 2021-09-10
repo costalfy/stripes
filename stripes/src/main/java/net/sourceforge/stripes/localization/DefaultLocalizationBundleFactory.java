@@ -16,9 +16,9 @@ package net.sourceforge.stripes.localization;
 
 import net.sourceforge.stripes.config.Configuration;
 
-import java.util.ResourceBundle;
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * Very simple default implementation of a bundle factory. Looks for
@@ -62,7 +62,7 @@ public class DefaultLocalizationBundleFactory implements LocalizationBundleFacto
      * to look for configured bundle names in the servlet init parameters etc.
      * If those can't be found then the default bundle names are put in place.
      */
-    public void init(Configuration configuration) throws Exception {
+    public void init(Configuration configuration) {
         setConfiguration(configuration);
 
         this.errorBundleName = configuration.getBootstrapPropertyResolver().

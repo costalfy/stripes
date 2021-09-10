@@ -14,15 +14,6 @@
  */
 package net.sourceforge.stripes.tag;
 
-import static net.sourceforge.stripes.controller.StripesConstants.URL_KEY_FIELDS_PRESENT;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TryCatchFinally;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.controller.ActionResolver;
 import net.sourceforge.stripes.controller.StripesConstants;
@@ -31,6 +22,14 @@ import net.sourceforge.stripes.exception.StripesJspException;
 import net.sourceforge.stripes.exception.StripesServletException;
 import net.sourceforge.stripes.util.CryptoUtil;
 import net.sourceforge.stripes.util.HtmlUtil;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TryCatchFinally;
+import java.util.HashSet;
+import java.util.Set;
+
+import static net.sourceforge.stripes.controller.StripesConstants.URL_KEY_FIELDS_PRESENT;
 
 /**
  * <p>
@@ -70,11 +69,10 @@ public class WizardFieldsTag extends StripesTagSupport implements TryCatchFinall
 
     /**
      * Skips over the body because there shouldn't be one.
-     * @return 
-     * @throws javax.servlet.jsp.JspException
+     * @return
      */
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         getTagStack().push(this);
         return SKIP_BODY;
     }
@@ -185,9 +183,9 @@ public class WizardFieldsTag extends StripesTagSupport implements TryCatchFinall
     protected Set<String> getParamNames() {
         // Combine actual parameter names with input names from the form, which might not be
         // represented by a real request parameter
-        Set<String> paramNames = new HashSet<String>();
         ServletRequest request = getPageContext().getRequest();
-        paramNames.addAll(request.getParameterMap().keySet());
+        Set<String> paramNames = new HashSet<String>(request.getParameterMap()
+                                                             .keySet());
         String fieldsPresent = request.getParameter(URL_KEY_FIELDS_PRESENT);
         if (fieldsPresent != null) {
             paramNames.addAll(HtmlUtil.splitValues(CryptoUtil.decrypt(fieldsPresent)));
@@ -202,8 +200,7 @@ public class WizardFieldsTag extends StripesTagSupport implements TryCatchFinall
      * @return 
      */
     protected Set<String> getExcludes(FormTag form) {
-        Set<String> excludes = new HashSet<String>();
-        excludes.addAll(form.getRegisteredFields());
+        Set<String> excludes = new HashSet<String>(form.getRegisteredFields());
         excludes.add(StripesConstants.URL_KEY_SOURCE_PAGE);
         excludes.add(StripesConstants.URL_KEY_FIELDS_PRESENT);
         excludes.add(StripesConstants.URL_KEY_EVENT_NAME);
