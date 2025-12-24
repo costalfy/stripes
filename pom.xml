@@ -12,7 +12,7 @@
         <mail.version>1.4.7</mail.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
         <commons-logging.version>1.2</commons-logging.version>
-        <log4j.version>2.19.0</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <spring.version>5.3.24</spring.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-io.version>2.11.0</commons-io.version>
